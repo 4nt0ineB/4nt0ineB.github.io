@@ -76,7 +76,7 @@ métrique n'a pas de valeur continue, elle a la valeur qu'elle avait aux instant
 est venu la lire. Un événement qui commence et se termine entre deux scrapes n'a jamais
 existé pour Prometheus.
 
-## Ce que le tuyau achète {#ce-que-le-tuyau-achete}
+## À quoi sert le collecteur {#ce-que-le-tuyau-achete}
 
 Le collecteur ne garde rien, donc on peut se demander à quoi il sert. Il sert à ce que
 l'application ne connaisse qu'une seule destination. Remplacer Tempo par autre chose

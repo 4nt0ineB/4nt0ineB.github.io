@@ -6,7 +6,7 @@ La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et d
 
 - `## Titre {#ancre}` : l'ancre est la cible de liens croises, ne la renomme pas.
 - `<jargon mot="x">y</jargon>` : definit un terme a sa premiere occurrence dans la page.
-- `<mesure valeur="..." source="...">y</mesure>` : un chiffre mesure et sa provenance.
+- `<mesure valeur="...">y</mesure>` : un chiffre mesuré, marqué comme tel.
 - `:::regle`, `:::aller-plus-loin`, `:::devine`, `:::tableau` : des blocs, dont la prose interieure est modifiable.
 - `:::schema` : une fiche descriptive, informative seulement. Le schema lui-meme est du code.
 
@@ -107,7 +107,7 @@ article   : introduction-observabilite
 page      : trois-piliers
 fichier   : blog/introduction-observabilite/en/02-trois-piliers.html
 surtitre  : Chapter 2
-lecture   : 5 min
+lecture   : 4 min
 ```
 
 ## Detect, locate, explain {#detecter-localiser-expliquer}
@@ -147,9 +147,9 @@ A click on the spike opens the trace of a real slow request. This trace is a tre
 A click on one of these operations opens the log tool, already filtered on the identifier of this request. A single line answers everything: `cache miss for order items, falling back to per-item fetch`. The cache has been empty since the 14:02 deployment.
 
 :::schema schema-trois-etages
-titre: La latence de /checkout passe de 200 millisecondes à 3 secondes à 14h02
-titre: Une trace de 3,1 secondes, dont 2,9 secondes en cent requêtes SQL jumelles
-titre: Un log filtré sur l'identifiant de trace
+titre: The /checkout latency goes from 200 milliseconds to 3 seconds at 14:02
+titre: A 3.1-second trace, 2.9 seconds of which in a hundred twin SQL queries
+titre: A log filtered on the trace identifier
 voir: L'enquete du checkout lent en trois clics. Etage 1 le graphe de latence avec son point d'exemplar, etage 2 la trace en cascade et ses cent requetes jumelles, etage 3 la ligne de log filtree sur l'identifiant de trace.
 :::
 
@@ -166,7 +166,7 @@ A metric is aggregated ahead of time. When a request fails, a counter goes from 
 What remains is to make this metric able to explain. If we labelled the counter with the user's identifier, we would no longer have one metric but as many metrics as the system has users. Adding the URL with its parameters would multiply again. Prometheus keeps its indexes in memory, so it does not degrade gracefully and would collapse under its own weight.
 
 :::schema schema-cardinalite
-titre: Nombre de séries stockées par la métrique, en échelle logarithmique
+titre: Number of series stored by the metric, on a logarithmic scale
 voir: Des cases a cocher, une par etiquette de metrique (statut 5 valeurs, route 20, methode 6, identifiant client 40 000, URL sans limite). Une barre en echelle logarithmique et un compteur suivent le nombre de series stockees, et basculent en alerte au-dela du seuil.
 :::
 
@@ -245,7 +245,7 @@ An instrumented application emits its three pillars through three different path
 Grafana reads the three stores and puts them on the same screen. In parallel, Prometheus evaluates its alerting rules, and a fired alert can reach a human.
 
 :::schema schema-trajet
-titre: Le trajet d'une donnée, de l'application jusqu'à l'écran
+titre: The journey of a data point, from the application to the screen
 voir: Un schema en trois colonnes, application, tuyaux et stockages, ecran. Les quatre chemins s'allument l'un apres l'autre : /metrics que Prometheus vient lire, les traces vers le collecteur puis Tempo, la sortie standard lue par Alloy puis Loki, et Grafana qui lit les trois.
 :::
 
@@ -258,13 +258,13 @@ Prometheus does <jargon mot="pull">pull</jargon>. The application sends its metr
 Logs and traces, on the other hand, are <jargon mot="push">pushed</jargon>. An event happens when it happens, so something has to send it at the moment it occurs. A state, on the contrary, is measured on demand. One cannot ask a process what it logged in the last thirty seconds, but one can always ask it how much memory it is using now.
 
 :::schema schema-pull-push
-titre: Prometheus tire ses métriques, l'agent pousse ses logs
+titre: Prometheus pulls its metrics, the agent pushes its logs
 voir: Deux colonnes animees en boucle. A gauche Prometheus qui va chercher ses metriques, a droite l'agent qui pousse ses logs vers Loki.
 :::
 
 Pull has a consequence that comes back in [chapter 6](#/en/blog/introduction-observabilite/lire-un-graphe#la-fenetre): a metric has no continuous value, it has the value it had at the instants someone came to read it. An event that starts and ends between two scrapes never existed for Prometheus.
 
-## What the pipe buys {#ce-que-le-tuyau-achete}
+## What the collector is for {#ce-que-le-tuyau-achete}
 
 The collector keeps nothing, so one may wonder what it is for. It is there so that the application only knows a single destination. Replacing Tempo with something else becomes a change in the collector's configuration, not a redeployment of forty services.
 
@@ -279,7 +279,7 @@ article   : introduction-observabilite
 page      : les-outils
 fichier   : blog/introduction-observabilite/en/04-les-outils.html
 surtitre  : Chapter 4
-lecture   : 5 min
+lecture   : 4 min
 ```
 
 ## Prometheus {#prometheus}
@@ -353,7 +353,7 @@ article   : introduction-observabilite
 page      : instrumenter
 fichier   : blog/introduction-observabilite/en/05-instrumenter.html
 surtitre  : Chapter 5
-lecture   : 3 min
+lecture   : 2 min
 ```
 
 ## What exists without doing anything {#ce-qui-existe-sans-rien-faire}
@@ -449,7 +449,7 @@ This is also why an alert that compares a raw counter to a fixed threshold is a 
 Too wide a window spreads a short event out. A six-second incident, averaged over a minute, draws a bump a minute wide, and nothing in the graph is broken.
 
 :::schema schema-fenetre-rate
-titre: Un incident réel de 6 secondes, et ce qu'une moyenne glissante en montre selon la largeur de la fenêtre choisie
+titre: A real 6-second incident, and what a moving average shows of it depending on the chosen window width
 voir: Un incident reel de 6 secondes, et un curseur de fenetre de requete. La courbe de verite ne bouge jamais, la courbe affichee s'elargit et s'aplatit a mesure que la fenetre grandit.
 :::
 
@@ -459,7 +459,7 @@ So for a post-mortem, read the raw counter first, and only use a window once the
 
 ## The time of the scrape {#l-heure-du-scrape}
 
-The position of a point on the timeline is the moment it was collected, not the moment the event took place. A container was killed at a known instant, <mesure valeur="11:21:31" source="lab, 2026-08-26">according to the timestamp of its end, and the panel showed it at 11:23</mesure>, because the next collection happened then. Two minutes of error are enough to blame the wrong deployment. When the exact instant matters, look for a metric that carries the event's timestamp as its value, not the position of the sample.
+The position of a point on the timeline is the moment it was collected, not the moment the event took place. A container was killed at a known instant, <mesure valeur="11:21:31">according to the timestamp of its end, and the panel showed it at 11:23</mesure>, because the next collection happened then. Two minutes of error are enough to blame the wrong deployment. When the exact instant matters, look for a metric that carries the event's timestamp as its value, not the position of the sample.
 
 ## A single clock {#une-seule-horloge}
 
@@ -520,9 +520,9 @@ A liveness probe answers a single question: is this process stuck for good, by a
 It must therefore check neither the database, nor another service, nor the network, because the chain reaction is mechanical. If the database goes down and the liveness probe checks the database, every pod fails its probe at the same moment, so the kubelet kills them all, in a loop. The database outage becomes a database outage plus a total loss of the service.
 
 :::schema schema-reaction-chaine
-titre: État final : readiness en échec, les quatre instances hors service mais toujours en cours d'exécution, base rétablie
-titre: État final : liveness en échec, les quatre instances tuées et redémarrées en boucle, base rétablie mais le backoff continue
-titre: Quatre instances et une base de données, pendant et après une coupure
+titre: Final state: readiness failing, the four instances out of service but still running, database restored
+titre: Final state: liveness failing, the four instances killed and restarted in a loop, database restored but the backoff goes on
+titre: Four instances and a database, during and after an outage
 voir: Quatre instances et une base. Un interrupteur « la liveness interroge la base », un bouton pour couper la base. Le compteur de redemarrages reste a zero dans le bon scenario et grimpe dans le mauvais.
 :::
 
@@ -545,7 +545,7 @@ It fails. An endpoint that does nothing still needs a thread to answer, and all 
 
 :::
 
-The tolerated response time is one second by default, and three failures in a row are enough to kill. With these two defaults left as they were, the probe failed <mesure valeur="2 times out of 3" source="lab, 2026-08-26">under this load, one cycle away from the crash loop, with a healthy application</mesure>. A probe that touches nothing is not a probe that needs nothing.
+The tolerated response time is one second by default, and three failures in a row are enough to kill. With these two defaults left as they were, the probe failed <mesure valeur="2 times out of 3">under this load, one cycle away from the crash loop, with a healthy application</mesure>. A probe that touches nothing is not a probe that needs nothing.
 
 :::regle
 A liveness probe must not be able to fail because of load.
@@ -599,7 +599,7 @@ Nobody. The stack's default destination is called "null" and does nothing, so th
 "We will see it" assumes a human in front of a dashboard, which is what an alert exists to remove.
 :::
 
-This default can stay for weeks without anyone noticing, and an alert rang for <mesure valeur="40 min" source="lab, 2026-08-27">on a real incident without a single message leaving the machine</mesure>.
+This default can stay for weeks without anyone noticing, and an alert rang for <mesure valeur="40 min">on a real incident without a single message leaving the machine</mesure>.
 
 Two habits follow. The first is to send a real alert, on purpose, and to confirm that it reaches the device meant to receive it, not only the interface. The second is to keep the alert list empty in normal times, because an alert that rings permanently, even a correct one, turns the list into decoration. The third entry in a list that already has two changes nothing to the eye, and a team that starts with a noisy list durably learns to ignore it.
 
@@ -667,7 +667,7 @@ We do not know. Zero failures says nothing was refused, not that nothing broke. 
 A green dashboard is a hypothesis, not a result.
 :::
 
-Over the nine failures provoked for this text, this perfect client-side result appeared <mesure valeur="3 times out of 9" source="lab, 2026-08-26">with, each time, a system in danger</mesure>.
+Over the nine failures provoked for this text, this perfect client-side result appeared <mesure valeur="3 times out of 9">with, each time, a system in danger</mesure>.
 
 Nothing in an instrument distinguishes a signal that shows nothing because nothing is broken from a signal that shows nothing because it is looking in the wrong place. The only way to settle it is to make something fail on purpose, at a chosen moment, while watching. Trigger every panel once and confirm that it moves, because a panel one has never seen react is decoration. Send an alert and wait for the phone. Kill a pod under load and read what the restart counter shows, that is, zero, since the killed pod no longer exists.
 

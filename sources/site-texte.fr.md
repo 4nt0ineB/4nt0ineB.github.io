@@ -6,7 +6,7 @@ La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et d
 
 - `## Titre {#ancre}` : l'ancre est la cible de liens croises, ne la renomme pas.
 - `<jargon mot="x">y</jargon>` : definit un terme a sa premiere occurrence dans la page.
-- `<mesure valeur="..." source="...">y</mesure>` : un chiffre mesure et sa provenance.
+- `<mesure valeur="...">y</mesure>` : un chiffre mesuré, marqué comme tel.
 - `:::regle`, `:::aller-plus-loin`, `:::devine`, `:::tableau` : des blocs, dont la prose interieure est modifiable.
 - `:::schema` : une fiche descriptive, informative seulement. Le schema lui-meme est du code.
 
@@ -147,9 +147,9 @@ Un clic sur le pic ouvre la trace d'une vraie requête lente. Cette trace est un
 Un clic sur l'une de ces opérations ouvre l'outil de logs, déjà filtré sur l'identifiant de cette requête. Une seule ligne répond à tout : `cache miss for order items, falling back to per-item fetch`. Le cache est vide depuis le déploiement de 14h02.
 
 :::schema schema-trois-etages
-titre: La latence de /checkout passe de 200 millisecondes à 3 secondes à 14h02
-titre: Une trace de 3,1 secondes, dont 2,9 secondes en cent requêtes SQL jumelles
-titre: Un log filtré sur l'identifiant de trace
+titre: The /checkout latency goes from 200 milliseconds to 3 seconds at 14:02
+titre: A 3.1-second trace, 2.9 seconds of which in a hundred twin SQL queries
+titre: A log filtered on the trace identifier
 voir: L'enquete du checkout lent en trois clics. Etage 1 le graphe de latence avec son point d'exemplar, etage 2 la trace en cascade et ses cent requetes jumelles, etage 3 la ligne de log filtree sur l'identifiant de trace.
 :::
 
@@ -166,7 +166,7 @@ Une métrique est agrégée à l'avance. Quand une requête échoue, un compteur
 Reste à rendre cette métrique capable d'expliquer. Si on étiquetait le compteur avec l'identifiant de l'utilisateur, on n'aurait plus une seule métrique mais autant de métriques que le système a d'utilisateurs. Ajouter l'URL avec ses paramètres multiplierait encore. Prometheus garde ses index en mémoire, donc il ne se dégrade pas en douceur et tomberait sous son propre poids.
 
 :::schema schema-cardinalite
-titre: Nombre de séries stockées par la métrique, en échelle logarithmique
+titre: Number of series stored by the metric, on a logarithmic scale
 voir: Des cases a cocher, une par etiquette de metrique (statut 5 valeurs, route 20, methode 6, identifiant client 40 000, URL sans limite). Une barre en echelle logarithmique et un compteur suivent le nombre de series stockees, et basculent en alerte au-dela du seuil.
 :::
 
@@ -245,7 +245,7 @@ Une application instrumentée émet ses trois piliers par trois chemins différe
 Grafana lit les trois stockages et les met sur le même écran. En parallèle, Prometheus évalue ses règles d'alerte, et une alerte déclenchée peut joindre un humain.
 
 :::schema schema-trajet
-titre: Le trajet d'une donnée, de l'application jusqu'à l'écran
+titre: The journey of a data point, from the application to the screen
 voir: Un schema en trois colonnes, application, tuyaux et stockages, ecran. Les quatre chemins s'allument l'un apres l'autre : /metrics que Prometheus vient lire, les traces vers le collecteur puis Tempo, la sortie standard lue par Alloy puis Loki, et Grafana qui lit les trois.
 :::
 
@@ -258,13 +258,13 @@ Prometheus fait du <jargon mot="pull">pull</jargon>. L'application n'envoie ses 
 Les logs et les traces, eux, se <jargon mot="push">push</jargon>. Un événement arrive quand il arrive, donc il faut bien que quelque chose l'envoie au moment où il se produit. Un état, au contraire, se mesure sur commande. On ne peut pas demander à un processus ce qu'il a loggé dans les trente dernières secondes, mais on peut toujours lui demander combien de mémoire il utilise maintenant.
 
 :::schema schema-pull-push
-titre: Prometheus tire ses métriques, l'agent pousse ses logs
+titre: Prometheus pulls its metrics, the agent pushes its logs
 voir: Deux colonnes animees en boucle. A gauche Prometheus qui va chercher ses metriques, a droite l'agent qui pousse ses logs vers Loki.
 :::
 
 Le pull a une conséquence qui revient au [chapitre 6](#/fr/blog/introduction-observabilite/lire-un-graphe#la-fenetre) : une métrique n'a pas de valeur continue, elle a la valeur qu'elle avait aux instants où on est venu la lire. Un événement qui commence et se termine entre deux scrapes n'a jamais existé pour Prometheus.
 
-## Ce que le tuyau achète {#ce-que-le-tuyau-achete}
+## À quoi sert le collecteur {#ce-que-le-tuyau-achete}
 
 Le collecteur ne garde rien, donc on peut se demander à quoi il sert. Il sert à ce que l'application ne connaisse qu'une seule destination. Remplacer Tempo par autre chose devient un changement dans la configuration du collecteur, et non un redéploiement de quarante services.
 
@@ -449,7 +449,7 @@ C'est aussi pourquoi une alerte qui compare un compteur brut à un seuil fixe es
 Une fenêtre trop large étale un événement court. Un incident de six secondes, moyenné sur une minute, dessine une bosse d'une minute de large, et rien n'est cassé dans le graphe.
 
 :::schema schema-fenetre-rate
-titre: Un incident réel de 6 secondes, et ce qu'une moyenne glissante en montre selon la largeur de la fenêtre choisie
+titre: A real 6-second incident, and what a moving average shows of it depending on the chosen window width
 voir: Un incident reel de 6 secondes, et un curseur de fenetre de requete. La courbe de verite ne bouge jamais, la courbe affichee s'elargit et s'aplatit a mesure que la fenetre grandit.
 :::
 
@@ -459,7 +459,7 @@ Donc pour un post-mortem, lire d'abord le compteur brut, et n'utiliser une fenê
 
 ## L'heure du scrape {#l-heure-du-scrape}
 
-La position d'un point sur la ligne du temps est le moment où il a été collecté, pas le moment où l'événement a eu lieu. Un conteneur a été tué à un instant connu, <mesure valeur="11:21:31" source="labo, 2026-08-26">d'après l'horodatage de sa fin, et le panneau l'a affiché à 11:23</mesure>, parce que la collecte suivante a eu lieu à ce moment-là. Deux minutes d'erreur suffisent à accuser le mauvais déploiement. Quand l'instant exact compte, il faut chercher une métrique qui porte l'horodatage de l'événement comme valeur, pas la position de l'échantillon.
+La position d'un point sur la ligne du temps est le moment où il a été collecté, pas le moment où l'événement a eu lieu. Un conteneur a été tué à un instant connu, <mesure valeur="11:21:31">d'après l'horodatage de sa fin, et le panneau l'a affiché à 11:23</mesure>, parce que la collecte suivante a eu lieu à ce moment-là. Deux minutes d'erreur suffisent à accuser le mauvais déploiement. Quand l'instant exact compte, il faut chercher une métrique qui porte l'horodatage de l'événement comme valeur, pas la position de l'échantillon.
 
 ## Une seule horloge {#une-seule-horloge}
 
@@ -520,9 +520,9 @@ Une liveness répond à une seule question : ce processus est-il définitivement
 Elle ne doit donc vérifier ni la base, ni un autre service, ni le réseau, car la réaction en chaîne est mécanique. Si la base tombe et que la liveness vérifie la base, tous les pods échouent leur sonde au même moment, donc le kubelet les tue tous, en boucle. La panne de base devient une panne de base plus une perte totale du service.
 
 :::schema schema-reaction-chaine
-titre: État final : readiness en échec, les quatre instances hors service mais toujours en cours d'exécution, base rétablie
-titre: État final : liveness en échec, les quatre instances tuées et redémarrées en boucle, base rétablie mais le backoff continue
-titre: Quatre instances et une base de données, pendant et après une coupure
+titre: Final state: readiness failing, the four instances out of service but still running, database restored
+titre: Final state: liveness failing, the four instances killed and restarted in a loop, database restored but the backoff goes on
+titre: Four instances and a database, during and after an outage
 voir: Quatre instances et une base. Un interrupteur « la liveness interroge la base », un bouton pour couper la base. Le compteur de redemarrages reste a zero dans le bon scenario et grimpe dans le mauvais.
 :::
 
@@ -545,7 +545,7 @@ Elle échoue. Un endpoint qui ne fait rien a quand même besoin d'un thread pour
 
 :::
 
-Le délai de réponse toléré vaut une seconde par défaut, et trois échecs de suite suffisent pour tuer. Avec ces deux défauts laissés tels quels, la sonde a échoué <mesure valeur="2 fois sur 3" source="labo, 2026-08-26">sous cette charge, à un cycle du crash loop, avec une application saine</mesure>. Une sonde qui ne touche à rien n'est pas une sonde qui n'a besoin de rien.
+Le délai de réponse toléré vaut une seconde par défaut, et trois échecs de suite suffisent pour tuer. Avec ces deux défauts laissés tels quels, la sonde a échoué <mesure valeur="2 fois sur 3">sous cette charge, à un cycle du crash loop, avec une application saine</mesure>. Une sonde qui ne touche à rien n'est pas une sonde qui n'a besoin de rien.
 
 :::regle
 Une liveness ne doit pas pouvoir échouer à cause de la charge.
@@ -599,7 +599,7 @@ Personne. La destination par défaut de la pile s'appelle « null » et ne fait 
 « On le verra » suppose un humain devant un dashboard, ce qu'une alerte existe pour supprimer.
 :::
 
-Ce défaut peut rester des semaines sans que personne le remarque, et une alerte a sonné <mesure valeur="40 min" source="labo, 2026-08-27">sur un vrai incident sans qu'un seul message sorte de la machine</mesure>.
+Ce défaut peut rester des semaines sans que personne le remarque, et une alerte a sonné <mesure valeur="40 min">sur un vrai incident sans qu'un seul message sorte de la machine</mesure>.
 
 Il en découle deux habitudes. La première est d'envoyer une vraie alerte, exprès, et de confirmer qu'elle arrive sur l'appareil censé la recevoir, pas seulement dans l'interface. La seconde est de garder la liste des alertes vide en temps normal, car une alerte qui sonne en permanence, même juste, transforme la liste en décor. La troisième entrée dans une liste qui en compte déjà deux ne change rien à l'œil, et une équipe qui démarre avec une liste bruyante apprend durablement à l'ignorer.
 
@@ -667,7 +667,7 @@ On ne sait pas. Zéro échec dit que rien n'a été refusé, pas que rien n'a ca
 Un dashboard vert est une hypothèse, pas un résultat.
 :::
 
-Sur les neuf pannes provoquées pour ce texte, ce résultat parfait côté client est apparu <mesure valeur="3 fois sur 9" source="labo, 2026-08-26">avec, à chaque fois, un système en danger</mesure>.
+Sur les neuf pannes provoquées pour ce texte, ce résultat parfait côté client est apparu <mesure valeur="3 fois sur 9">avec, à chaque fois, un système en danger</mesure>.
 
 Rien dans un instrument ne distingue un signal qui ne montre rien parce que rien n'est cassé d'un signal qui ne montre rien parce qu'il regarde au mauvais endroit. La seule façon de trancher est de faire échouer quelque chose exprès, à un moment choisi, en regardant. Déclencher chaque panneau une fois et confirmer qu'il bouge, car un panneau qu'on n'a jamais vu réagir est une décoration. Envoyer une alerte et attendre le téléphone. Tuer un pod sous charge et lire ce que le compteur de redémarrages affiche, c'est-à-dire zéro, puisque le pod tué n'existe plus.
 

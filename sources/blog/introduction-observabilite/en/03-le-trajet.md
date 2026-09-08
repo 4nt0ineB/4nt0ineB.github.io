@@ -76,7 +76,7 @@ Pull has a consequence that comes back in
 no continuous value, it has the value it had at the instants someone came to read it. An
 event that starts and ends between two scrapes never existed for Prometheus.
 
-## What the pipe buys {#ce-que-le-tuyau-achete}
+## What the collector is for {#ce-que-le-tuyau-achete}
 
 The collector keeps nothing, so one may wonder what it is for. It is there so that the
 application only knows a single destination. Replacing Tempo with something else becomes
