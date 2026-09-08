@@ -1,5 +1,5 @@
 import { createApp, defineComponent, ref, shallowRef, computed, onMounted, nextTick } from 'https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.esm-browser.prod.js'
-import { SECTIONS, ACCUEIL, page, voisins } from './sections.js'
+import { SECTIONS, SECTIONS_EN_TETE, ACCUEIL, page, voisins } from './sections.js'
 import { routeCourante, lien, surChangement } from './routeur.js'
 import { themeEffectif, basculerTheme } from './theme.js'
 import { enregistrer } from './composants/index.js'
@@ -37,7 +37,7 @@ const App = defineComponent({
       if (liste.value) return null
       return page(route.value.section, route.value.slug)
     })
-    const cote = computed(() => courante.value ? voisins(route.value.section, courante.value.slug) : { precedent: null, suivant: null })
+    const cote = computed(() => courante.value && route.value.section ? voisins(route.value.section, courante.value.slug) : { precedent: null, suivant: null })
 
     // Deux navigations rapprochées peuvent avoir leurs promesses résolues
     // dans le désordre. `demande` fige la route visée au moment de l'appel :
@@ -79,7 +79,7 @@ const App = defineComponent({
       majAvancement()
     })
 
-    return { SITE, SECTIONS, route, section, liste, courante, vue, erreur, theme, avancement, cote, lien,
+    return { SITE, SECTIONS, SECTIONS_EN_TETE, route, section, liste, courante, vue, erreur, theme, avancement, cote, lien,
              bascule: () => { theme.value = basculerTheme() } }
   },
   template: `
@@ -87,15 +87,15 @@ const App = defineComponent({
     <header class="entete">
       <a class="titre-site" href="#/">{{ SITE }}</a>
       <nav class="sections" aria-label="Sections">
-        <a v-for="(s, nom) in SECTIONS" :key="nom" :href="lien(nom)"
-           :aria-current="nom === route.section ? 'page' : null">{{ s.titre }}</a>
+        <a v-for="nom in SECTIONS_EN_TETE" :key="nom" :href="lien(nom)"
+           :aria-current="nom === route.section ? 'page' : null">{{ SECTIONS[nom].titre }}</a>
       </nav>
       <button type="button" class="bascule-theme" @click="bascule"
               :aria-label="theme === 'dark' ? 'Passer au thème clair' : 'Passer au thème sombre'">
         {{ theme === 'dark' ? 'Clair' : 'Sombre' }}
       </button>
     </header>
-    <div class="coquille" :class="{ 'sans-sommaire': !section || !section.sommaire, ['section-' + route.section]: route.section }">
+    <div class="coquille" :class="{ 'sans-sommaire': !section || !section.sommaire, ['section-' + (route.section ?? 'cv')]: true }">
       <nav v-if="section && section.sommaire" class="sommaire" aria-label="Sommaire">
         <a v-for="p in section.pages" :key="p.slug" :href="lien(route.section, p.slug)"
            :aria-current="courante && p.slug === courante.slug ? 'page' : null">

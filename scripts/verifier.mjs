@@ -127,8 +127,8 @@ function depliantsImbriques (html) {
 
 // --- Contrôles -----------------------------------------------------------
 
-const { toutesLesPages, ACCUEIL } = await import(pathToFileURL(path.join(RACINE, 'js/sections.js')).href)
-const PAGES = [ACCUEIL, ...toutesLesPages()]
+const { toutesLesPages } = await import(pathToFileURL(path.join(RACINE, 'js/sections.js')).href)
+const PAGES = toutesLesPages()
 const { LEXIQUE } = await import(pathToFileURL(path.join(RACINE, 'js/lexique.js')).href)
 
 // Les composants réellement enregistrés à l'exécution, pas ceux qui

@@ -38,7 +38,12 @@ export const SECTIONS = {
   }
 }
 
-export const ACCUEIL = { titre: 'Accueil', fichier: 'accueil.html' }
+// La page principale du site est le CV : #/ et #/cv affichent la même page.
+export const ACCUEIL = SECTIONS.cv.pages[0]
+
+// Les sections proposées dans l'en-tête. Le CV n'y est pas : le titre du
+// site y mène déjà.
+export const SECTIONS_EN_TETE = ['observabilite', 'blog']
 
 export function toutesLesPages () {
   return Object.values(SECTIONS).flatMap(s => s.pages)

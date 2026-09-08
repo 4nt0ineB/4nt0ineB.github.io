@@ -5,7 +5,7 @@ Pages. Trois sections dans une seule coquille Vue chargée depuis un CDN :
 
 - `observabilite/` : l'introduction à l'observabilité, douze pages.
 - `blog/` : les articles, un fragment par article.
-- `cv/` : le CV, page à concevoir (voir son « À faire »).
+- `cv/` : le CV, page principale du site (`#/`), à concevoir (voir son « À faire »).
 
 ## Lancer le site
 
