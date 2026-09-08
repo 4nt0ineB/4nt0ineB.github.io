@@ -85,9 +85,6 @@
 /* Du texte en ligne, qui se coupe comme la phrase autour : seule la valeur
    est insécable. En bloc insécable, un libellé long élargissait la page sur mobile. */
 .mesure-valeur {
-  font-family: var(--mono);
-  font-weight: 600;
-  color: var(--accent);
   white-space: nowrap;
   margin-right: 0.35em;
 }
@@ -101,8 +98,6 @@
   white-space: nowrap;
   font-size: 0.75em;
   color: var(--texte-faible);
-  cursor: help;
-  border-bottom: 1px dotted var(--texte-faible);
 }
 
 /* --- devine ----------------------------------------------------------------- */
@@ -330,6 +325,10 @@
 
 .schema-trois-etages {
   margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
 }
 
 .etage-scene {
@@ -435,6 +434,10 @@
 
 .schema-pull-push {
   margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
 }
 
 .pull-push-svg {
@@ -522,6 +525,10 @@
 
 .schema-reaction-chaine {
   margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
 }
 
 .rc-controles {
@@ -1117,6 +1124,10 @@
 
 .schema-trois-colonnes {
   margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
 }
 
 .tc-tableau {
@@ -1146,6 +1157,10 @@
 
 .schema-chaine-alerte {
   margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
 }
 
 .cae-bascule {
@@ -1277,6 +1292,10 @@
 
 .schema-trajet {
   margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
 }
 
 .trajet-svg {
