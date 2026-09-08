@@ -82,7 +82,7 @@ practices
 - Continuous integration
 - Scrum
 
-cv · antoine bastos · software engineer · seine-et-marne · 2026 · inspired by emil ruder, tm typographische monatsblätter 12, 1955
+cv · antoine bastos · 2026 · inspired by emil ruder, tm 12, 1955
 
 ---
 

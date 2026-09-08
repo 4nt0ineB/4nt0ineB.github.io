@@ -328,9 +328,18 @@ html.page-cv .contenu {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
   white-space: nowrap;
+}
+
+/* Fenêtre trop basse pour la ligne entière : la marge reprend sa place dans
+   le flux plutôt que d'être rognée en haut. */
+@media (max-height: 640px) {
+  .cv-marge {
+    position: static;
+    height: auto;
+  }
 }
 
 @media (max-width: 800px) {
