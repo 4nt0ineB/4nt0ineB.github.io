@@ -78,7 +78,9 @@ What remains is what the system wrote while it was running. Observability consis
 
 Every investigation asks the same three questions, in the same order:
 
-1. Is there a problem, and since when? 2. Where is it, in a system made of several parts? 3. Why, exactly?
+1. Is there a problem, and since when?
+2. Where is it, in a system made of several parts?
+3. Why, exactly?
 
 They are different questions, and they call for different data, because data that answers the first one well answers the third one badly. The reason is mathematical, not historical, and the next chapter lays it out. For now, let us keep this sequence in mind: detect, locate, explain.
 
@@ -316,7 +318,7 @@ The second is the collector, whose role the [previous chapter](#/en/blog/introdu
 - processors transform it (batching, memory limits, origin metadata);
 - exporters send it onwards.
 
-Processors are not scripts one writes. They are components already compiled into the program, and the configuration only picks them, tunes them and sets their order.
+Processors are not scripts you write. They are components already compiled into the program, and the configuration only picks them, tunes them and sets their order.
 
 ## Grafana {#grafana}
 
@@ -336,11 +338,13 @@ One exception: the Prometheus interface has a page that lists every application 
 
 Elasticsearch, usually used in an ELK stack (Elasticsearch, Logstash, Kibana), indexes the full text of every line. This index gives broad ad hoc search, on any word, but it is expensive at scale, because it often exceeds the size of the data itself.
 
-If the services one writes oneself are well instrumented, it will not be needed for them. Three cases remain where it wins.
+If the services you write yourself are well instrumented, it will not be needed for them. Three cases remain where it wins.
 
-1. A business identifier that arrives late, through customer support, weeks after the facts. It is not a trace identifier, because traces are kept a few days and sampled, whereas logs are kept for weeks. A cold search across all services, weeks back, is what full-text indexing exists for. 2. Security and audit. "Every action of this user on every system for six months" is a cold full-text search over a long period, and no amount of tracing answers it. 3. Systems one does not control. A real company contains legacy platforms, appliances and vendor software that emit unstructured text, with no identifier in it. Full-text indexing is the lowest common denominator, since everything gets indexed for want of being able to change what is emitted.
+1. A business identifier that arrives late, through customer support, weeks after the facts. It is not a trace identifier, because traces are kept a few days and sampled, whereas logs are kept for weeks. A cold search across all services, weeks back, is what full-text indexing exists for.
+2. Security and audit. "Every action of this user on every system for six months" is a cold full-text search over a long period, and no amount of tracing answers it.
+3. Systems you do not control. A real company contains legacy platforms, appliances and vendor software that emit unstructured text, with no identifier in it. Full-text indexing is the lowest common denominator, since everything gets indexed for want of being able to change what is emitted.
 
-Good instrumentation makes a full-text engine unnecessary for the code one writes oneself. It remains the right tool for the code one does not write.
+Good instrumentation makes a full-text engine unnecessary for the code you write yourself. It remains the right tool for the code you do not write.
 
 :::
 

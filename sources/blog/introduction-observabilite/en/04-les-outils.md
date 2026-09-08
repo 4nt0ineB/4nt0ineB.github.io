@@ -65,7 +65,7 @@ gives. Its configuration has three stages:
 - processors transform it (batching, memory limits, origin metadata);
 - exporters send it onwards.
 
-Processors are not scripts one writes. They are components already compiled into the
+Processors are not scripts you write. They are components already compiled into the
 program, and the configuration only picks them, tunes them and sets their order.
 
 ## Grafana {#grafana}
@@ -97,7 +97,7 @@ Elasticsearch, usually used in an ELK stack (Elasticsearch, Logstash, Kibana), i
 the full text of every line. This index gives broad ad hoc search, on any word, but it is
 expensive at scale, because it often exceeds the size of the data itself.
 
-If the services one writes oneself are well instrumented, it will not be needed for
+If the services you write yourself are well instrumented, it will not be needed for
 them. Three cases remain where it wins.
 
 1. A business identifier that arrives late, through customer support, weeks after the
@@ -106,12 +106,11 @@ them. Three cases remain where it wins.
    what full-text indexing exists for.
 2. Security and audit. "Every action of this user on every system for six months" is a
    cold full-text search over a long period, and no amount of tracing answers it.
-3. Systems one does not control. A real company contains legacy platforms, appliances
+3. Systems you do not control. A real company contains legacy platforms, appliances
    and vendor software that emit unstructured text, with no identifier in it. Full-text
    indexing is the lowest common denominator, since everything gets indexed for want of
    being able to change what is emitted.
 
-Good instrumentation makes a full-text engine unnecessary for the code one writes
-oneself. It remains the right tool for the code one does not write.
+Good instrumentation makes a full-text engine unnecessary for the code you write yourself. It remains the right tool for the code you do not write.
 
 :::

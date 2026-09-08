@@ -60,7 +60,7 @@
     <li>exporters send it onwards.</li>
   </ul>
 
-  <p>Processors are not scripts one writes. They are components already compiled into the
+  <p>Processors are not scripts you write. They are components already compiled into the
   program, and the configuration only picks them, tunes them and sets their order.</p>
 
   <h2 id="grafana">Grafana</h2>
@@ -89,21 +89,23 @@
     word, but it is expensive at scale, because it often exceeds the size of the data
     itself.</p>
 
-    <p>If the services one writes oneself are well instrumented, it will not be needed for
+    <p>If the services you write yourself are well instrumented, it will not be needed for
     them. Three cases remain where it wins.</p>
 
-    <p>1. A business identifier that arrives late, through customer support, weeks after
-    the facts. It is not a trace identifier, because traces are kept a few days and
-    sampled, whereas logs are kept for weeks. A cold search across all services, weeks
-    back, is what full-text indexing exists for. 2. Security and audit. "Every action of
-    this user on every system for six months" is a cold full-text search over a long
-    period, and no amount of tracing answers it. 3. Systems one does not control. A real
-    company contains legacy platforms, appliances and vendor software that emit
-    unstructured text, with no identifier in it. Full-text indexing is the lowest common
-    denominator, since everything gets indexed for want of being able to change what is
-    emitted.</p>
+    <ol>
+      <li>A business identifier that arrives late, through customer support, weeks after
+      the facts. It is not a trace identifier, because traces are kept a few days and
+      sampled, whereas logs are kept for weeks. A cold search across all services, weeks
+      back, is what full-text indexing exists for.</li>
+      <li>Security and audit. "Every action of this user on every system for six months"
+      is a cold full-text search over a long period, and no amount of tracing answers
+      it.</li>
+      <li>Systems you do not control. A real company contains legacy platforms, appliances
+      and vendor software that emit unstructured text, with no identifier in it.
+      Full-text indexing is the lowest common denominator, since everything gets indexed
+      for want of being able to change what is emitted.</li>
+    </ol>
 
-    <p>Good instrumentation makes a full-text engine unnecessary for the code one writes
-    oneself. It remains the right tool for the code one does not write.</p>
+    <p>Good instrumentation makes a full-text engine unnecessary for the code you write yourself. It remains the right tool for the code you do not write.</p>
   </aller-plus-loin>
 </article>

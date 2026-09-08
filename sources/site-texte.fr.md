@@ -78,7 +78,9 @@ Il reste ce que le système a écrit pendant qu'il tournait. L'observabilité co
 
 Chaque enquête pose les mêmes trois questions, dans le même ordre :
 
-1. Y a-t-il un problème, et depuis quand ? 2. Où se trouve-t-il, dans un système fait de plusieurs parties ? 3. Pourquoi, exactement ?
+1. Y a-t-il un problème, et depuis quand ?
+2. Où se trouve-t-il, dans un système fait de plusieurs parties ?
+3. Pourquoi, exactement ?
 
 Ce sont des questions différentes, qui réclament des données différentes, car une donnée qui répond bien à la première répond mal à la troisième. La raison est mathématique et non historique, et le chapitre suivant l'expose. Pour l'instant, retenons cet enchaînement : détecter, localiser, expliquer.
 
@@ -338,7 +340,9 @@ Elasticsearch, en général utilisé dans une stack ELK (Elasticsearch, Logstash
 
 Si les services qu'on écrit soi-même sont bien instrumentés, on n'en aura pas besoin pour eux. Trois cas restent où il gagne.
 
-1. Un identifiant métier qui arrive tard, par le support client, des semaines après les faits. Ce n'est pas un identifiant de trace, car les traces se gardent quelques jours et sont échantillonnées, alors que les logs se gardent des semaines. Une recherche à froid à travers tous les services, des semaines en arrière, c'est ce pour quoi l'indexation plein texte existe. 2. Sécurité et audit. « Toutes les actions de cet utilisateur sur tous les systèmes pendant six mois » est une recherche plein texte à froid sur une longue période, et aucune quantité de traçage n'y répond. 3. Des systèmes qu'on ne contrôle pas. Une vraie entreprise contient des plateformes historiques, des appliances et des logiciels de fournisseurs qui émettent du texte non structuré, sans identifiant dedans. L'indexation plein texte est le plus petit dénominateur commun, puisqu'on indexe tout faute de pouvoir changer ce qui est émis.
+1. Un identifiant métier qui arrive tard, par le support client, des semaines après les faits. Ce n'est pas un identifiant de trace, car les traces se gardent quelques jours et sont échantillonnées, alors que les logs se gardent des semaines. Une recherche à froid à travers tous les services, des semaines en arrière, c'est ce pour quoi l'indexation plein texte existe.
+2. Sécurité et audit. « Toutes les actions de cet utilisateur sur tous les systèmes pendant six mois » est une recherche plein texte à froid sur une longue période, et aucune quantité de traçage n'y répond.
+3. Des systèmes qu'on ne contrôle pas. Une vraie entreprise contient des plateformes historiques, des appliances et des logiciels de fournisseurs qui émettent du texte non structuré, sans identifiant dedans. L'indexation plein texte est le plus petit dénominateur commun, puisqu'on indexe tout faute de pouvoir changer ce qui est émis.
 
 Une bonne instrumentation rend un moteur plein texte inutile pour le code qu'on écrit soi-même. Il reste le bon outil pour le code qu'on n'écrit pas.
 
