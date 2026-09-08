@@ -82,7 +82,7 @@ pratiques
 - Intégration continue
 - Scrum
 
-cv · antoine bastos · 2026 · inspired by emil ruder, tm 12, 1955
+antoine bastos · 2026 · cv inspired by emil ruder, tm 12, 1955
 
 ---
 
