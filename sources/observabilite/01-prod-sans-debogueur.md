@@ -1,0 +1,66 @@
+# La prod n'a pas de débogueur
+
+```
+page      : prod-sans-debogueur
+fichier   : chapitres/01-prod-sans-debogueur.html
+surtitre  : Chapitre 1
+```
+
+## La boucle perdue {#la-boucle-perdue}
+
+En développement, on profite d'une boucle si confortable qu'elle ne se remarque qu'une
+fois perdue : on exécute le code, on le regarde échouer, on pose un break point, on
+relance, et l'échec se reproduit, parce qu'on maîtrise l'entrée.
+
+La production rend cette boucle impossible. La panne a eu lieu une fois il y a vingt
+minutes, pour un utilisateur sur quarante mille, parmi quatre processus, et l'état qui
+l'a provoquée a déjà disparu. Impossible de mettre le système en pause, puisqu'il
+continue de servir les utilisateurs.
+
+## Écrire à l'avance {#ecrire-a-l-avance}
+
+Il reste ce que le système a écrit pendant qu'il tournait. L'observabilité consiste à lui
+faire écrire, à l'avance, des données qui permettront de répondre à des questions qu'on
+ne se pose pas encore. Tout tient dans « à l'avance », car ce qui n'a pas été enregistré
+à 14h32 ne se retrouvera jamais.
+
+## Les trois questions {#trois-questions}
+
+Chaque enquête pose les mêmes trois questions, dans le même ordre :
+
+1. Y a-t-il un problème, et depuis quand ?
+2. Où se trouve-t-il, dans un système fait de plusieurs parties ?
+3. Pourquoi, exactement ?
+
+Ce sont des questions différentes, qui réclament des données différentes, car une donnée
+qui répond bien à la première répond mal à la troisième. La raison est mathématique et
+non historique, et le chapitre suivant l'expose. Pour l'instant, retenons cet
+enchaînement : détecter, localiser, expliquer.
+
+:::regle
+Presque toutes les mauvaises enquêtes commencent au milieu, en cherchant un mot dans les
+logs.
+:::
+
+## Pourquoi ajouter des logs cesse de suffire {#pourquoi-les-logs-cassent}
+
+Ajouter des logs est le réflexe de tout développeur, et ce réflexe est juste. Il casse de
+trois façons distinctes.
+
+Il casse en volume. Une ligne par requête, à quarante mille requêtes la minute, ça fait
+beaucoup de texte. Le stocker reste abordable, mais le chercher ne l'est plus, puisque
+chercher veut dire tout relire.
+
+Il casse en agrégation. « Combien de commandes ont échoué dans la dernière heure » est
+une question de comptage, et une ligne de log n'est pas un compte. On peut tout à fait
+recompter à chaque rafraîchissement de dashboard et à chaque évaluation d'alerte, au prix
+de relire des gigaoctets de texte - aïe.
+
+Il casse à la traversée des processus. Quand une requête touche quatre services, son
+histoire se disperse en quatre tas de texte séparés, sur quatre machines, que rien ne
+relie sinon un horodatage approximatif. Reconstituer une requête à la main reste
+possible, mais pas pour les cent requêtes qui ont échoué la même minute.
+
+Les logs ne sont pas mauvais pour autant. Ils répondent à la troisième question mieux que
+n'importe quel autre outil, parce qu'ils gardent le détail. Ils ne conviennent pas aux
+deux premières, et s'y précipiter d'abord est l'erreur la plus commune.

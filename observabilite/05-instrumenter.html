@@ -1,0 +1,70 @@
+<article>
+  <p class="eyebrow">Chapitre 5</p>
+  <h1>Ce qu'on écrit soi-même</h1>
+
+  <h2 id="ce-qui-existe-sans-rien-faire">Ce qui existe sans rien faire</h2>
+  <p>Les frameworks modernes instrumentent déjà beaucoup d'office : les requêtes HTTP
+  entrantes, les codes de réponse, la distribution des latences, la mémoire, le garbage
+  collector, l'usage du pool de connexions à la base. Tout ça existe en général dès
+  qu'on ajoute la dépendance de métriques (Micrometer pour Quarkus et Spring Boot).</p>
+
+  <p>Inutile de reconstruire ça. Le travail qui appartient au développeur est la couche que
+  personne d'autre ne peut deviner, à savoir ce que l'application fait pour le métier.</p>
+
+  <h2 id="les-quatre-types">Les quatre types de métriques</h2>
+  <p>Une métrique est un objet qu'on déclare une fois et qu'on met à jour dans le code.</p>
+
+  <tableau-mesure legende="Les quatre types de métriques et à quoi chacun sert.">
+    <table>
+      <thead>
+        <tr><th>type</th><th>comportement</th><th>sert pour</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><jargon mot="counter">counter</jargon></td><td>ne fait qu'augmenter</td><td>requêtes servies, commandes créées, erreurs</td></tr>
+        <tr><td><jargon mot="gauge">gauge</jargon></td><td>monte et descend</td><td>longueur de file, connexions actives, éléments en cache</td></tr>
+        <tr><td><jargon mot="histogram">histogram</jargon> (ou timer)</td><td>enregistre une distribution</td><td>des durées, pour pouvoir demander le p95</td></tr>
+        <tr><td>résumé de valeurs</td><td>une distribution de valeurs non temporelles</td><td>montant d'une commande, taille d'une charge utile</td></tr>
+      </tbody>
+    </table>
+  </tableau-mesure>
+
+  <p>À savoir : une latence moyenne ne vaut presque rien, puisqu'elle est dominée par les
+  nombreuses requêtes rapides et cache les lentes. Un percentile décrit au contraire
+  l'expérience des utilisateurs les moins chanceux, et c'est ce qui fait l'utilité d'un
+  histogram.</p>
+
+  <h2 id="les-metriques-metier">Les métriques métier</h2>
+  <p><code>orders_created_total</code>. <code>cart_value_euros</code>.
+  <code>password_resets_total</code>. Ce sont des métriques légitimes, et impossibles à
+  instrumenter automatiquement, puisqu'aucun framework ne sait ce qu'est une commande.</p>
+
+  <p>Ce sont aussi elles qui rendent un incident lisible pour quelqu'un d'autre que le
+  développeur. « La latence monte » est un fait technique. « Les paiements sont tombés à
+  zéro il y a quatre minutes » est une panne, et tout le monde la comprend.</p>
+
+  <p>Le <a href="#/observabilite/trois-piliers#la-cardinalite">chapitre 2</a> a donné la contrainte qui
+  les encadre : une étiquette doit avoir un ensemble de valeurs petit, fini et connu,
+  comme un statut ou un nom de route tiré d'une liste fixe. Jamais un identifiant,
+  jamais une URL brute avec ses paramètres, jamais rien qui vient de la saisie
+  utilisateur.</p>
+
+  <h2 id="une-question-posee-a-l-avance">Une question posée à l'avance</h2>
+  <p>On ne peut interroger que ce qu'on a décidé d'instrumenter avant l'incident, et c'est
+  la limite de l'approche. Si personne n'a pensé à compter les uploads rejetés, alors
+  pendant l'incident sur les uploads rejetés, ce chiffre n'existe pas et ne peut pas
+  être récupéré après coup.</p>
+
+  <p>Les logs ont la limite et la force symétriques, car ils répondent à des questions que
+  personne n'avait anticipées et s'agrègent mal. Cette symétrie est la raison de garder
+  les deux.</p>
+
+  <h2 id="les-exemplars">Les exemplars</h2>
+  <p>Un <jargon mot="exemplar">exemplar</jargon> est un petit pointeur attaché à un point
+  de mesure, portant l'identifiant d'une requête précise qui a contribué à ce point.
+  C'est ce qui transforme « le p95 est monté » en « voici une vraie requête lente, à
+  regarder de près ».</p>
+
+  <p>C'est une quantité modeste de configuration, et le lien à plus forte valeur de toute
+  la pile, puisqu'il convertit une statistique en spécimen. Sans lui, passer d'un graphe
+  à une trace veut dire copier des horodatages dans une barre de recherche et espérer.</p>
+</article>

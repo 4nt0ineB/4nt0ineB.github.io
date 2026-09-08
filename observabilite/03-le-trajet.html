@@ -1,0 +1,87 @@
+<article>
+  <p class="eyebrow">Chapitre 3</p>
+  <h1>Le trajet d'une donnée</h1>
+
+  <h2 id="deux-boites">Deux boîtes</h2>
+  <p>La plupart des confusions sur l'outillage disparaissent une fois chaque produit rangé
+  dans l'une de deux boîtes : ceux qui gardent la donnée, et ceux qui la déplacent. On
+  discute beaucoup d'outils qui ne se concurrencent pas, parce qu'ils ne sont pas dans
+  la même boîte.</p>
+
+  <tableau-mesure legende="La carte de la pile : chaque outil, sa boîte, et s'il garde la donnée.">
+    <table>
+      <thead>
+        <tr><th>outil</th><th>boîte</th><th>garde la donnée ?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Prometheus</td><td>stockage, pour les métriques</td><td>oui, et il fait aussi tourner les requêtes et les alertes</td></tr>
+        <tr><td>Loki</td><td>stockage, pour les logs</td><td>oui</td></tr>
+        <tr><td>Tempo</td><td>stockage, pour les traces</td><td>oui</td></tr>
+        <tr><td>OpenTelemetry Collector</td><td>tuyau</td><td>non</td></tr>
+        <tr><td>Grafana Alloy</td><td>tuyau</td><td>non</td></tr>
+        <tr><td>Grafana</td><td>affichage</td><td>non</td></tr>
+      </tbody>
+    </table>
+  </tableau-mesure>
+
+  <p>Cette pile a été choisie parce qu'elle est rodée, libre, et tient sur une machine de 8
+  Go, et que Grafana sait lire les trois stockages. D'autres choix existent et la page
+  suivante en cite un.</p>
+
+  <p>Cette carte répond à « qu'est-ce que ce composant ». Elle ne répond pas à « comment la
+  donnée arrive sur mon écran », qui est une question de mouvement.</p>
+
+  <h2 id="de-l-application-a-l-ecran">De l'application à l'écran</h2>
+  <p>Une application instrumentée émet ses trois piliers par trois chemins différents.</p>
+
+  <ul>
+    <li>Ses métriques ne partent nulle part. Elle les expose sur un endpoint HTTP,
+    <code>/metrics</code>, et Prometheus vient les lire.</li>
+    <li>Ses traces partent en OTLP vers le collecteur OpenTelemetry, qui les route vers
+    Tempo.</li>
+    <li>Ses logs vont sur sa sortie standard, où un agent qui tourne sur la machine, Alloy,
+    les lit, les étiquette et les pousse vers Loki. L'application ne fait rien pour ça,
+    ce qui est la force d'un agent, puisqu'il collecte sans aucune coopération du code.</li>
+  </ul>
+
+  <p>Grafana lit les trois stockages et les met sur le même écran. En parallèle, Prometheus
+  évalue ses règles d'alerte, et une alerte déclenchée peut joindre un humain.</p>
+
+  <schema-trajet></schema-trajet>
+
+  <h2 id="pull-contre-push">Pull contre push</h2>
+  <p>Deux de ces trois chemins vont dans un sens et le troisième dans l'autre, et cette
+  asymétrie n'est pas arbitraire.</p>
+
+  <p>Prometheus fait du <jargon mot="pull">pull</jargon>. L'application n'envoie ses
+  métriques nulle part, elle affiche ses compteurs actuels en texte sur
+  <code>/metrics</code>, et Prometheus se connecte à cet endpoint toutes les quinze ou
+  trente secondes pour noter ce qu'il voit. Cette opération s'appelle un
+  <jargon mot="scrape">scrape</jargon>.</p>
+
+  <p>Les logs et les traces, eux, se <jargon mot="push">push</jargon>. Un événement arrive
+  quand il arrive, donc il faut bien que quelque chose l'envoie au moment où il se
+  produit. Un état, au contraire, se mesure sur commande. On ne peut pas demander à un
+  processus ce qu'il a loggé dans les trente dernières secondes, mais on peut toujours
+  lui demander combien de mémoire il utilise maintenant.</p>
+
+  <schema-pull-push></schema-pull-push>
+
+  <p>Le pull a une conséquence qui revient au
+  <a href="#/observabilite/lire-un-graphe#la-fenetre">chapitre 6</a> : une métrique n'a pas de valeur
+  continue, elle a la valeur qu'elle avait aux instants où on est venu la lire. Un
+  événement qui commence et se termine entre deux scrapes n'a jamais existé pour
+  Prometheus.</p>
+
+  <h2 id="ce-que-le-tuyau-achete">Ce que le tuyau achète</h2>
+  <p>Le collecteur ne garde rien, donc on peut se demander à quoi il sert. Il sert à ce que
+  l'application ne connaisse qu'une seule destination. Remplacer Tempo par autre chose
+  devient un changement dans la configuration du collecteur, et non un redéploiement de
+  quarante services.</p>
+
+  <p>Un nom qui trompe, sur ce point : le collecteur a un exporter appelé
+  <code>prometheus</code>, et il n'envoie rien à Prometheus. Il l'imite, en traduisant
+  les métriques dans son format texte et en les exposant sur un <code>/metrics</code>
+  que Prometheus vient scraper comme n'importe quelle autre cible. Le modèle pull reste
+  intact même là.</p>
+</article>

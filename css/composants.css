@@ -1,0 +1,1357 @@
+/* Composants : rempli à la tâche 5. */
+
+/* --- aller-plus-loin ----------------------------------------------------- */
+
+.aller-plus-loin {
+  margin: 1.5em 0;
+  padding: 0.9em 1.1em;
+  background: var(--fond-doux);
+  border-left: 3px solid var(--trait-fort);
+  border-radius: 0 4px 4px 0;
+}
+
+.aller-plus-loin summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  cursor: pointer;
+  list-style: none;
+}
+
+.aller-plus-loin summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chevron dessiné, pas une image : il pivote à l'ouverture. */
+.aller-plus-loin summary::after {
+  content: '';
+  margin-left: auto;
+  width: 0.5em;
+  height: 0.5em;
+  align-self: center;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duree) ease-out;
+  color: var(--texte-faible);
+}
+
+.aller-plus-loin[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.apl-etiquette {
+  font-family: var(--sans);
+  font-variant: small-caps;
+  font-size: 0.8em;
+  letter-spacing: 0.03em;
+  color: var(--texte-faible);
+  flex-shrink: 0;
+}
+
+.apl-titre {
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.apl-corps {
+  margin-top: 0.8em;
+}
+
+.apl-corps > :last-child {
+  margin-bottom: 0;
+}
+
+/* --- regle ---------------------------------------------------------------- */
+
+.regle {
+  margin: 1.5em 0;
+  padding: 0.9em 1.1em;
+  background: var(--accent-doux);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--texte);
+}
+
+.regle > :last-child {
+  margin-bottom: 0;
+}
+
+/* --- mesure ----------------------------------------------------------------- */
+
+.mesure {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35em;
+  white-space: nowrap;
+}
+
+.mesure-valeur {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.mesure-libelle {
+  color: var(--texte);
+}
+
+.mesure-source {
+  font-size: 0.75em;
+  color: var(--texte-faible);
+  cursor: help;
+  border-bottom: 1px dotted var(--texte-faible);
+}
+
+/* --- devine ----------------------------------------------------------------- */
+
+.devine {
+  margin: 1.5em 0;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+.devine-question {
+  font-family: var(--sans);
+  font-weight: 600;
+  margin-bottom: 0.8em;
+}
+
+.devine-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.6em;
+}
+
+.devine-option {
+  font: inherit;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  padding: 0.6em 0.8em;
+  background: var(--fond-eleve);
+  color: var(--texte);
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.devine-option:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.devine-option:disabled {
+  cursor: default;
+}
+
+/* L'état choisi et l'état correct ne reposent jamais sur la seule couleur :
+   un liseré distinct plus un symbole en préfixe, pour le daltonisme. */
+.devine-option.est-choisi {
+  border-color: var(--texte-faible);
+  border-style: dashed;
+}
+
+.devine-option.est-choisi::before {
+  content: '→ ';
+}
+
+.devine-option.est-bonne {
+  border-color: var(--signal);
+  border-style: solid;
+  border-width: 2px;
+}
+
+.devine-option.est-bonne::before {
+  content: '✓ ';
+}
+
+.devine-verdict {
+  margin-top: 0.8em;
+  font-family: var(--sans);
+  font-weight: 600;
+}
+
+.devine-reponse {
+  margin-top: 0.4em;
+}
+
+.devine-reponse > :last-child {
+  margin-bottom: 0;
+}
+
+/* --- tableau-mesure ----------------------------------------------------------- */
+
+.tableau-mesure {
+  margin: 1.8em auto;
+}
+
+.tableau-mesure figcaption {
+  margin-top: 0.6em;
+  font-family: var(--sans);
+  font-size: 0.85em;
+  color: var(--texte-faible);
+}
+
+/* --- jargon ----------------------------------------------------------------- */
+
+.jargon {
+  position: relative;
+  text-decoration: underline dotted var(--texte-faible);
+  text-underline-offset: 0.15em;
+  cursor: help;
+}
+
+.jargon-bulle {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  z-index: 20;
+  width: max-content;
+  max-width: 22em;
+  margin-bottom: 0.4em;
+  padding: 0.6em 0.8em;
+  background: var(--fond-eleve);
+  color: var(--texte-doux);
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 0.85em;
+  line-height: 1.4;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--duree) ease-out;
+}
+
+.jargon:hover .jargon-bulle,
+.jargon:focus-within .jargon-bulle {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --- schema-cardinalite ---------------------------------------------------- */
+
+.schema-cardinalite {
+  margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+.cardinalite-etiquettes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em 1.2em;
+  margin: 0 0 1.2em 0;
+  padding: 0;
+  border: 0;
+}
+
+.cardinalite-etiquettes legend {
+  width: 100%;
+  margin-bottom: 0.6em;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--texte);
+  padding: 0;
+}
+
+.cardinalite-etiquette {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  color: var(--texte);
+  cursor: pointer;
+}
+
+.cardinalite-etiquette.est-dangereuse {
+  color: var(--accent);
+}
+
+.cardinalite-valeurs {
+  color: var(--texte-faible);
+  font-size: 0.9em;
+}
+
+.cardinalite-barre {
+  display: block;
+  width: 100%;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cardinalite-fond {
+  fill: var(--fond-eleve);
+}
+
+.cardinalite-remplissage {
+  fill: var(--signal);
+  transition: width var(--duree) ease-out;
+}
+
+.cardinalite-remplissage.est-rompu {
+  fill: var(--accent);
+}
+
+.cardinalite-compte {
+  margin: 0.8em 0 0.3em 0;
+  font-family: var(--mono);
+  font-size: 1.5em;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.cardinalite-compte.est-rompu,
+.cardinalite-verdict.est-rompu {
+  color: var(--accent);
+}
+
+.cardinalite-unite {
+  font-family: var(--sans);
+  font-size: 0.5em;
+  font-weight: 400;
+  color: var(--texte-faible);
+}
+
+.cardinalite-verdict {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 500;
+}
+
+/* --- schema-trois-etages ---------------------------------------------------- */
+
+.schema-trois-etages {
+  margin: 1.8em auto;
+}
+
+.etage-scene {
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+.etage svg {
+  display: block;
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--trait-fort);
+}
+
+.etage-anime {
+  animation: etage-apparait var(--duree) ease-out;
+}
+
+@keyframes etage-apparait {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.span-racine {
+  fill: var(--accent-doux);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.span-jumeau {
+  fill: var(--fond-eleve);
+  stroke: var(--trait-fort);
+  stroke-width: 1;
+}
+
+.span-texte,
+.etage-legende-svg {
+  font-family: var(--sans);
+  fill: var(--texte);
+}
+
+.etage-legende-svg {
+  font-size: 13px;
+  fill: var(--texte-faible);
+}
+
+.point-exemplar {
+  fill: var(--accent);
+}
+
+.log-cadre {
+  fill: var(--fond-eleve);
+  stroke: var(--trait-fort);
+}
+
+.log-ligne {
+  font-family: var(--mono);
+  font-size: 14px;
+  fill: var(--texte);
+}
+
+.etage-note {
+  margin: 0.8em 0;
+  font-family: var(--sans);
+  font-size: 0.9em;
+  color: var(--texte-doux);
+  text-align: center;
+}
+
+.etage-bouton,
+.etage-bouton-remonter {
+  display: block;
+  margin: 0.6em auto 0;
+  font: inherit;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  padding: 0.55em 1em;
+  background: var(--fond-eleve);
+  color: var(--texte);
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.etage-bouton:hover,
+.etage-bouton-remonter:hover {
+  border-color: var(--accent);
+}
+
+.etage-bouton-remonter {
+  margin-top: 1em;
+  color: var(--texte-faible);
+}
+
+.etages-texte {
+  margin-top: 1em;
+  font-size: 0.92em;
+}
+
+/* --- schema-pull-push ---------------------------------------------------- */
+
+.schema-pull-push {
+  margin: 1.8em auto;
+}
+
+.pull-push-svg {
+  display: block;
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--trait-fort);
+}
+
+.pp-boite {
+  fill: var(--fond-doux);
+  stroke: var(--trait-fort);
+  stroke-width: 1.5;
+}
+
+.pp-texte {
+  font-family: var(--sans);
+  font-size: 15px;
+  fill: var(--texte);
+}
+
+.pp-legende-svg {
+  font-family: var(--sans);
+  font-size: 13px;
+  fill: var(--texte-faible);
+}
+
+.pp-fleche-aller,
+.pp-fleche-retour,
+.pp-tuyau {
+  color: var(--texte-faible);
+}
+
+/* La flèche d'aller et celle de retour s'allument à tour de rôle : le
+   scrape part, puis revient chargé. Boucle CSS pure, sans état. */
+.pull-push-svg.anime .pp-fleche-aller,
+.pull-push-svg.anime .pp-fleche-retour {
+  opacity: 0.25;
+}
+
+.pull-push-svg.anime.est-visible .pp-fleche-aller {
+  animation: pp-pulse 2.4s ease-in-out infinite;
+}
+
+.pull-push-svg.anime.est-visible .pp-fleche-retour {
+  animation: pp-pulse 2.4s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+@keyframes pp-pulse {
+  0%, 100% { opacity: 0.25; }
+  20%, 45% { opacity: 1; }
+}
+
+/* Trois paquets montent l'un après l'autre du service vers Loki, en boucle. */
+.pull-push-svg.anime .pp-paquet {
+  fill: var(--accent);
+  opacity: 0;
+}
+
+.pull-push-svg.anime.est-visible .pp-paquet-1 { animation: pp-monte 2.4s linear infinite; }
+.pull-push-svg.anime.est-visible .pp-paquet-2 { animation: pp-monte 2.4s linear infinite; animation-delay: 0.8s; }
+.pull-push-svg.anime.est-visible .pp-paquet-3 { animation: pp-monte 2.4s linear infinite; animation-delay: 1.6s; }
+
+@keyframes pp-monte {
+  0%   { opacity: 0; transform: translateY(0); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-60px); }
+}
+
+/* Sous prefers-reduced-motion, --duree tombe à 0ms mais les durées fixes
+   en secondes ci-dessus n'en dépendent pas : la règle globale de theme.css
+   force aussi animation-duration à 0.001ms et animation-iteration-count à
+   1, ce qui fige chaque boucle sur une image plutôt que de la stopper à
+   mi-course. La légende en texte porte toute l'information dans les deux cas. */
+
+.pull-push-legende {
+  margin-top: 1em;
+  font-size: 0.92em;
+  color: var(--texte-doux);
+}
+
+/* --- schema-reaction-chaine ------------------------------------------------ */
+
+.schema-reaction-chaine {
+  margin: 1.8em auto;
+}
+
+.rc-controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8em 1.2em;
+  margin: 0 0 1em 0;
+  padding: 0;
+  border: 0;
+}
+
+.rc-controles legend {
+  width: 100%;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--texte);
+  padding: 0;
+  margin-bottom: 0.2em;
+}
+
+.rc-case {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  color: var(--texte);
+  cursor: pointer;
+}
+
+.rc-bouton {
+  font: inherit;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  padding: 0.5em 0.9em;
+  background: var(--fond-eleve);
+  color: var(--texte);
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rc-bouton:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.rc-bouton:disabled {
+  cursor: default;
+  color: var(--texte-faible);
+}
+
+.rc-bouton-rejouer {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.rc-svg,
+.rc-panneau svg {
+  display: block;
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--trait-fort);
+}
+
+.rc-client,
+.rc-base {
+  fill: var(--fond-doux);
+  stroke: var(--trait-fort);
+  stroke-width: 1.5;
+}
+
+.rc-base.base-down {
+  fill: var(--accent-doux);
+  stroke: var(--accent);
+}
+
+.rc-instance {
+  fill: var(--fond-doux);
+  stroke: var(--trait-fort);
+  stroke-width: 1.5;
+  transition: fill var(--duree) ease-out, stroke var(--duree) ease-out;
+}
+
+.rc-instance.etat-sain {
+  fill: var(--fond-doux);
+  stroke: var(--signal);
+}
+
+.rc-instance.etat-hors-service {
+  fill: var(--fond-doux);
+  stroke: var(--texte-faible);
+  stroke-dasharray: 4 3;
+}
+
+.rc-instance.etat-en-echec,
+.rc-instance.etat-tue {
+  fill: var(--accent-doux);
+  stroke: var(--accent);
+}
+
+.rc-instance.etat-redemarre,
+.rc-instance.etat-en-attente {
+  fill: var(--fond-doux);
+  stroke: var(--accent);
+  stroke-dasharray: 4 3;
+}
+
+.rc-texte-svg {
+  font-family: var(--sans);
+  font-size: 13px;
+  fill: var(--texte);
+}
+
+.rc-etat-svg {
+  font-size: 12px;
+  fill: var(--texte-doux);
+}
+
+.rc-compteur-svg {
+  font-family: var(--mono);
+  font-size: 11px;
+  fill: var(--texte-faible);
+}
+
+.rc-client-etat {
+  margin: 0.8em 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  text-align: center;
+}
+
+.rc-texte {
+  font-size: 0.9em;
+  color: var(--texte-doux);
+}
+
+.rc-cote-a-cote {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.rc-panneau-titre {
+  font-family: var(--sans);
+  font-size: 1em;
+  margin: 0 0 0.6em 0;
+  text-align: center;
+}
+
+.rc-note-reduite {
+  grid-column: 1 / -1;
+  font-size: 0.9em;
+  color: var(--texte-doux);
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .rc-cote-a-cote {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- schema-fenetre-rate -------------------------------------------------- */
+
+.schema-fenetre-rate {
+  margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+.fr-controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 0.6em;
+  font-family: var(--sans);
+}
+
+.fr-controles label {
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.fr-controles input[type="range"] {
+  flex: 1 1 12rem;
+  min-width: 8rem;
+  accent-color: var(--accent);
+}
+
+.fr-fenetre-valeur {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 3.5em;
+}
+
+.fr-svg {
+  display: block;
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--trait-fort);
+}
+
+.fr-axe {
+  stroke: var(--trait-fort);
+  stroke-width: 1;
+}
+
+.fr-verite {
+  stroke: var(--texte);
+  stroke-width: 2;
+}
+
+.fr-affichee {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+
+.fr-points {
+  fill: var(--accent);
+}
+
+.fr-libelles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.4em;
+  justify-content: center;
+  margin: 0.8em 0 0;
+  font-family: var(--mono);
+  font-size: 0.92em;
+  color: var(--texte-doux);
+}
+
+/* --- schema-agregat -------------------------------------------------------- */
+
+.schema-agregat {
+  margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+.ag-bascule {
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.ag-bouton {
+  font: inherit;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  padding: 0.5em 0.9em;
+  background: var(--fond-eleve);
+  color: var(--texte);
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ag-bouton:hover {
+  border-color: var(--accent);
+}
+
+.ag-bouton.est-actif {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ag-vue-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.ag-fondu-enter-active,
+.ag-fondu-leave-active {
+  transition: opacity var(--duree) ease-out;
+}
+
+.ag-fondu-enter-from,
+.ag-fondu-leave-to {
+  opacity: 0;
+}
+
+.ag-ligne {
+  display: grid;
+  grid-template-columns: 11rem 1fr 3.5rem;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.ag-etiquette {
+  font-family: var(--sans);
+  font-size: 0.92em;
+  color: var(--texte);
+}
+
+.ag-plafond {
+  color: var(--texte-faible);
+  font-size: 0.9em;
+}
+
+.ag-jauge {
+  display: block;
+  height: 14px;
+  background: var(--fond-eleve);
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ag-barre-remplissage {
+  display: block;
+  height: 100%;
+  background: var(--signal);
+  transition: width var(--duree) ease-out, opacity var(--duree) ease-out;
+}
+
+/* Le motif de hachures porte l'alerte sans dépendre de la teinte : au
+   daltonisme, la barre reste identifiable à sa texture. */
+.ag-barre-remplissage.est-alerte {
+  background-color: var(--accent);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 4px,
+    color-mix(in srgb, var(--texte) 18%, transparent) 4px 8px
+  );
+}
+
+.ag-valeur {
+  font-family: var(--mono);
+  font-weight: 600;
+  text-align: right;
+  color: var(--texte);
+}
+
+.ag-valeur.est-alerte {
+  color: var(--accent);
+}
+
+.ag-note {
+  margin: 1.2em 0 0;
+  font-family: var(--sans);
+  font-size: 0.9em;
+  color: var(--texte-doux);
+  text-align: center;
+}
+
+/* --- schema-choisir-sa-mort ------------------------------------------------ */
+
+.schema-choisir-sa-mort {
+  margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+.csm-controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 1.2em;
+  font-family: var(--sans);
+}
+
+.csm-controles label {
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.csm-controles input[type="range"] {
+  flex: 1 1 12rem;
+  min-width: 8rem;
+  accent-color: var(--accent);
+}
+
+.csm-valeur {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 5em;
+}
+
+.csm-scene {
+  position: relative;
+  height: 220px;
+  margin: 0 auto;
+  max-width: 420px;
+}
+
+.csm-barre {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.3em;
+  border-radius: 3px 3px 0 0;
+  transition: height var(--duree) ease-out;
+}
+
+.csm-etiquette {
+  font-family: var(--mono);
+  font-size: 0.78em;
+  white-space: nowrap;
+  color: var(--texte-doux);
+}
+
+.csm-limite {
+  width: 100%;
+  background: transparent;
+  border: 2px dashed var(--trait-fort);
+  z-index: 1;
+}
+
+.csm-empreinte {
+  width: 66%;
+  background: var(--accent-doux);
+  border: 1px solid var(--trait-fort);
+  z-index: 2;
+}
+
+.csm-empreinte .csm-etiquette {
+  color: var(--texte-doux);
+}
+
+.csm-empreinte.est-alerte {
+  border-color: var(--accent);
+}
+
+.csm-heap {
+  width: 36%;
+  background: var(--signal);
+  z-index: 3;
+}
+
+.csm-heap .csm-etiquette {
+  color: var(--fond);
+}
+
+.csm-heap.est-alerte {
+  background-color: var(--accent);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 4px,
+    color-mix(in srgb, var(--texte) 20%, transparent) 4px 8px
+  );
+}
+
+.csm-verdict {
+  margin: 1em 0 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  text-align: center;
+}
+
+.csm-verdict.est-serre {
+  color: var(--texte);
+}
+
+.csm-verdict.est-dangereux {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.csm-mesures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1.4em;
+  justify-content: center;
+  margin: 0.9em 0 0;
+  font-size: 0.9em;
+}
+
+/* --- schema-connexions ------------------------------------------------------ */
+
+.schema-connexions {
+  margin: 1.8em auto;
+  padding: 1.1em;
+  background: var(--fond-doux);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+.cx-controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 0.8em;
+  font-family: var(--sans);
+}
+
+.cx-controles label {
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.cx-controles input[type="range"] {
+  flex: 1 1 12rem;
+  min-width: 8rem;
+  accent-color: var(--accent);
+}
+
+.cx-valeur {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 2.5em;
+}
+
+.cx-case {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-bottom: 1em;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  color: var(--texte);
+  cursor: pointer;
+}
+
+.cx-barres {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.cx-ligne {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr 8.5rem;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.cx-ligne.est-nouvelle {
+  color: var(--texte-faible);
+}
+
+.cx-etiquette {
+  font-family: var(--sans);
+  font-size: 0.92em;
+  color: var(--texte);
+}
+
+.cx-jauge {
+  display: block;
+  height: 14px;
+  background: var(--fond-eleve);
+  border: 1px solid var(--trait);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cx-barre-remplissage {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width var(--duree) ease-out;
+}
+
+.cx-ligne.est-nouvelle .cx-jauge {
+  border-style: dashed;
+}
+
+.cx-valeur-connexions {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  color: var(--texte-doux);
+}
+
+.cx-note,
+.cx-note-cinquieme {
+  margin: 1em 0 0;
+  font-family: var(--sans);
+  font-size: 0.9em;
+  color: var(--texte-doux);
+  text-align: center;
+}
+
+/* --- schema-trois-colonnes -------------------------------------------------- */
+
+.schema-trois-colonnes {
+  margin: 1.8em auto;
+}
+
+.tc-tableau {
+  font-size: 0.92em;
+}
+
+/* La ligne condamnée porte deux signaux indépendants de la couleur : le
+   symbole ⚠ écrit dans le texte de sa cellule d'en-tête (voir trois-colonnes.js),
+   et ce liseré gauche. Aucun des deux ne repose sur la seule teinte. */
+.tc-tableau tbody tr.tc-condamne th,
+.tc-tableau tbody tr.tc-condamne td {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.tc-tableau tbody tr.tc-condamne th {
+  border-left: 3px solid var(--accent);
+}
+
+.tc-note {
+  margin: 1em 0 0;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  color: var(--texte-doux);
+}
+
+/* --- schema-chaine-alerte ---------------------------------------------------- */
+
+.schema-chaine-alerte {
+  margin: 1.8em auto;
+}
+
+.cae-bascule {
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.cae-bouton {
+  font: inherit;
+  font-family: var(--sans);
+  font-size: 0.92em;
+  padding: 0.5em 0.9em;
+  background: var(--fond-eleve);
+  color: var(--texte);
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cae-bouton:hover {
+  border-color: var(--accent);
+}
+
+.cae-bouton.est-actif {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.cae-svg,
+.cae-panneau svg {
+  display: block;
+  max-width: 660px;
+  margin: 0 auto;
+  color: var(--trait-fort);
+}
+
+.cae-chemin {
+  stroke: var(--trait-fort);
+  stroke-width: 2;
+}
+
+.cae-boite {
+  fill: var(--fond-doux);
+  stroke: var(--trait-fort);
+  stroke-width: 1.5;
+}
+
+/* Éteint et allumé se distinguent par le trait, pas seulement par une
+   teinte : pointillé pour éteint, trait plein épais pour allumé. */
+.cae-boite.est-eteinte {
+  stroke-dasharray: 4 3;
+  opacity: 0.7;
+}
+
+.cae-boite.est-allumee {
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.cae-texte {
+  font-family: var(--sans);
+  font-size: 12px;
+  fill: var(--texte-doux);
+}
+
+.cae-point {
+  fill: var(--accent);
+  offset-path: path('M 70,70 L 620,70');
+  offset-rotate: 0deg;
+}
+
+.cae-point.cae-va-court {
+  animation: cae-pulse-court 2.6s ease-in-out infinite;
+}
+
+.cae-point.cae-va-loin {
+  animation: cae-pulse-loin 2.6s ease-in-out infinite;
+}
+
+@keyframes cae-pulse-court {
+  0%   { offset-distance: 0%;  opacity: 1; }
+  55%  { offset-distance: 75%; opacity: 1; }
+  65%  { offset-distance: 75%; opacity: 0; }
+  100% { offset-distance: 75%; opacity: 0; }
+}
+
+@keyframes cae-pulse-loin {
+  0%   { offset-distance: 0%;   opacity: 1; }
+  70%  { offset-distance: 100%; opacity: 1; }
+  85%  { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+.cae-resultat {
+  margin: 1em 0 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  text-align: center;
+}
+
+.cae-texte-liste {
+  margin-top: 0.8em;
+  font-size: 0.9em;
+  color: var(--texte-doux);
+}
+
+.cae-cote-a-cote {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.cae-panneau-titre {
+  font-family: var(--sans);
+  font-size: 1em;
+  margin: 0 0 0.6em 0;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .cae-cote-a-cote {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- schema-trajet -------------------------------------------------------- */
+
+.schema-trajet {
+  margin: 1.8em auto;
+}
+
+.trajet-svg {
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+  color: var(--trait-fort);
+}
+
+.trajet-boite {
+  fill: var(--fond-doux);
+  stroke: var(--trait-fort);
+  stroke-width: 1.5;
+}
+
+.trajet-app {
+  fill: var(--accent-doux);
+  stroke: var(--accent);
+}
+
+.trajet-tuyau {
+  fill: var(--fond-eleve);
+  stroke-dasharray: 4 3;
+}
+
+.trajet-grafana {
+  fill: var(--fond-eleve);
+}
+
+.trajet-texte {
+  font-family: var(--sans);
+  font-size: 15px;
+  fill: var(--texte);
+}
+
+.trajet-sous,
+.trajet-colonne,
+.trajet-etiquette {
+  font-family: var(--sans);
+  font-size: 13px;
+  fill: var(--texte-faible);
+}
+
+.trajet-colonne {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
+.trajet-chemin {
+  color: var(--texte-faible);
+}
+
+/* Les quatre chemins apparaissent l'un après l'autre, une seule fois, quand
+   le schéma entre dans la fenêtre. Avant, ils sont là mais estompés, donc
+   sans JavaScript ni IntersectionObserver rien ne manque. */
+.trajet-svg.anime .trajet-chemin {
+  opacity: 0.2;
+}
+
+.trajet-svg.anime.est-visible .trajet-chemin {
+  animation: trajet-allume 600ms ease-out forwards;
+}
+
+.trajet-svg.anime.est-visible .trajet-chemin-2 { animation-delay: 700ms; }
+.trajet-svg.anime.est-visible .trajet-chemin-3 { animation-delay: 1400ms; }
+.trajet-svg.anime.est-visible .trajet-chemin-4 { animation-delay: 2100ms; }
+
+@keyframes trajet-allume {
+  to { opacity: 1; }
+}
+
+.trajet-texte-liste {
+  margin-top: 1em;
+  font-size: 0.92em;
+  color: var(--texte-doux);
+}

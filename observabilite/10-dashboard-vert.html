@@ -1,0 +1,43 @@
+<article>
+  <p class="eyebrow">Chapitre 10</p>
+  <h1>Ce qu'un dashboard vert ne dit pas</h1>
+
+  <p>Un compteur plat et une série absente se ressemblent. Un agrégat à 65 % cache un pool
+  à 97 %. Une alerte évaluée et affichée ne signifie pas quelqu'un la vu. Un run vert
+  recouvre des pods qui ne démarrent pas. Chaque page de ce texte a rencontré la même
+  chose sous une forme différente : un instrument qui ne montre rien est indiscernable
+  d'un système sain.</p>
+
+  <p>Admettons un test de charge de cinq minutes sur un service, avec un dashboard sous les
+  yeux. Résultat côté client : zéro requête échouée, latence stable, débit servi égal au
+  débit demandé.</p>
+
+  <devine question="Le service est-il en bonne santé ?"
+          :options="['Oui, les trois chiffres le disent', 'Non, il est en surcharge', 'On ne sait pas']"
+          :bonne="2">
+    <template #reponse><p>On ne sait pas. Zéro échec dit que rien n'a été refusé, pas que rien n'a cassé. Les
+    pods peuvent être sortis du Service un par un pendant que le client voit cent pour
+    cent de succès, la liveness peut être à un cycle de tuer le conteneur, et une limite
+    mémoire peut se franchir si vite qu'aucune requête n'a le temps d'échouer.</p></template>
+  </devine>
+
+  <regle>Un dashboard vert est une hypothèse, pas un résultat.</regle>
+
+  <p>Sur les neuf pannes provoquées pour ce texte, ce résultat parfait côté client est
+  apparu <mesure valeur="3 fois sur 9" source="labo, 2026-08-26">avec, à chaque fois, un
+  système en danger</mesure>.</p>
+
+  <p>Rien dans un instrument ne distingue un signal qui ne montre rien parce que rien n'est
+  cassé d'un signal qui ne montre rien parce qu'il regarde au mauvais endroit. La seule
+  façon de trancher est de faire échouer quelque chose exprès, à un moment choisi, en
+  regardant. Déclencher chaque panneau une fois et confirmer qu'il bouge, car un panneau
+  qu'on n'a jamais vu réagir est une décoration. Envoyer une alerte et attendre le
+  téléphone. Tuer un pod sous charge et lire ce que le compteur de redémarrages affiche,
+  c'est-à-dire zéro, puisque le pod tué n'existe plus.</p>
+
+  <p>C'est ce que le cours qui accompagne ce texte fait faire. Chaque module pose un décor
+  sur un cluster jetable, envoie de la charge, demande une prédiction écrite avant
+  d'ouvrir le premier dashboard, puis casse quelque chose. Le pari écrit est ce qui
+  sépare lire une conclusion de l'apprendre : « la colonne à zéro échec est la pire »
+  enseigne quelque chose à qui a parié sur elle, et rien à qui le lit dans un tableau.</p>
+</article>

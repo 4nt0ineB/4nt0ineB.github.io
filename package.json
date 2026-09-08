@@ -1,0 +1,12 @@
+{
+  "name": "site-observabilite",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "sirv . --dev --port 4321",
+    "check": "node scripts/verifier.mjs"
+  },
+  "devDependencies": {
+    "sirv-cli": "3.0.1"
+  }
+}

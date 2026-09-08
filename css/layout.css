@@ -1,0 +1,198 @@
+/* Barre de progression de lecture, en haut de la fenêtre. */
+.progression {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  height: 3px;
+  /* --avancement est un ratio de 0 à 1, posé par app.js au défilement. */
+  width: calc(var(--avancement, 0) * 100%);
+  background: var(--accent);
+  transition: width var(--duree) ease-out;
+}
+
+.entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1.2rem 1.5rem 0;
+  font-family: var(--sans);
+}
+
+.titre-site {
+  color: var(--texte);
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.titre-site:hover {
+  color: var(--accent);
+}
+
+.sections {
+  display: flex;
+  gap: 1.4rem;
+  font-size: 0.95rem;
+}
+
+.sections a {
+  color: var(--texte-doux);
+  text-decoration: none;
+}
+
+.sections a:hover,
+.sections a[aria-current="page"] {
+  color: var(--accent);
+}
+
+.coquille {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2.5rem;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.sommaire {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 1.5rem 0;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+
+.sommaire a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.8em;
+  color: var(--texte-doux);
+  text-decoration: none;
+  padding: 0.35em 0;
+}
+
+.sommaire a:hover {
+  color: var(--texte);
+}
+
+/* Colonne de droite : les durées s'alignent entre elles, quel que soit le
+   nombre de lignes du titre. */
+.sommaire .minutes {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--texte-faible);
+  font-size: 0.85em;
+}
+
+/* Marqueur du chapitre courant, posé par le routeur. */
+.sommaire a[aria-current="page"] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.contenu {
+  max-width: var(--mesure);
+  margin: 0 auto;
+  padding-top: 1.5rem;
+}
+
+/* Sans sommaire (accueil, CV), le contenu prend la grille entière. */
+.coquille.sans-sommaire {
+  grid-template-columns: 1fr;
+}
+
+.sommaire-vide {
+  color: var(--texte-faible);
+}
+
+.liste-articles {
+  list-style: none;
+  padding: 0;
+}
+
+.liste-articles li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  align-items: baseline;
+}
+
+.liste-articles .date {
+  flex-shrink: 0;
+  font-family: var(--sans);
+  font-size: 0.85em;
+  color: var(--texte-faible);
+}
+
+/* Casse la mesure de lecture pour un schéma ou un tableau large. */
+.pleine-largeur {
+  max-width: none;
+  width: min(100%, 56rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Enfant en flux de .entete, aligné au titre par le space-between du parent.
+   Une pilule et non un cercle : le libellé est un mot (« Sombre », « Clair »),
+   pas une icône, et un cercle de 2,4rem le laissait déborder. */
+.bascule-theme {
+  flex-shrink: 0;
+  padding: 0.4em 0.9em;
+  font: inherit;
+  font-size: 0.85rem;
+  line-height: 1;
+  background: var(--fond-eleve);
+  border: 1px solid var(--trait);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--texte);
+}
+
+.bascule-theme:hover {
+  border-color: var(--trait-fort);
+}
+
+.nav-chapitre {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--trait);
+  font-family: var(--sans);
+}
+
+.nav-chapitre a {
+  text-decoration: none;
+  color: var(--texte);
+}
+
+.nav-chapitre a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .entete {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .coquille {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1.2rem 3rem;
+  }
+
+  .sommaire {
+    position: static;
+    max-height: none;
+    border-bottom: 1px solid var(--trait);
+    padding-bottom: 1rem;
+  }
+}

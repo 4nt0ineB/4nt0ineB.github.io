@@ -1,0 +1,95 @@
+<article>
+  <p class="eyebrow">Chapitre 6</p>
+  <h1>Lire un graphe sans se tromper</h1>
+
+  <p>Un graphe a l'air d'une fenêtre sur le système. C'en est une reconstruction, faite de
+  points collectés à intervalle régulier puis passés dans une requête.</p>
+
+  <h2 id="le-bord-droit">Le bord droit n'est pas un événement</h2>
+  <p>On pourrait être tenté de lire tout mouvement à la droite de la courbe comme « il se
+  passe quelque chose maintenant ». Mais le bord droit est simplement l'endroit où la
+  donnée s'arrête, c'est-à-dire maintenant, et chaque graphe finit toujours là, qu'il se
+  passe quelque chose ou non.</p>
+
+  <p>Un dashboard qui se rafraîchit tout seul recrée cette impression toutes les quelques
+  secondes. Une ligne qui remonte légèrement au bord droit n'annonce rien, car c'est le
+  dernier échantillon, bruité comme les autres, qui n'a pas encore de voisin pour le
+  lisser. Attendons le rafraîchissement suivant avant de réveiller quelqu'un.</p>
+
+  <h2 id="plat-n-est-pas-absent">Plat n'est pas absent</h2>
+  <p>Admettons un <jargon mot="counter">compteur</jargon> de requêtes. Il ne fait
+  qu'augmenter, et il répond à « combien depuis le démarrage de ce processus ».</p>
+
+  <p>Un jour, sa ligne devient plate.</p>
+
+  <devine question="Le compteur de requêtes ne bouge plus depuis dix minutes. Que se passe-t-il ?"
+          :options="['Le scrape est cassé', 'Plus aucune requête n\'arrive', 'Le compteur a atteint son maximum']"
+          :bonne="1">
+    <template #reponse><p>Plus aucune requête n'arrive, et c'est l'incident. La collecte, elle, tourne toutes
+    les quinze secondes et relit la même valeur. Un scrape cassé ne donne pas une ligne
+    plate, il fait disparaître la série.</p></template>
+  </devine>
+
+  <p>Les deux situations réclament des réponses opposées, car un compteur plat veut dire
+  que la chose comptée a cessé de se produire, alors qu'une série absente veut dire que
+  la collecte elle-même est cassée.</p>
+
+  <p>Un compteur brut se lit donc rarement tel quel. L'outil est <code>rate()</code>, qui
+  le transforme en « combien par seconde, maintenant ». On alerte sur ce taux et on
+  diagnostique sur ce taux. Le compteur brut ne sert qu'à lire un total exact.</p>
+
+  <p>C'est aussi pourquoi une alerte qui compare un compteur brut à un seuil fixe est une
+  erreur de conception et non un réglage à corriger. Le compteur ne fait que grossir,
+  donc un seuil qui a un sens la première heure n'en a plus aucun la troisième semaine.
+  Un taux, lui, reste comparable d'un jour à l'autre.</p>
+
+  <h2 id="la-fenetre">La fenêtre d'une requête</h2>
+  <p><code>rate()</code> calcule sa moyenne sur une fenêtre de temps, qu'on choisit à
+  chaque requête. Cette fenêtre porte deux pièges, qui tirent en sens opposé.</p>
+
+  <p>Une fenêtre trop large étale un événement court. Un incident de six secondes, moyenné
+  sur une minute, dessine une bosse d'une minute de large, et rien n'est cassé dans le
+  graphe.</p>
+
+  <schema-fenetre-rate></schema-fenetre-rate>
+
+  <p>Une fenêtre trop étroite cache un événement. Une requête qui demande l'augmentation
+  sur les quinze dernières minutes rend zéro pour tout ce qui s'est passé avant, même si
+  le compteur brut, lui, porte encore la trace.</p>
+
+  <p>Donc pour un post-mortem, lire d'abord le compteur brut, et n'utiliser une fenêtre
+  qu'une fois qu'on sait où l'incident se situe sur la ligne du temps. Et quand la durée
+  réelle d'un événement compte, il faut une source qui porte des horodatages exacts,
+  comme les events Kubernetes, car aucune moyenne glissante ne peut résoudre quelques
+  secondes.</p>
+
+  <h2 id="l-heure-du-scrape">L'heure du scrape</h2>
+  <p>La position d'un point sur la ligne du temps est le moment où il a été collecté, pas
+  le moment où l'événement a eu lieu. Un conteneur a été tué à un instant connu,
+  <mesure valeur="11:21:31" source="labo, 2026-08-26">d'après l'horodatage de sa fin, et
+  le panneau l'a affiché à 11:23</mesure>, parce que la collecte suivante a eu lieu à ce
+  moment-là. Deux minutes d'erreur suffisent à accuser le mauvais déploiement. Quand
+  l'instant exact compte, il faut chercher une métrique qui porte l'horodatage de
+  l'événement comme valeur, pas la position de l'échantillon.</p>
+
+  <h2 id="une-seule-horloge">Une seule horloge</h2>
+  <p>Rien ne dérive dans le stockage, car les bases de métriques, de logs et de traces
+  stockent toutes un instant sous forme de nombre, sans fuseau attaché. Le risque est à
+  l'affichage, et dans le texte des lignes de log.</p>
+
+  <p>À l'affichage, chaque outil a son propre réglage de fuseau, et Grafana en a deux : un
+  pour les dashboards, un pour les vues ad hoc (<code>default_timezone</code> dans
+  <code>grafana.ini</code>). Sans décision, une même panne se lit à 12:50 sur un écran
+  et à 14:50 sur l'autre. Décider de l'UTC et l'appliquer partout.</p>
+
+  <p>Dans les lignes de log, le piège est le format :</p>
+
+  <pre><code>2026-08-20 12:16:24,793 INFO ...      ambigu pour toujours
+2026-08-20T13:07:43.370Z INFO ...     le décalage est porté dans la ligne</code></pre>
+
+  <p>Rendu sans décalage, le même instant dans deux fuseaux produit deux lignes
+  indiscernables, à deux heures d'écart, et rien dans la ligne ne dit laquelle est
+  laquelle. Toujours formater les horodatages avec le décalage inclus.</p>
+
+  <regle>Un graphe montre la forme que la requête lui a donnée, pas la forme de l'incident.</regle>
+</article>

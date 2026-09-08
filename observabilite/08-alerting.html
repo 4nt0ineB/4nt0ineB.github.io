@@ -1,0 +1,41 @@
+<article>
+  <p class="eyebrow">Chapitre 8</p>
+  <h1>Un signal doit atteindre quelqu'un</h1>
+
+  <p>Tout ce qui précède suppose que quelqu'un regarde un dashboard. À trois heures du
+  matin, personne ne regarde, et c'est le rôle d'une alerte.</p>
+
+  <p>Une alerte est une requête sur les métriques, avec une durée. Prometheus l'évalue
+  toutes les trente secondes, et quand elle reste vraie pendant toute la durée, il la
+  déclenche. Reste à la livrer quelque part, un mail, un canal de discussion ou une
+  notification sur un téléphone, et c'est un réglage à part, avec sa propre destination.
+  La durée sert à ne pas réveiller quelqu'un pour une seule mesure malchanceuse. «
+  Mémoire au-dessus de 90 % pendant cinq minutes » est une alerte, « mémoire au-dessus
+  de 90 % » est une nuisance.</p>
+
+  <p>Admettons une pile d'observabilité installée depuis deux semaines avec ses réglages
+  par défaut. Un pod cesse d'être prêt, l'alerte se déclenche, et elle s'affiche dans la
+  liste des alertes de Grafana.</p>
+
+  <devine question="Quelqu'un est-il prévenu ?"
+          :options="['Oui, l\'alerte est arrivée au bout de la chaîne', 'Non, personne', 'Seulement si l\'interface est ouverte']"
+          :bonne="1">
+    <template #reponse><p>Personne. La destination par défaut de la pile s'appelle « null » et ne fait rien,
+    pour qu'une installation neuve n'envoie pas de messages là où personne n'a rien
+    configuré. L'alerte s'affiche, et la chaîne s'arrête là.</p></template>
+  </devine>
+
+  <regle>« On le verra » suppose un humain devant un dashboard, ce qu'une alerte existe pour
+  supprimer.</regle>
+
+  <p>Ce défaut peut rester des semaines sans que personne le remarque, et une alerte a
+  sonné <mesure valeur="40 min" source="labo, 2026-08-27">sur un vrai incident sans
+  qu'un seul message sorte de la machine</mesure>.</p>
+
+  <p>Il en découle deux habitudes. La première est d'envoyer une vraie alerte, exprès, et
+  de confirmer qu'elle arrive sur l'appareil censé la recevoir, pas seulement dans
+  l'interface. La seconde est de garder la liste des alertes vide en temps normal, car
+  une alerte qui sonne en permanence, même juste, transforme la liste en décor. La
+  troisième entrée dans une liste qui en compte déjà deux ne change rien à l'œil, et une
+  équipe qui démarre avec une liste bruyante apprend durablement à l'ignorer.</p>
+</article>

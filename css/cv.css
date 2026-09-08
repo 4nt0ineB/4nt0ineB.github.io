@@ -1,0 +1,16 @@
+/* Feuille du CV, à concevoir. Tout ce qui est propre au CV se porte sur
+   .cv, pour que le reste du site n'en hérite rien. */
+.cv .a-faire {
+  margin-top: 2rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--trait-fort);
+  border-radius: 6px;
+  background: var(--fond-doux);
+  font-family: var(--sans);
+  font-size: 0.95em;
+}
+
+.cv .a-faire h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
