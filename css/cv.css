@@ -228,6 +228,12 @@ html.page-cv .contenu {
   margin-bottom: 0.5rem;
 }
 
+.cv a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
 .cv-org {
   font-size: 1rem;
   font-weight: 600;
