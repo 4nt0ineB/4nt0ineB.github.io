@@ -1,16 +1,348 @@
-/* Feuille du CV, à concevoir. Tout ce qui est propre au CV se porte sur
-   .cv, pour que le reste du site n'en hérite rien. */
-.cv .a-faire {
-  margin-top: 2rem;
-  padding: 1rem 1.2rem;
-  border: 1px dashed var(--trait-fort);
-  border-radius: 6px;
-  background: var(--fond-doux);
-  font-family: var(--sans);
-  font-size: 0.95em;
+/* Feuille du CV. Une référence : la couverture des Typographische
+   Monatsblätter de décembre 1955 par Emil Ruder. Un aplat, une encre, des
+   carrés pleins reliés par des filets d'un pixel, beaucoup de vide.
+
+   Les couleurs sont des paires fond/encre que le lecteur choisit
+   (composant cv-palettes), indépendantes du thème clair/sombre du reste du
+   site. Tout ce qui est propre au CV se porte sur .cv ou sur html.page-cv,
+   pour que le blog n'en hérite rien. */
+
+:root {
+  --cv-fond:  #f5c543;
+  --cv-encre: #141414;
 }
 
-.cv .a-faire h2 {
+:root[data-cv-palette="bleu"]   { --cv-fond: #2f55d4; --cv-encre: #f4f1ea; }
+:root[data-cv-palette="orange"] { --cv-fond: #e8702a; --cv-encre: #141414; }
+:root[data-cv-palette="noir"]   { --cv-fond: #141414; --cv-encre: #f5c543; }
+:root[data-cv-palette="papier"] { --cv-fond: #f4f1ea; --cv-encre: #141414; }
+
+/* --- La page entière prend la feuille, en-tête compris ------------------- */
+
+html.page-cv body {
+  background: var(--cv-fond);
+  color: var(--cv-encre);
+}
+
+html.page-cv .progression {
+  background: var(--cv-encre);
+}
+
+html.page-cv .titre-site,
+html.page-cv .sections a,
+html.page-cv .bascule-langue,
+html.page-cv .titre-site:hover,
+html.page-cv .sections a:hover {
+  color: var(--cv-encre);
+}
+
+html.page-cv .bascule-langue {
+  background: transparent;
+  border: 1px solid var(--cv-encre);
+  border-radius: 0;
+}
+
+html.page-cv .contenu {
+  max-width: none;
+  padding-top: 2.5rem;
+}
+
+/* --- La feuille --------------------------------------------------------- */
+
+.cv {
+  --carre: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 1.5rem;
+  grid-template-areas:
+    "identite parcours marge"
+    "outils   parcours marge"
+    "formation parcours marge";
+  grid-template-rows: auto auto 1fr;
+  column-gap: 4rem;
+  row-gap: 4.5rem;
+  font-family: var(--sans);
+  color: var(--cv-encre);
+  min-height: 80vh;
+}
+
+.cv h1, .cv h2, .cv p, .cv ul, .cv ol {
+  margin: 0;
+  color: inherit;
+}
+
+.cv ul, .cv ol {
+  list-style: none;
+  padding: 0;
+}
+
+.cv li + li {
   margin-top: 0;
-  font-size: 1.1rem;
+}
+
+.cv-carre {
+  display: inline-block;
+  width: var(--carre);
+  height: var(--carre);
+  background: var(--cv-encre);
+  flex-shrink: 0;
+}
+
+.cv-index {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+}
+
+/* Un titre de section : le carré, le numéro de feuille, le libellé. */
+.cv h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  line-height: 1;
+  margin-bottom: 2.2rem;
+}
+
+/* --- 01, identité ------------------------------------------------------- */
+
+.cv-identite {
+  grid-area: identite;
+}
+
+.cv-identite .cv-repere {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 2.4rem;
+}
+
+/* Le filet part du carré et court jusqu'au bord du bloc. */
+.cv-identite .cv-repere::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--cv-encre);
+}
+
+.cv h1 {
+  font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  margin-bottom: 0.9rem;
+}
+
+.cv-role {
+  font-size: 1.15rem;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  margin-bottom: 0.5rem;
+}
+
+.cv-lieu {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+
+.cv-resume {
+  max-width: 34ch;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 2.4rem;
+}
+
+/* Le choix de la paire fond/encre : un carré par palette, dans ses couleurs. */
+.cv-palettes {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.cv-palette {
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0;
+  border: 1px solid var(--cv-encre);
+  border-radius: 0;
+  cursor: pointer;
+  background: var(--fond-palette);
+  box-shadow: inset 0 0 0 2px var(--cv-fond);
+}
+
+.cv-palette[aria-checked="true"] {
+  box-shadow: inset 0 0 0 2px var(--cv-fond), inset 0 0 0 5px var(--cv-encre);
+}
+
+.cv-palette-jaune  { --fond-palette: #f5c543; }
+.cv-palette-bleu   { --fond-palette: #2f55d4; }
+.cv-palette-orange { --fond-palette: #e8702a; }
+.cv-palette-noir   { --fond-palette: #141414; }
+.cv-palette-papier { --fond-palette: #f4f1ea; }
+
+/* --- 02, parcours : un axe vertical, un carré par étape ------------------ */
+
+.cv-parcours {
+  grid-area: parcours;
+}
+
+.cv-axe {
+  margin-left: calc(var(--carre) / 2);
+  border-left: 1px solid var(--cv-encre);
+  padding-bottom: 1rem;
+}
+
+.cv-etape {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.cv-etape + .cv-etape {
+  margin-top: 3rem;
+}
+
+.cv-etape > .cv-carre {
+  position: absolute;
+  left: calc(var(--carre) / -2 - 0.5px);
+  top: 0.2em;
+}
+
+.cv-date {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+.cv-org {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.15rem;
+}
+
+.cv-poste {
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+}
+
+.cv-faits {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  max-width: 44ch;
+}
+
+.cv-faits li + li {
+  margin-top: 0.15rem;
+}
+
+.cv-pile {
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+/* --- 03, outils : des carrés sur un filet, une rangée par famille -------- */
+
+.cv-outils {
+  grid-area: outils;
+}
+
+.cv .cv-rangee {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  row-gap: 0.9rem;
+  margin-bottom: 1.8rem;
+}
+
+.cv-rangee-nom {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.7rem;
+}
+
+.cv-rangee li {
+  position: relative;
+  padding-top: calc(var(--carre) + 0.5rem);
+  padding-right: 0.5rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+/* Le filet traverse chaque cellule à mi-hauteur du carré : mis bout à bout,
+   les cellules d'une même ligne dessinent une seule règle continue. */
+.cv-rangee li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--carre) / 2);
+  height: 1px;
+  background: var(--cv-encre);
+}
+
+.cv-rangee li .cv-carre {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* --- 04, formation ------------------------------------------------------ */
+
+.cv-formation {
+  grid-area: formation;
+}
+
+.cv-formation .cv-axe {
+  padding-bottom: 0;
+}
+
+.cv-formation .cv-etape + .cv-etape {
+  margin-top: 1.6rem;
+}
+
+/* --- La marge : une ligne de texte tournée, comme sur la couverture ------ */
+
+.cv-marge {
+  grid-area: marge;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cv-marge p {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+@media (max-width: 800px) {
+  .cv {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "identite"
+      "parcours"
+      "outils"
+      "formation";
+    grid-template-rows: auto;
+    row-gap: 3.5rem;
+  }
+
+  .cv-marge {
+    display: none;
+  }
+
+  html.page-cv .contenu {
+    padding-top: 1rem;
+  }
 }

@@ -1,18 +1,137 @@
 <article class="cv">
-  <h1>Antoine Bastos</h1>
+  <header class="cv-identite">
+    <p class="cv-repere"><span class="cv-carre"></span><span class="cv-index">01</span></p>
+    <h1>Antoine Bastos</h1>
+    <p class="cv-role">ingénieur logiciel</p>
+    <p class="cv-lieu">Seine-et-Marne, France</p>
+    <p class="cv-resume">Backend Java, performance, modernisation de code existant et
+    migration de données. Chez Lunatech depuis 2024, en mission chez ses clients.</p>
+    <cv-palettes></cv-palettes>
+  </header>
 
-  <p>Développeur.</p>
+  <section class="cv-parcours" aria-labelledby="parcours">
+    <h2 id="parcours"><span class="cv-carre"></span><span class="cv-index">02</span> parcours</h2>
+    <ol class="cv-axe">
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-date">depuis mars 2026</p>
+        <p class="cv-org">CARIAD, groupe Volkswagen</p>
+        <p class="cv-poste">lead dev d'une équipe de trois, via Lunatech</p>
+        <ul class="cv-faits">
+          <li>Migration d'un monolithe rendu côté serveur vers React et une API REST, par le
+          motif Strangler Fig.</li>
+          <li>Endpoint par endpoint derrière un feature flag, retour arrière instantané, dix
+          endpoints sur vingt-six migrés sans régression.</li>
+          <li>L'outil gère les accès de trois cents utilisateurs aux chaînes d'étiquetage
+          d'images des modèles de conduite autonome.</li>
+        </ul>
+        <p class="cv-pile">Java · Spring Boot · React 19 · TypeScript · Vitest</p>
+      </li>
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-date">juillet 2025 à mars 2026</p>
+        <p class="cv-org">DARVA, Domaine Client</p>
+        <p class="cv-poste">développeur backend sur un MDM, via Lunatech</p>
+        <ul class="cv-faits">
+          <li>Migration de toutes les données clients d'un CRM vers le référentiel : huit
+          batchs récurrents et un batch unique de trente mille enregistrements.</li>
+          <li>Batch unique ramené de 8 h à moins d'1 h 30, batchs récurrents ramenés sous
+          cinq minutes.</li>
+          <li>Saturation mémoire de la JVM en recette diagnostiquée sur heap dump et corrigée
+          dans le modèle de données.</li>
+        </ul>
+        <p class="cv-pile">Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins</p>
+      </li>
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-date">janvier à juillet 2025</p>
+        <p class="cv-org">DARVA, Exiris</p>
+        <p class="cv-poste">développeur full-stack, lettre recommandée électronique, via Lunatech</p>
+        <ul class="cv-faits">
+          <li>Recherche de courriers par filtres dynamiques, intercepteur signalant l'expiration
+          des certificats sur tous les endpoints.</li>
+          <li>Migration des tests de Lighthouse et Cypress vers une seule suite Playwright,
+          sans interrompre la CI.</li>
+        </ul>
+        <p class="cv-pile">Java · Quarkus · React · TypeScript · Playwright · Jenkins</p>
+      </li>
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-date">depuis 2024</p>
+        <p class="cv-org">Lunatech</p>
+        <p class="cv-poste">ingénieur logiciel, en mission chez les clients ci-dessus</p>
+      </li>
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-date">mai à août 2024</p>
+        <p class="cv-org">Open Food Facts</p>
+        <p class="cv-poste">développeur backend, stage de master, en anglais</p>
+        <ul class="cv-faits">
+          <li>Intégration du CRM Odoo par XML-RPC dans un monolithe Perl de 2012, import de
+          trois cents organisations de producteurs.</li>
+          <li>Refonte du routage en handlers typés, adoptée comme standard du projet.</li>
+        </ul>
+        <p class="cv-pile">Perl · Docker · Linux</p>
+      </li>
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-date">été 2022</p>
+        <p class="cv-org">VLA, catalogue raisonné</p>
+        <p class="cv-poste">freelance, seul développeur</p>
+        <ul class="cv-faits">
+          <li>Catalogue en ligne des six cent cinquante œuvres d'un peintre, du devis à la
+          mise en production. Toujours en ligne.</li>
+        </ul>
+        <p class="cv-pile">Python · Django · JavaScript · Docker · Nginx</p>
+      </li>
+    </ol>
+  </section>
 
-  <aside class="a-faire" role="note">
-    <h2 id="a-faire">À faire</h2>
-    <p>Cette page est un emplacement. Le style du CV est à concevoir à part, différent du
-    reste du site, et son contenu vient de <code>career.md</code>. Ce qui est décidé :</p>
-    <ul>
-      <li>pas de PDF à télécharger ;</li>
-      <li>aucune donnée personnelle : ni téléphone, ni adresse mail, ni adresse postale,
-      seulement le département ;</li>
-      <li>sa feuille de style est <code>css/cv.css</code>, chargée pour lui seul par la
-      classe <code>cv</code> de cet article.</li>
+  <section class="cv-outils" aria-labelledby="outils">
+    <h2 id="outils"><span class="cv-carre"></span><span class="cv-index">03</span> outils</h2>
+    <p class="cv-rangee-nom">langages</p>
+    <ul class="cv-rangee">
+      <li><span class="cv-carre"></span>Java</li>
+      <li><span class="cv-carre"></span>TypeScript</li>
+      <li><span class="cv-carre"></span>Python</li>
+      <li><span class="cv-carre"></span>SQL</li>
     </ul>
+    <p class="cv-rangee-nom">frameworks</p>
+    <ul class="cv-rangee">
+      <li><span class="cv-carre"></span>Quarkus</li>
+      <li><span class="cv-carre"></span>Spring Boot</li>
+      <li><span class="cv-carre"></span>Hibernate</li>
+      <li><span class="cv-carre"></span>React</li>
+      <li><span class="cv-carre"></span>Mutiny, Vert.x</li>
+    </ul>
+    <p class="cv-rangee-nom">infra et IA</p>
+    <ul class="cv-rangee">
+      <li><span class="cv-carre"></span>PostgreSQL</li>
+      <li><span class="cv-carre"></span>Docker</li>
+      <li><span class="cv-carre"></span>Jenkins</li>
+      <li><span class="cv-carre"></span>Linux</li>
+      <li><span class="cv-carre"></span>Claude Code</li>
+    </ul>
+  </section>
+
+  <section class="cv-formation" aria-labelledby="formation">
+    <h2 id="formation"><span class="cv-carre"></span><span class="cv-index">04</span> formation</h2>
+    <ol class="cv-axe">
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-org">Master en informatique, ingénierie logicielle et données</p>
+        <p class="cv-poste">Université Gustave Eiffel, 2025</p>
+      </li>
+      <li class="cv-etape">
+        <span class="cv-carre"></span>
+        <p class="cv-org">TOEIC 945</p>
+        <p class="cv-poste">anglais professionnel, 2025</p>
+      </li>
+    </ol>
+  </section>
+
+  <aside class="cv-marge" aria-hidden="true">
+    <span class="cv-carre"></span>
+    <p>curriculum vitae · antoine bastos · ingénieur logiciel · seine-et-marne · 2026</p>
   </aside>
 </article>

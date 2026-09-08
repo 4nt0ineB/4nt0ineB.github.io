@@ -76,6 +76,9 @@ const App = defineComponent({
       document.documentElement.lang = demande.locale
       erreur.value = null
       vue.value = null
+      // La feuille du CV couvre toute la page, en-tête compris : la classe se
+      // pose sur la racine, hors de portée de la coquille.
+      document.documentElement.classList.toggle('page-cv', estCv.value && courante.value !== null)
       if (liste.value) { document.title = `${T.value.blog} | ${SITE}`; window.scrollTo(0, 0); return }
       if (courante.value === null) { erreur.value = 'introuvable'; return }
       try {
@@ -122,7 +125,7 @@ const App = defineComponent({
       </nav>
       <div class="boutons-entete">
         <a v-if="autreLangue" class="bascule-langue" :href="autreLangue" :hreflang="locale === 'fr' ? 'en' : 'fr'">{{ T.autreLangue }}</a>
-        <button type="button" class="bascule-theme" @click="bascule"
+        <button v-if="!estCv" type="button" class="bascule-theme" @click="bascule"
                 :aria-label="theme === 'dark' ? T.themeClair : T.themeSombre">
           {{ theme === 'dark' ? T.clair : T.sombre }}
         </button>

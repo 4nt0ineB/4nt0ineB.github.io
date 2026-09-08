@@ -22,15 +22,54 @@ surtitre  :
 lecture   : - min
 ```
 
-Développeur.
+01
 
-## À faire {#a-faire}
+ingénieur logiciel
 
-Cette page est un emplacement. Le style du CV est à concevoir à part, différent du reste du site, et son contenu vient de `career.md`. Ce qui est décidé :
+Seine-et-Marne, France
 
-- pas de PDF à télécharger ;
-- aucune donnée personnelle : ni téléphone, ni adresse mail, ni adresse postale, seulement le département ;
-- sa feuille de style est `css/cv.css`, chargée pour lui seul par la classe `cv` de cet article.
+Backend Java, performance, modernisation de code existant et migration de données. Chez Lunatech depuis 2024, en mission chez ses clients.
+
+## 02 parcours {#parcours}
+
+1. depuis mars 2026 CARIAD, groupe Volkswagen lead dev d'une équipe de trois, via Lunatech Migration d'un monolithe rendu côté serveur vers React et une API REST, par le motif Strangler Fig. Endpoint par endpoint derrière un feature flag, retour arrière instantané, dix endpoints sur vingt-six migrés sans régression. L'outil gère les accès de trois cents utilisateurs aux chaînes d'étiquetage d'images des modèles de conduite autonome. Java · Spring Boot · React 19 · TypeScript · Vitest
+2. juillet 2025 à mars 2026 DARVA, Domaine Client développeur backend sur un MDM, via Lunatech Migration de toutes les données clients d'un CRM vers le référentiel : huit batchs récurrents et un batch unique de trente mille enregistrements. Batch unique ramené de 8 h à moins d'1 h 30, batchs récurrents ramenés sous cinq minutes. Saturation mémoire de la JVM en recette diagnostiquée sur heap dump et corrigée dans le modèle de données. Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins
+3. janvier à juillet 2025 DARVA, Exiris développeur full-stack, lettre recommandée électronique, via Lunatech Recherche de courriers par filtres dynamiques, intercepteur signalant l'expiration des certificats sur tous les endpoints. Migration des tests de Lighthouse et Cypress vers une seule suite Playwright, sans interrompre la CI. Java · Quarkus · React · TypeScript · Playwright · Jenkins
+4. depuis 2024 Lunatech ingénieur logiciel, en mission chez les clients ci-dessus
+5. mai à août 2024 Open Food Facts développeur backend, stage de master, en anglais Intégration du CRM Odoo par XML-RPC dans un monolithe Perl de 2012, import de trois cents organisations de producteurs. Refonte du routage en handlers typés, adoptée comme standard du projet. Perl · Docker · Linux
+6. été 2022 VLA, catalogue raisonné freelance, seul développeur Catalogue en ligne des six cent cinquante œuvres d'un peintre, du devis à la mise en production. Toujours en ligne. Python · Django · JavaScript · Docker · Nginx
+
+## 03 outils {#outils}
+
+langages
+
+- Java
+- TypeScript
+- Python
+- SQL
+
+frameworks
+
+- Quarkus
+- Spring Boot
+- Hibernate
+- React
+- Mutiny, Vert.x
+
+infra et IA
+
+- PostgreSQL
+- Docker
+- Jenkins
+- Linux
+- Claude Code
+
+## 04 formation {#formation}
+
+1. Master en informatique, ingénierie logicielle et données Université Gustave Eiffel, 2025
+2. TOEIC 945 anglais professionnel, 2025
+
+curriculum vitae · antoine bastos · ingénieur logiciel · seine-et-marne · 2026
 
 ---
 

@@ -32,6 +32,7 @@ export const TEXTES = {
     allerPlusLoin: 'Aller plus loin',
     mesure: 'mesuré',
     definitionDe: 'Définition de',
+    palettes: { choisir: 'Couleurs de la feuille', jaune: 'Jaune', bleu: 'Bleu', orange: 'Orange', noir: 'Noir', papier: 'Papier' },
     dateFormat: 'fr-FR'
   },
   en: {
@@ -62,6 +63,7 @@ export const TEXTES = {
     allerPlusLoin: 'Going further',
     mesure: 'measured',
     definitionDe: 'Definition of',
+    palettes: { choisir: 'Sheet colours', jaune: 'Yellow', bleu: 'Blue', orange: 'Orange', noir: 'Black', papier: 'Paper' },
     dateFormat: 'en-GB'
   }
 }

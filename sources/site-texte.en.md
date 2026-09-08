@@ -22,15 +22,54 @@ surtitre  :
 lecture   : - min
 ```
 
-Software developer.
+01
 
-## To do {#to-do}
+software engineer
 
-This page is a placeholder. The CV has its own design, still to be made, distinct from the rest of the site, and its content comes from `career.md`. What is decided:
+Seine-et-Marne, France
 
-- no PDF to download;
-- no personal data: no phone number, no e-mail, no postal address, only the French department;
-- its stylesheet is `css/cv.css`, loaded for it alone through the `cv` class of this article.
+Java backend, performance, legacy modernisation and data migration. At Lunatech since 2024, on assignment with its clients.
+
+## 02 career {#parcours}
+
+1. since March 2026 CARIAD, Volkswagen Group lead developer of a team of three, through Lunatech Migration of a server-side rendered monolith to React and a REST API, using the Strangler Fig pattern. Endpoint by endpoint behind a feature flag, instant rollback, ten endpoints out of twenty-six migrated with no regression. The tool governs access for three hundred users of the image-labelling workflows feeding autonomous-driving models. Java · Spring Boot · React 19 · TypeScript · Vitest
+2. July 2025 to March 2026 DARVA, Domaine Client backend developer on an MDM, through Lunatech Migration of all customer data from a CRM into the master data repository: eight recurring batches and a one-shot batch of thirty thousand records. One-shot batch brought from 8 h down to under 1 h 30, recurring batches brought under five minutes. JVM heap saturation in UAT diagnosed on heap dumps and fixed in the data model. Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins
+3. January to July 2025 DARVA, Exiris full-stack developer, electronic registered mail, through Lunatech Mail search with dynamic filters, an interceptor flagging certificate expiry on every endpoint. Test migration from Lighthouse and Cypress to a single Playwright suite, without interrupting CI. Java · Quarkus · React · TypeScript · Playwright · Jenkins
+4. since 2024 Lunatech software engineer, on assignment with the clients above
+5. May to August 2024 Open Food Facts backend developer, master's internship, in English Odoo CRM integration over XML-RPC into a Perl monolith from 2012, import of three hundred producer organisations. Routing rewritten into typed handlers, adopted as the project standard. Perl · Docker · Linux
+6. summer 2022 VLA, catalogue raisonné freelance, sole developer Online catalogue of a painter's six hundred and fifty works, from quote to production. Still online. Python · Django · JavaScript · Docker · Nginx
+
+## 03 tools {#outils}
+
+languages
+
+- Java
+- TypeScript
+- Python
+- SQL
+
+frameworks
+
+- Quarkus
+- Spring Boot
+- Hibernate
+- React
+- Mutiny, Vert.x
+
+infra and AI
+
+- PostgreSQL
+- Docker
+- Jenkins
+- Linux
+- Claude Code
+
+## 04 education {#formation}
+
+1. Master's in Computer Science, Software and Data Engineering Université Gustave Eiffel, 2025
+2. TOEIC 945 professional English, 2025
+
+curriculum vitae · antoine bastos · software engineer · seine-et-marne · 2026
 
 ---
 

@@ -3,7 +3,10 @@
 Site statique en français, sans étape de build, servi tel quel par GitHub
 Pages. Une seule coquille Vue chargée depuis un CDN, deux choses dedans :
 
-- `cv/` : le CV, page principale du site (`#/`), à concevoir (voir son « À faire »).
+- `cv/` : le CV, page principale du site (`#/`). Sa feuille `css/cv.css` a sa propre
+  identité (une référence : la couverture de Ruder pour les Typographische
+  Monatsblätter de 1955), et ses paires fond/encre se choisissent dans la page
+  (`cv-palettes`), à part du thème clair/sombre du reste du site.
 - `blog/` : les articles, du plus récent au plus ancien. Un article a une ou
   plusieurs pages (`blog/introduction-observabilite/` en a douze), une date de
   publication et une date de mise à jour.

@@ -14,6 +14,9 @@
   try {
     var t = localStorage.getItem('obs-theme')
     if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t)
+    // 'cv-palette' duplique PALETTE_CLE de js/composants/socle/palettes-cv.js.
+    var p = localStorage.getItem('cv-palette')
+    if (p) document.documentElement.setAttribute('data-cv-palette', p)
   } catch (e) {}
 </script>
 

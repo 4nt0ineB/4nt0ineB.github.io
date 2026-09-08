@@ -4,6 +4,7 @@ import { Mesure } from './socle/mesure.js'
 import { Devine } from './socle/devine.js'
 import { TableauMesure } from './socle/tableau-mesure.js'
 import { Jargon } from './socle/jargon.js'
+import { PalettesCv } from './socle/palettes-cv.js'
 import { SchemaCardinalite } from './schemas/cardinalite.js'
 import { SchemaTroisEtages } from './schemas/trois-etages.js'
 import { SchemaPullPush } from './schemas/pull-push.js'
@@ -23,6 +24,7 @@ export function enregistrer (app) {
   app.component('devine', Devine)
   app.component('tableau-mesure', TableauMesure)
   app.component('jargon', Jargon)
+  app.component('cv-palettes', PalettesCv)
   app.component('schema-cardinalite', SchemaCardinalite)
   app.component('schema-trois-etages', SchemaTroisEtages)
   app.component('schema-pull-push', SchemaPullPush)
