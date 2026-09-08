@@ -10,16 +10,17 @@ Le code tourne en prod et un matin, quelqu'un dit que l'application est lente. I
 ni débogueur, ni moyen de reproduire le contexte du problème. Si l'observabilité a été
 mise en place, un développeur a de quoi tenter de comprendre. Sinon, bon courage.
 
-Ce texte s'adresse à qui sait ce qu'est une ligne de log et a peut-être vu un dashboard
-Grafana sur l'écran d'un collègue, sans jamais avoir construit ni fait tourner ce qui
-produit ces graphes. Aucune connaissance de Prometheus, de Kubernetes ou de la notion de
-trace n'est supposée, et les mots de jargon sont expliqués à leur première apparition.
+Cet article s'adresse à qui sait ce qu'est une ligne de log et a peut-être vu un
+dashboard Grafana sur l'écran d'un collègue, sans jamais avoir construit ni fait tourner
+ce qui produit ces graphes. Aucune connaissance des outils de l'observabilité
+(Prometheus, Kubernetes, etc.) ou des notions associées n'est supposée, et les mots de
+jargon sont expliqués à leur première apparition.
 
 Il vient d'un bilan d'auto-apprentissage aidé par l'IA : neuf pannes provoquées sous
 charge réelle, sur un vrai serveur, diagnostiquées depuis les dashboards seuls. Tout ce
-qui est chiffré ici a été mesuré là.
+qui est chiffré ici a été constaté par un enchaînement d'exercices pratiques sur un
+serveur virtuel.
 
-L'objectif est une image mentale correcte, pas la capacité de diagnostiquer une panne.
-Cette capacité-là ne s'obtient qu'en cassant quelque chose et en regardant ce que
-racontent les instruments, donc elle est dans le cours qui accompagne ce texte, où
-chaque panne se rejoue sur un cluster jetable posé sur son propre portable.
+L'objectif est d'arriver à vous former, vous lecteur, une image mentale de
+l'observabilité et de ses concepts clés. Il ne s'agit pas ici de la capacité de
+diagnostiquer une panne, qu'un texte de quelques lignes ne pourrait pas enseigner.
