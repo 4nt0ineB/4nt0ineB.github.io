@@ -32,14 +32,18 @@ Backend Java, performance, modernisation de code existant et migration de donné
 
 ## 02 parcours {#parcours}
 
-1. depuis mars 2026 CARIAD, groupe Volkswagen lead dev d'une équipe de trois, via Lunatech Migration d'un monolithe rendu côté serveur vers React et une API REST, par le motif Strangler Fig. Endpoint par endpoint derrière un feature flag, retour arrière instantané, dix endpoints sur vingt-six migrés sans régression. L'outil gère les accès de trois cents utilisateurs aux chaînes d'étiquetage d'images des modèles de conduite autonome. Java · Spring Boot · React 19 · TypeScript · Vitest
-2. juillet 2025 à mars 2026 DARVA, Domaine Client développeur backend sur un MDM, via Lunatech Migration de toutes les données clients d'un CRM vers le référentiel : huit batchs récurrents et un batch unique de trente mille enregistrements. Batch unique ramené de 8 h à moins d'1 h 30, batchs récurrents ramenés sous cinq minutes. Saturation mémoire de la JVM en recette diagnostiquée sur heap dump et corrigée dans le modèle de données. Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins
-3. janvier à juillet 2025 DARVA, Exiris développeur full-stack, lettre recommandée électronique, via Lunatech Recherche de courriers par filtres dynamiques, intercepteur signalant l'expiration des certificats sur tous les endpoints. Migration des tests de Lighthouse et Cypress vers une seule suite Playwright, sans interrompre la CI. Java · Quarkus · React · TypeScript · Playwright · Jenkins
-4. depuis 2024 Lunatech ingénieur logiciel, en mission chez les clients ci-dessus
-5. mai à août 2024 Open Food Facts développeur backend, stage de master, en anglais Intégration du CRM Odoo par XML-RPC dans un monolithe Perl de 2012, import de trois cents organisations de producteurs. Refonte du routage en handlers typés, adoptée comme standard du projet. Perl · Docker · Linux
-6. été 2022 VLA, catalogue raisonné freelance, seul développeur Catalogue en ligne des six cent cinquante œuvres d'un peintre, du devis à la mise en production. Toujours en ligne. Python · Django · JavaScript · Docker · Nginx
+1. mars à août 2026 CARIAD, groupe Volkswagen lead dev d'une équipe de trois, via Lunatech Chez la filiale logicielle du groupe Volkswagen, migration d'un outil de gestion des accès, d'un monolithe rendu côté serveur vers React et une API REST. Le motif Strangler Fig, endpoint par endpoint derrière un feature flag, avec retour arrière instantané et sans régression. Java · Spring Boot · React 19 · TypeScript · Vitest
+2. juillet 2025 à mars 2026 DARVA, Domaine Client développeur backend, via Lunatech Chez un éditeur de services pour l'assurance, migration de toutes les données clients de l'ancien CRM vers le référentiel client. Huit batchs récurrents ramenés sous cinq minutes, et un batch unique de trente mille enregistrements ramené de huit heures à moins d'une heure et demie. Une saturation mémoire de la JVM en recette, diagnostiquée sur heap dump et corrigée dans le modèle de données. Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins
+3. janvier à juillet 2025 DARVA, Exiris développeur full-stack, via Lunatech Sur la plateforme de lettre recommandée électronique, des fonctionnalités de recherche et de contrôle des certificats, et la migration des tests de Lighthouse et Cypress vers une seule suite Playwright, sans interrompre la CI. Java · Quarkus · React · TypeScript · Playwright · Jenkins
+4. mai à août 2024 Open Food Facts développeur backend, stage de master, en anglais Intégration du CRM Odoo par XML-RPC dans le monolithe Perl de la plateforme producteurs, import de trois cents organisations, et refonte du routage en handlers typés, adoptée comme standard du projet. Perl · Docker · Linux
+5. été 2022 VLA, catalogue raisonné freelance, seul développeur Le catalogue en ligne des six cent cinquante œuvres d'un peintre, du devis à la mise en production. Le site est toujours en ligne. Python · Django · JavaScript · Docker · Nginx
 
-## 03 outils {#outils}
+## 03 formation {#formation}
+
+1. Master en informatique, ingénierie logicielle et données Université Gustave Eiffel, 2025
+2. TOEIC 945 anglais professionnel, 2025
+
+## 04 outils {#outils}
 
 langages
 
@@ -54,20 +58,29 @@ frameworks
 - Spring Boot
 - Hibernate
 - React
-- Mutiny, Vert.x
+- Mutiny et Vert.x
 
-infra et IA
+données et infra
 
 - PostgreSQL
+- MariaDB
 - Docker
 - Jenkins
 - Linux
+
+ia
+
 - Claude Code
+- Gemini CLI
+- GitHub Copilot
 
-## 04 formation {#formation}
+pratiques
 
-1. Master en informatique, ingénierie logicielle et données Université Gustave Eiffel, 2025
-2. TOEIC 945 anglais professionnel, 2025
+- Architecture hexagonale
+- Strangler Fig
+- Tests Playwright
+- Intégration continue
+- Scrum
 
 curriculum vitae · antoine bastos · ingénieur logiciel · seine-et-marne · 2026
 

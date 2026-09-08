@@ -54,10 +54,10 @@ html.page-cv .contenu {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 1.5rem;
   grid-template-areas:
-    "identite parcours marge"
-    "outils   parcours marge"
-    "formation parcours marge";
-  grid-template-rows: auto auto 1fr;
+    "identite  parcours marge"
+    "formation parcours marge"
+    "outils    outils   marge";
+  grid-template-rows: auto 1fr auto;
   column-gap: 4rem;
   row-gap: 4.5rem;
   font-family: var(--sans);
@@ -65,17 +65,19 @@ html.page-cv .contenu {
   min-height: 80vh;
 }
 
-.cv h1, .cv h2, .cv p, .cv ul, .cv ol {
+/* :where() pour que la remise à zéro pèse moins que les classes qui posent
+   les marges plus bas. */
+.cv :where(h1, h2, p, ul, ol) {
   margin: 0;
   color: inherit;
 }
 
-.cv ul, .cv ol {
+.cv :where(ul, ol) {
   list-style: none;
   padding: 0;
 }
 
-.cv li + li {
+.cv :where(li + li) {
   margin-top: 0;
 }
 
@@ -152,13 +154,21 @@ html.page-cv .contenu {
   max-width: 34ch;
   font-size: 0.9rem;
   line-height: 1.6;
-  margin-bottom: 2.4rem;
 }
 
-/* Le choix de la paire fond/encre : un carré par palette, dans ses couleurs. */
+/* Le choix de la paire fond/encre : un carré par palette, dans ses couleurs,
+   en colonne fixée à gauche de la page. Sur téléphone, en rangée au-dessus. */
 .cv-palettes {
+  position: fixed;
+  left: 1.5rem;
+  top: 6rem;
   display: flex;
+  flex-direction: column;
   gap: 0.6rem;
+}
+
+html.page-cv .contenu {
+  padding-left: 3rem;
 }
 
 .cv-palette {
@@ -229,71 +239,61 @@ html.page-cv .contenu {
   margin-bottom: 0.6rem;
 }
 
-.cv-faits {
+.cv-mission {
   font-size: 0.88rem;
-  line-height: 1.55;
-  max-width: 44ch;
+  line-height: 1.6;
+  max-width: 48ch;
 }
 
-.cv-faits li + li {
-  margin-top: 0.15rem;
-}
-
+/* La pile se détache du paragraphe : un filet court au-dessus, une encre atténuée. */
 .cv-pile {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   font-family: var(--mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
 }
 
-/* --- 03, outils : des carrés sur un filet, une rangée par famille -------- */
+.cv-pile::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 1px;
+  margin-bottom: 0.5rem;
+  background: var(--cv-encre);
+}
+
+/* --- 04, outils : une colonne par famille, séparée par un filet ---------- */
 
 .cv-outils {
   grid-area: outils;
 }
 
-.cv .cv-rangee {
+.cv-familles {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
-  row-gap: 0.9rem;
-  margin-bottom: 1.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 2.4rem 1.5rem;
 }
 
-.cv-rangee-nom {
+.cv-famille {
+  border-left: 1px solid var(--cv-encre);
+  padding-left: 1.1rem;
+}
+
+.cv-famille-nom {
   font-family: var(--mono);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.9rem;
 }
 
-.cv-rangee li {
-  position: relative;
-  padding-top: calc(var(--carre) + 0.5rem);
-  padding-right: 0.5rem;
-  font-size: 0.82rem;
-  letter-spacing: 0.03em;
-  line-height: 1.3;
+.cv-famille li {
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  line-height: 1.75;
 }
 
-/* Le filet traverse chaque cellule à mi-hauteur du carré : mis bout à bout,
-   les cellules d'une même ligne dessinent une seule règle continue. */
-.cv-rangee li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(var(--carre) / 2);
-  height: 1px;
-  background: var(--cv-encre);
-}
-
-.cv-rangee li .cv-carre {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-/* --- 04, formation ------------------------------------------------------ */
+/* --- 03, formation ------------------------------------------------------ */
 
 .cv-formation {
   grid-area: formation;
@@ -332,14 +332,24 @@ html.page-cv .contenu {
     grid-template-areas:
       "identite"
       "parcours"
-      "outils"
-      "formation";
+      "formation"
+      "outils";
     grid-template-rows: auto;
     row-gap: 3.5rem;
   }
 
   .cv-marge {
     display: none;
+  }
+
+  .cv-palettes {
+    position: static;
+    flex-direction: row;
+    margin-bottom: 2rem;
+  }
+
+  html.page-cv .contenu {
+    padding-left: 0;
   }
 
   html.page-cv .contenu {

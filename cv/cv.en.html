@@ -6,7 +6,6 @@
     <p class="cv-lieu">Seine-et-Marne, France</p>
     <p class="cv-resume">Java backend, performance, legacy modernisation and data
     migration. At Lunatech since 2024, on assignment with its clients.</p>
-    <cv-palettes></cv-palettes>
   </header>
 
   <section class="cv-parcours" aria-labelledby="parcours">
@@ -14,63 +13,46 @@
     <ol class="cv-axe">
       <li class="cv-etape">
         <span class="cv-carre"></span>
-        <p class="cv-date">since March 2026</p>
+        <p class="cv-date">March to August 2026</p>
         <p class="cv-org">CARIAD, Volkswagen Group</p>
         <p class="cv-poste">lead developer of a team of three, through Lunatech</p>
-        <ul class="cv-faits">
-          <li>Migration of a server-side rendered monolith to React and a REST API, using
-          the Strangler Fig pattern.</li>
-          <li>Endpoint by endpoint behind a feature flag, instant rollback, ten endpoints out
-          of twenty-six migrated with no regression.</li>
-          <li>The tool governs access for three hundred users of the image-labelling
-          workflows feeding autonomous-driving models.</li>
-        </ul>
+        <p class="cv-mission">At the software arm of the Volkswagen Group, migration of an
+        access-management tool from a server-side rendered monolith to React and a REST API.
+        The Strangler Fig pattern, endpoint by endpoint behind a feature flag, with instant
+        rollback and no regression.</p>
         <p class="cv-pile">Java · Spring Boot · React 19 · TypeScript · Vitest</p>
       </li>
       <li class="cv-etape">
         <span class="cv-carre"></span>
         <p class="cv-date">July 2025 to March 2026</p>
         <p class="cv-org">DARVA, Domaine Client</p>
-        <p class="cv-poste">backend developer on an MDM, through Lunatech</p>
-        <ul class="cv-faits">
-          <li>Migration of all customer data from a CRM into the master data repository:
-          eight recurring batches and a one-shot batch of thirty thousand records.</li>
-          <li>One-shot batch brought from 8 h down to under 1 h 30, recurring batches brought
-          under five minutes.</li>
-          <li>JVM heap saturation in UAT diagnosed on heap dumps and fixed in the data
-          model.</li>
-        </ul>
+        <p class="cv-poste">backend developer, through Lunatech</p>
+        <p class="cv-mission">At an IT services provider for the insurance industry,
+        migration of all customer data from the legacy CRM into the customer master data
+        repository. Eight recurring batches brought under five minutes, and a one-shot batch
+        of thirty thousand records brought from eight hours down to under an hour and a
+        half. A JVM heap saturation in UAT, diagnosed on heap dumps and fixed in the data
+        model.</p>
         <p class="cv-pile">Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins</p>
       </li>
       <li class="cv-etape">
         <span class="cv-carre"></span>
         <p class="cv-date">January to July 2025</p>
         <p class="cv-org">DARVA, Exiris</p>
-        <p class="cv-poste">full-stack developer, electronic registered mail, through Lunatech</p>
-        <ul class="cv-faits">
-          <li>Mail search with dynamic filters, an interceptor flagging certificate expiry
-          on every endpoint.</li>
-          <li>Test migration from Lighthouse and Cypress to a single Playwright suite,
-          without interrupting CI.</li>
-        </ul>
+        <p class="cv-poste">full-stack developer, through Lunatech</p>
+        <p class="cv-mission">On the electronic registered mail platform, search and
+        certificate-monitoring features, and the migration of the tests from Lighthouse and
+        Cypress to a single Playwright suite, without interrupting CI.</p>
         <p class="cv-pile">Java · Quarkus · React · TypeScript · Playwright · Jenkins</p>
-      </li>
-      <li class="cv-etape">
-        <span class="cv-carre"></span>
-        <p class="cv-date">since 2024</p>
-        <p class="cv-org">Lunatech</p>
-        <p class="cv-poste">software engineer, on assignment with the clients above</p>
       </li>
       <li class="cv-etape">
         <span class="cv-carre"></span>
         <p class="cv-date">May to August 2024</p>
         <p class="cv-org">Open Food Facts</p>
         <p class="cv-poste">backend developer, master's internship, in English</p>
-        <ul class="cv-faits">
-          <li>Odoo CRM integration over XML-RPC into a Perl monolith from 2012, import of
-          three hundred producer organisations.</li>
-          <li>Routing rewritten into typed handlers, adopted as the project standard.</li>
-        </ul>
+        <p class="cv-mission">Odoo CRM integration over XML-RPC into the Perl monolith of the
+        producer platform, import of three hundred organisations, and a rewrite of the
+        routing into typed handlers, adopted as the project standard.</p>
         <p class="cv-pile">Perl · Docker · Linux</p>
       </li>
       <li class="cv-etape">
@@ -78,44 +60,15 @@
         <p class="cv-date">summer 2022</p>
         <p class="cv-org">VLA, catalogue raisonné</p>
         <p class="cv-poste">freelance, sole developer</p>
-        <ul class="cv-faits">
-          <li>Online catalogue of a painter's six hundred and fifty works, from quote to
-          production. Still online.</li>
-        </ul>
+        <p class="cv-mission">The online catalogue of a painter's six hundred and fifty
+        works, from quote to production. The site is still online.</p>
         <p class="cv-pile">Python · Django · JavaScript · Docker · Nginx</p>
       </li>
     </ol>
   </section>
 
-  <section class="cv-outils" aria-labelledby="outils">
-    <h2 id="outils"><span class="cv-carre"></span><span class="cv-index">03</span> tools</h2>
-    <p class="cv-rangee-nom">languages</p>
-    <ul class="cv-rangee">
-      <li><span class="cv-carre"></span>Java</li>
-      <li><span class="cv-carre"></span>TypeScript</li>
-      <li><span class="cv-carre"></span>Python</li>
-      <li><span class="cv-carre"></span>SQL</li>
-    </ul>
-    <p class="cv-rangee-nom">frameworks</p>
-    <ul class="cv-rangee">
-      <li><span class="cv-carre"></span>Quarkus</li>
-      <li><span class="cv-carre"></span>Spring Boot</li>
-      <li><span class="cv-carre"></span>Hibernate</li>
-      <li><span class="cv-carre"></span>React</li>
-      <li><span class="cv-carre"></span>Mutiny, Vert.x</li>
-    </ul>
-    <p class="cv-rangee-nom">infra and AI</p>
-    <ul class="cv-rangee">
-      <li><span class="cv-carre"></span>PostgreSQL</li>
-      <li><span class="cv-carre"></span>Docker</li>
-      <li><span class="cv-carre"></span>Jenkins</li>
-      <li><span class="cv-carre"></span>Linux</li>
-      <li><span class="cv-carre"></span>Claude Code</li>
-    </ul>
-  </section>
-
   <section class="cv-formation" aria-labelledby="formation">
-    <h2 id="formation"><span class="cv-carre"></span><span class="cv-index">04</span> education</h2>
+    <h2 id="formation"><span class="cv-carre"></span><span class="cv-index">03</span> education</h2>
     <ol class="cv-axe">
       <li class="cv-etape">
         <span class="cv-carre"></span>
@@ -128,6 +81,59 @@
         <p class="cv-poste">professional English, 2025</p>
       </li>
     </ol>
+  </section>
+
+  <section class="cv-outils" aria-labelledby="outils">
+    <h2 id="outils"><span class="cv-carre"></span><span class="cv-index">04</span> tools</h2>
+    <div class="cv-familles">
+      <div class="cv-famille">
+        <p class="cv-famille-nom">languages</p>
+        <ul>
+          <li>Java</li>
+          <li>TypeScript</li>
+          <li>Python</li>
+          <li>SQL</li>
+        </ul>
+      </div>
+      <div class="cv-famille">
+        <p class="cv-famille-nom">frameworks</p>
+        <ul>
+          <li>Quarkus</li>
+          <li>Spring Boot</li>
+          <li>Hibernate</li>
+          <li>React</li>
+          <li>Mutiny and Vert.x</li>
+        </ul>
+      </div>
+      <div class="cv-famille">
+        <p class="cv-famille-nom">data and infra</p>
+        <ul>
+          <li>PostgreSQL</li>
+          <li>MariaDB</li>
+          <li>Docker</li>
+          <li>Jenkins</li>
+          <li>Linux</li>
+        </ul>
+      </div>
+      <div class="cv-famille">
+        <p class="cv-famille-nom">ai</p>
+        <ul>
+          <li>Claude Code</li>
+          <li>Gemini CLI</li>
+          <li>GitHub Copilot</li>
+        </ul>
+      </div>
+      <div class="cv-famille">
+        <p class="cv-famille-nom">practices</p>
+        <ul>
+          <li>Hexagonal architecture</li>
+          <li>Strangler Fig</li>
+          <li>Playwright tests</li>
+          <li>Continuous integration</li>
+          <li>Scrum</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <aside class="cv-marge" aria-hidden="true">

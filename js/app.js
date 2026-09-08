@@ -140,6 +140,7 @@ const App = defineComponent({
         </a>
       </nav>
       <main id="contenu" class="contenu">
+        <cv-palettes v-if="estCv && vue" />
         <template v-if="liste">
           <h1>{{ T.blog }}</h1>
           <p v-if="articles.length === 0">{{ T.aucunArticle }}</p>
