@@ -62,14 +62,12 @@ code, pre {
 
 code {
   background: var(--fond-doux);
-  border-radius: 3px;
   padding: 0.15em 0.35em;
 }
 
 pre {
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
   padding: 1em;
   overflow-x: auto;
 }
@@ -126,7 +124,6 @@ img, svg {
   background: var(--fond-eleve);
   color: var(--texte);
   padding: 0.6em 1em;
-  border-radius: 4px;
   border: 1px solid var(--trait-fort);
 }
 

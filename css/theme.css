@@ -18,6 +18,8 @@
   --mono:   ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --mesure: 68ch;
+  /* Côté des carrés pleins, marqueurs de la feuille du CV et du blog. */
+  --carre:  12px;
   --duree:  240ms;
 }
 

@@ -6,7 +6,10 @@ Pages. Une seule coquille Vue chargée depuis un CDN, deux choses dedans :
 - `cv/` : le CV, page principale du site (`#/`). Sa feuille `css/cv.css` a sa propre
   identité (une référence : la couverture de Ruder pour les Typographische
   Monatsblätter de 1955), et ses paires fond/encre se choisissent dans la page
-  (`cv-palettes`), à part du thème clair/sombre du reste du site.
+  (`cv-palettes`), à part du thème clair/sombre du reste du site. Le blog reprend
+  la même grammaire (sans, chiffres en mono, carrés pleins, filets d'un pixel,
+  aucun arrondi), mais sa surface de lecture reste papier ou noir : la paire
+  fond/encre choisie ne colore que la barre du haut.
 - `blog/` : les articles, du plus récent au plus ancien. Un article a une ou
   plusieurs pages (`blog/introduction-observabilite/` en a douze), une date de
   publication et une date de mise à jour.

@@ -49,7 +49,7 @@ const App = defineComponent({
       return version.value
     })
     const estCv = computed(() => !blog.value)
-    const sommaire = computed(() => courant.value && version.value && version.value.pages.length > 1)
+    const sommaire = computed(() => courant.value && version.value && courante.value !== null && version.value.pages.length > 1)
     const cote = computed(() => courant.value && version.value && courante.value
       ? voisins(version.value, courante.value.slug) : { precedent: null, suivant: null })
 
@@ -72,6 +72,14 @@ const App = defineComponent({
       courante: code === locale.value,
       href: code === locale.value ? null : autreLangue.value
     })))
+
+    // Le numéro d'une page est celui de son chapitre dans le texte, l'accueil
+    // étant le chapitre 0, sur deux chiffres comme les feuilles du CV.
+    const numero = i => String(i).padStart(2, '0')
+    const numeroPage = computed(() => {
+      const pages = version.value?.pages ?? []
+      return numero(Math.max(0, pages.findIndex(p => p.slug === courante.value?.slug)))
+    })
 
     function dateLongue (iso) {
       return new Intl.DateTimeFormat(T.value.dateFormat, { dateStyle: 'long' }).format(new Date(`${iso}T00:00:00`))
@@ -121,7 +129,7 @@ const App = defineComponent({
     })
 
     return { SITE, T, locale, route, blog, liste, courant, version, courante, estCv, sommaire, vue, erreur, theme,
-             avancement, cote, autreLangue, langues, lien, dateLongue,
+             avancement, cote, autreLangue, langues, lien, dateLongue, numero, numeroPage,
              articles: computed(() => articlesParDate(locale.value)),
              bascule: () => { theme.value = basculerTheme() } }
   },
@@ -129,6 +137,7 @@ const App = defineComponent({
     <div class="progression" :style="{ '--avancement': avancement }"></div>
     <a class="saut-contenu" href="#contenu">{{ T.sauter }}</a>
     <header class="entete">
+      <div class="entete-int">
       <a class="titre-site" :href="lien(locale)">{{ SITE }}</a>
       <nav class="sections" aria-label="Sections">
         <a :href="lien(locale, 'blog')" :aria-current="blog ? 'page' : null">{{ T.blog }}</a>
@@ -146,18 +155,21 @@ const App = defineComponent({
           {{ theme === 'dark' ? T.clair : T.sombre }}
         </button>
       </div>
+      </div>
     </header>
     <div class="coquille" :class="{ 'sans-sommaire': !sommaire, 'section-cv': estCv }">
       <nav v-if="sommaire" class="sommaire" aria-label="Sommaire">
-        <a v-for="p in version.pages" :key="p.slug" :href="lien(locale, 'blog', courant.slug, p.slug)"
+        <a v-for="(p, i) in version.pages" :key="p.slug" :href="lien(locale, 'blog', courant.slug, p.slug)"
            :aria-current="p.slug === courante.slug ? 'page' : null">
-          {{ p.titre }}
+          <span class="index">{{ numero(i) }}</span>
+          <span>{{ p.titre }}</span>
           <span v-if="p.minutes" class="minutes">{{ p.minutes }} min</span>
         </a>
       </nav>
       <main id="contenu" class="contenu">
         <cv-palettes v-if="estCv && vue" />
         <template v-if="liste">
+          <p class="repere"><span class="carre"></span></p>
           <h1>{{ T.blog }}</h1>
           <p v-if="articles.length === 0">{{ T.aucunArticle }}</p>
           <ul v-else class="liste-articles">
@@ -168,6 +180,7 @@ const App = defineComponent({
           </ul>
         </template>
         <template v-else-if="vue">
+          <p v-if="courant" class="repere"><span class="carre"></span><span class="index">{{ numeroPage }}</span></p>
           <p v-if="courant" class="dates">
             {{ T.publie }} <time :datetime="courant.publie">{{ dateLongue(courant.publie) }}</time><template v-if="courant.maj !== courant.publie">,
             {{ T.maj }} <time :datetime="courant.maj">{{ dateLongue(courant.maj) }}</time></template>

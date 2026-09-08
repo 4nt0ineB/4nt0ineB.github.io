@@ -24,31 +24,10 @@ html.page-cv body {
   color: var(--cv-encre);
 }
 
-html.page-cv .progression {
-  background: var(--cv-encre);
-}
-
-html.page-cv .sections a,
-html.page-cv .sections a:hover,
-html.page-cv .langue {
-  color: var(--cv-encre);
-}
-
 /* Le nom est déjà en grand sur la feuille : la barre ne le répète pas.
    visibility garde sa place, pour que « Blog » reste au centre. */
 html.page-cv .titre-site {
   visibility: hidden;
-}
-
-html.page-cv .langues {
-  background: transparent;
-  border: 1px solid var(--cv-encre);
-  border-radius: 0;
-}
-
-html.page-cv .langue.est-courante {
-  background: var(--cv-encre);
-  color: var(--cv-fond);
 }
 
 html.page-cv .contenu {
@@ -59,7 +38,6 @@ html.page-cv .contenu {
 /* --- La feuille --------------------------------------------------------- */
 
 .cv {
-  --carre: 12px;
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 1.5rem;
   grid-template-areas:
@@ -90,20 +68,6 @@ html.page-cv .contenu {
   margin-top: 0;
 }
 
-.cv-carre {
-  display: inline-block;
-  width: var(--carre);
-  height: var(--carre);
-  background: var(--cv-encre);
-  flex-shrink: 0;
-}
-
-.cv-index {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-}
-
 /* Un titre de section : le carré, le numéro de feuille, le libellé. */
 .cv h2 {
   display: flex;
@@ -123,19 +87,8 @@ html.page-cv .contenu {
   grid-area: identite;
 }
 
-.cv-identite .cv-repere {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
+.cv-identite .repere {
   margin-bottom: 2.4rem;
-}
-
-/* Le filet part du carré et court jusqu'au bord du bloc. */
-.cv-identite .cv-repere::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--cv-encre);
 }
 
 .cv h1 {
@@ -224,7 +177,7 @@ html.page-cv .contenu {
   margin-top: 3rem;
 }
 
-.cv-etape > .cv-carre {
+.cv-etape > .carre {
   position: absolute;
   left: calc(var(--carre) / -2 - 0.5px);
   top: 0.2em;

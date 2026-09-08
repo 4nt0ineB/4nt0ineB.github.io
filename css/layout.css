@@ -1,3 +1,42 @@
+/* La coquille : barre, sommaire, colonne de lecture. Le blog reprend la
+   grammaire de la feuille du CV (sans, chiffres en mono, carrés pleins,
+   filets d'un pixel), mais sa surface de lecture reste papier ou noir, au
+   thème clair/sombre. La paire fond/encre du CV ne colore que la barre. */
+
+/* --- Primitives partagées avec le CV ------------------------------------ */
+
+.carre {
+  display: inline-block;
+  width: var(--carre);
+  height: var(--carre);
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.index {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+}
+
+/* Un repère de section : le carré, un numéro, un filet jusqu'au bord. */
+.repere {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--sans);
+  margin-bottom: 1.6rem;
+}
+
+.repere::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+
+/* --- La barre ----------------------------------------------------------- */
+
 /* Barre de progression de lecture, en haut de la fenêtre. */
 .progression {
   position: fixed;
@@ -7,165 +46,54 @@
   height: 3px;
   /* --avancement est un ratio de 0 à 1, posé par app.js au défilement. */
   width: calc(var(--avancement, 0) * 100%);
-  background: var(--accent);
+  background: var(--cv-encre);
   transition: width var(--duree) ease-out;
 }
 
 .entete {
+  background: var(--cv-fond);
+  color: var(--cv-encre);
+  font-family: var(--sans);
+}
+
+.entete-int {
   display: flex;
   align-items: center;
   justify-content: space-between;
   max-width: 76rem;
   margin: 0 auto;
-  padding: 1.2rem 1.5rem 0;
-  font-family: var(--sans);
+  padding: 1.1rem 1.5rem;
 }
 
 .titre-site {
-  color: var(--texte);
+  color: inherit;
   font-weight: 600;
   font-size: 1.05rem;
   text-decoration: none;
 }
 
-.titre-site:hover {
-  color: var(--accent);
-}
-
 .sections {
   display: flex;
   gap: 1.4rem;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
 }
 
 .sections a {
-  color: var(--texte-doux);
+  color: inherit;
   text-decoration: none;
 }
 
+.titre-site:hover,
 .sections a:hover,
 .sections a[aria-current="page"] {
-  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
 }
 
-.coquille {
-  display: grid;
-  /* minmax(0, 1fr) : un contenu large déborde dans sa colonne, jamais la page. */
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 2.5rem;
-  max-width: 76rem;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
-}
-
-.sommaire {
-  position: sticky;
-  top: 0;
-  align-self: start;
-  max-height: 100vh;
-  overflow-y: auto;
-  padding: 1.5rem 0;
-  font-family: var(--sans);
-  font-size: 0.9rem;
-}
-
-.sommaire a {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.8em;
-  color: var(--texte-doux);
-  text-decoration: none;
-  padding: 0.35em 0;
-}
-
-.sommaire a:hover {
-  color: var(--texte);
-}
-
-/* Colonne de droite : les durées s'alignent entre elles, quel que soit le
-   nombre de lignes du titre. */
-.sommaire .minutes {
-  flex-shrink: 0;
-  white-space: nowrap;
-  color: var(--texte-faible);
-  font-size: 0.85em;
-}
-
-/* Marqueur du chapitre courant, posé par le routeur. */
-.sommaire a[aria-current="page"] {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.contenu {
-  /* Avec margin auto, l'enfant de grille se dimensionne à son contenu, et un SVG
-     plus large que l'écran l'élargissait jusqu'à sa mesure. width 100% le cale sur
-     la colonne, le contenu large défile dans son bloc. */
-  width: 100%;
-  max-width: var(--mesure);
-  margin: 0 auto;
-  padding-top: 1.5rem;
-}
-
-/* Sans sommaire (accueil, CV), le contenu prend la grille entière. */
-.coquille.sans-sommaire {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.sommaire-vide {
-  color: var(--texte-faible);
-}
-
-.liste-articles {
-  list-style: none;
-  padding: 0;
-}
-
-.liste-articles li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1em;
-  align-items: baseline;
-}
-
-.dates {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.6em;
-  font-family: var(--sans);
-  font-size: 0.85em;
-  color: var(--texte-faible);
-}
-
-/* Qui a tenu la plume. Le détail est dans le title, au survol. */
-.badge-ecriture {
-  padding: 0.15em 0.6em;
-  border: 1px solid var(--trait-fort);
-  border-radius: 999px;
-  font-size: 0.9em;
-  color: var(--texte-doux);
-  background: var(--fond-doux);
-  cursor: help;
-}
-
-.liste-articles .date {
-  flex-shrink: 0;
-  font-family: var(--sans);
-  font-size: 0.85em;
-  color: var(--texte-faible);
-}
-
-/* Casse la mesure de lecture pour un schéma ou un tableau large. */
-.pleine-largeur {
-  max-width: none;
-  width: min(100%, 56rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Langue et thème, côte à côte à droite de l'en-tête. */
+/* Langue et thème, côte à côte à droite de la barre. */
 .boutons-entete {
   display: flex;
   align-items: center;
@@ -177,27 +105,20 @@
   display: inline-flex;
   font-size: 0.8rem;
   line-height: 1;
-  border: 1px solid var(--trait);
-  border-radius: 999px;
-  overflow: hidden;
-  background: var(--fond-eleve);
+  border: 1px solid currentColor;
 }
 
 .langue {
   padding: 0.45em 0.8em;
-  color: var(--texte-doux);
+  color: inherit;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
-.langue:hover {
-  color: var(--texte);
-}
-
 .langue.est-courante {
-  background: var(--texte);
-  color: var(--fond);
+  background: var(--cv-encre);
+  color: var(--cv-fond);
   font-weight: 600;
 }
 
@@ -205,24 +126,188 @@
   opacity: 0.4;
 }
 
-/* Enfant en flux de .entete, aligné au titre par le space-between du parent.
-   Une pilule et non un cercle : le libellé est un mot (« Sombre », « Clair »),
-   pas une icône, et un cercle de 2,4rem le laissait déborder. */
 .bascule-theme {
   flex-shrink: 0;
-  padding: 0.4em 0.9em;
+  padding: 0.45em 0.8em;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   line-height: 1;
-  background: var(--fond-eleve);
-  border: 1px solid var(--trait);
-  border-radius: 999px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid currentColor;
   cursor: pointer;
-  color: var(--texte);
+  color: inherit;
 }
 
 .bascule-theme:hover {
-  border-color: var(--trait-fort);
+  background: var(--cv-encre);
+  color: var(--cv-fond);
+}
+
+/* --- La coquille -------------------------------------------------------- */
+
+.coquille {
+  display: grid;
+  /* minmax(0, 1fr) : un contenu large déborde dans sa colonne, jamais la page. */
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 2.5rem;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Sans sommaire (accueil, CV), le contenu prend la grille entière. */
+.coquille.sans-sommaire {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* --- Le sommaire : un axe vertical, un carré sur la page courante -------- */
+
+/* Le sommaire défile dans sa boîte, qui rogne ce qui en sort : l'axe et le
+   carré sont donc dessinés à l'intérieur, par chaque lien, dans une marge
+   d'un demi-carré. */
+.sommaire {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: 100vh;
+  overflow-y: auto;
+  margin-top: 1.5rem;
+  padding: 0.5rem 0 0.5rem calc(var(--carre) / 2);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.sommaire a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2ch minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.7em;
+  padding: 0.35em 0 0.35em 1.5rem;
+  color: var(--texte-doux);
+  text-decoration: none;
+}
+
+.sommaire a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--trait-fort);
+}
+
+.sommaire a:hover {
+  color: var(--texte);
+}
+
+.sommaire .index {
+  font-size: 0.72rem;
+  color: var(--texte-faible);
+}
+
+/* Colonne de droite : les durées s'alignent entre elles, quel que soit le
+   nombre de lignes du titre. */
+.sommaire .minutes {
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--texte-faible);
+}
+
+/* Marqueur du chapitre courant, posé par le routeur : un carré plein centré
+   sur l'axe, à la hauteur de la première ligne. */
+.sommaire a[aria-current="page"] {
+  color: var(--texte);
+  font-weight: 600;
+}
+
+.sommaire a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--carre) / -2 + 0.5px);
+  top: calc(0.35em + 0.7em - var(--carre) / 2);
+  width: var(--carre);
+  height: var(--carre);
+  background: var(--texte);
+}
+
+.sommaire-vide {
+  color: var(--texte-faible);
+}
+
+/* --- La colonne de lecture ---------------------------------------------- */
+
+.contenu {
+  /* Avec margin auto, l'enfant de grille se dimensionne à son contenu, et un SVG
+     plus large que l'écran l'élargissait jusqu'à sa mesure. width 100% le cale sur
+     la colonne, le contenu large défile dans son bloc. */
+  width: 100%;
+  max-width: var(--mesure);
+  margin: 0 auto;
+  padding-top: 1.5rem;
+}
+
+.liste-articles {
+  list-style: none;
+  padding: 0;
+}
+
+.liste-articles li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+
+.liste-articles a {
+  flex: 1;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.liste-articles a:hover {
+  text-decoration: underline;
+}
+
+.liste-articles .date {
+  flex-shrink: 0;
+}
+
+.dates,
+.liste-articles .date {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--texte-faible);
+}
+
+.dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8em;
+}
+
+/* Qui a tenu la plume. Le détail est dans le title, au survol. */
+.badge-ecriture {
+  padding: 0.25em 0.6em;
+  border: 1px solid var(--trait-fort);
+  color: var(--texte-doux);
+  cursor: help;
+}
+
+/* Casse la mesure de lecture pour un schéma ou un tableau large. */
+.pleine-largeur {
+  max-width: none;
+  width: min(100%, 56rem);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .nav-chapitre {
@@ -231,8 +316,9 @@
   gap: 1rem;
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--trait);
+  border-top: 1px solid var(--trait-fort);
   font-family: var(--sans);
+  font-size: 0.9rem;
 }
 
 .nav-chapitre a {
@@ -241,11 +327,11 @@
 }
 
 .nav-chapitre a:hover {
-  color: var(--accent);
+  text-decoration: underline;
 }
 
 @media (max-width: 900px) {
-  .entete {
+  .entete-int {
     flex-wrap: wrap;
     gap: 0.8rem;
   }
@@ -258,7 +344,7 @@
   .sommaire {
     position: static;
     max-height: none;
-    border-bottom: 1px solid var(--trait);
-    padding-bottom: 1rem;
+    margin-top: 0;
+    padding-bottom: 0.5rem;
   }
 }

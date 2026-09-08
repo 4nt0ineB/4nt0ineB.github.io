@@ -7,7 +7,6 @@
   padding: 0.9em 1.1em;
   background: var(--fond-doux);
   border-left: 3px solid var(--trait-fort);
-  border-radius: 0 4px 4px 0;
 }
 
 .aller-plus-loin summary {
@@ -70,7 +69,6 @@
   padding: 0.9em 1.1em;
   background: var(--accent-doux);
   border-left: 4px solid var(--accent);
-  border-radius: 0 4px 4px 0;
   font-family: var(--sans);
   font-weight: 500;
   color: var(--texte);
@@ -108,7 +106,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .devine-question {
@@ -131,7 +128,6 @@
   background: var(--fond-eleve);
   color: var(--texte);
   border: 1px solid var(--trait-fort);
-  border-radius: 4px;
   cursor: pointer;
   text-align: left;
 }
@@ -213,7 +209,6 @@
   background: var(--fond-eleve);
   color: var(--texte-doux);
   border: 1px solid var(--trait-fort);
-  border-radius: 4px;
   font-family: var(--sans);
   font-size: 0.85em;
   line-height: 1.4;
@@ -235,7 +230,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .cardinalite-etiquettes {
@@ -279,7 +273,6 @@
   display: block;
   width: 100%;
   height: 14px;
-  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -329,14 +322,12 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .etage-scene {
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .etage svg {
@@ -412,7 +403,6 @@
   background: var(--fond-eleve);
   color: var(--texte);
   border: 1px solid var(--trait-fort);
-  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -438,7 +428,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .pull-push-svg {
@@ -529,7 +518,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .rc-controles {
@@ -569,7 +557,6 @@
   background: var(--fond-eleve);
   color: var(--texte);
   border: 1px solid var(--trait-fort);
-  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -700,7 +687,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .fr-controles {
@@ -774,7 +760,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .ag-bascule {
@@ -791,7 +776,6 @@
   background: var(--fond-eleve);
   color: var(--texte);
   border: 1px solid var(--trait-fort);
-  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -844,7 +828,6 @@
   height: 14px;
   background: var(--fond-eleve);
   border: 1px solid var(--trait);
-  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -892,7 +875,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .csm-controles {
@@ -938,7 +920,6 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 0.3em;
-  border-radius: 3px 3px 0 0;
   transition: height var(--duree) ease-out;
 }
 
@@ -1022,7 +1003,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .cx-controles {
@@ -1091,7 +1071,6 @@
   height: 14px;
   background: var(--fond-eleve);
   border: 1px solid var(--trait);
-  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -1128,7 +1107,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .tc-tableau {
@@ -1161,7 +1139,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .cae-bascule {
@@ -1178,7 +1155,6 @@
   background: var(--fond-eleve);
   color: var(--texte);
   border: 1px solid var(--trait-fort);
-  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -1296,7 +1272,6 @@
   padding: 1.1em;
   background: var(--fond-doux);
   border: 1px solid var(--trait);
-  border-radius: 6px;
 }
 
 .trajet-svg {
