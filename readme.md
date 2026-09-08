@@ -34,8 +34,9 @@ Chaque article et le CV ont une entrée par langue (`fr`, `en`). Une langue
 absente veut dire pas de traduction : l'article ne figure pas dans la liste de
 cette langue et le bouton de langue n'apparaît pas. Les chaînes de l'interface
 et des composants vivent dans `js/i18n.js`, le lexique des bulles de jargon
-dans `js/lexique.js`, un objet par langue. Les textes dessinés dans les schémas
-SVG sont en français dans les deux langues, c'est un reste à faire.
+dans `js/lexique.js`, un objet par langue. Les textes des schémas (SVG, boutons, légendes) sont en anglais dans les deux
+langues : un schéma se lit en anglais dans le métier, et la compréhension de
+l'article doit survivre sans lui.
 
 Le texte s'écrit en markdown dans `sources/`, avec les blocs `:::regle`,
 `:::devine`, `:::schema`, `:::tableau`, `:::aller-plus-loin` et les balises

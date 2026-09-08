@@ -64,12 +64,12 @@ export const SchemaFenetreRate = {
     }
   },
   methods: {
-    formatSecondes (s) { return s.toLocaleString('fr-FR') }
+    formatSecondes (s) { return s.toLocaleString('en-GB') }
   },
   template: `
     <div class="schema-fenetre-rate pleine-largeur">
       <div class="fr-controles">
-        <label for="fr-fenetre">Fenêtre de la requête</label>
+        <label for="fr-fenetre">Query window</label>
         <input id="fr-fenetre" type="range" min="0" max="3" step="1"
                v-model.number="indexFenetre"
                :aria-valuetext="fenetre.libelle">
@@ -78,7 +78,7 @@ export const SchemaFenetreRate = {
 
       <svg class="fr-svg" viewBox="0 0 640 200" role="img" aria-labelledby="fr-titre"
            preserveAspectRatio="xMidYMid meet">
-        <title id="fr-titre">Un incident réel de 6 secondes, et ce qu'une moyenne glissante en montre selon la largeur de la fenêtre choisie</title>
+        <title id="fr-titre">A real 6-second incident, and what a moving average shows of it depending on the chosen window width</title>
         <line class="fr-axe" :x1="40" :y1="170" :x2="620" :y2="170" />
         <path class="fr-verite" :d="cheminVerite" fill="none" />
         <polyline class="fr-affichee" :points="pointsAffiches" fill="none" />
@@ -88,8 +88,8 @@ export const SchemaFenetreRate = {
       </svg>
 
       <p class="fr-libelles" role="status">
-        <span class="fr-libelle">durée réelle : <strong>6 s</strong></span>
-        <span class="fr-libelle">largeur affichée : <strong>{{ formatSecondes(fenetre.secondes) }} s</strong></span>
+        <span class="fr-libelle">real duration: <strong>6 s</strong></span>
+        <span class="fr-libelle">displayed width: <strong>{{ formatSecondes(fenetre.secondes) }} s</strong></span>
       </p>
     </div>
   `

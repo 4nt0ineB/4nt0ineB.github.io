@@ -53,12 +53,12 @@ function compteurFaute (i, t) {
 const INDICES = Array.from({ length: N }, (_, i) => i)
 
 const LIBELLES = {
-  sain: 'sain, en service',
-  'hors-service': "en cours d'exécution, hors service",
-  'en-echec': 'sonde en échec',
-  tue: 'tué',
-  redemarre: 'redémarre',
-  'en-attente': 'reparti, en attente'
+  sain: 'healthy, in service',
+  'hors-service': 'running, out of service',
+  'en-echec': 'probe failing',
+  tue: 'killed',
+  redemarre: 'restarting',
+  'en-attente': 'back up, waiting'
 }
 
 export const SchemaReactionChaine = {
@@ -87,15 +87,15 @@ export const SchemaReactionChaine = {
       }))
     },
     clientEtat () {
-      if (!this.demarre) return 'Le client reçoit des réponses normales.'
+      if (!this.demarre) return 'The client gets normal responses.'
       if (this.livenessInterroge) {
         return this.instances.some(i => i.etat === 'en-attente')
-          ? 'Le client reçoit quelques réponses, entre deux redémarrages.'
-          : 'Le client reçoit des échecs de connexion.'
+          ? 'The client gets a few responses, between two restarts.'
+          : 'The client gets connection failures.'
       }
       return this.instances.some(i => i.etat === 'sain')
-        ? 'Le client reçoit des réponses normales.'
-        : 'Le client reçoit des échecs de connexion.'
+        ? 'The client gets normal responses.'
+        : 'The client gets connection failures.'
     },
     termine () {
       return this.demarre && !this.enCours
@@ -149,11 +149,11 @@ export const SchemaReactionChaine = {
 
       <div v-if="reduitMotion" class="rc-cote-a-cote">
         <div class="rc-panneau">
-          <h3 class="rc-panneau-titre">Readiness : le bon réflexe</h3>
+          <h3 class="rc-panneau-titre">Readiness: the right reflex</h3>
           <svg viewBox="0 0 300 210" role="img" aria-labelledby="rc-titre-correct" preserveAspectRatio="xMidYMid meet">
-            <title id="rc-titre-correct">État final : readiness en échec, les quatre instances hors service mais toujours en cours d'exécution, base rétablie</title>
+            <title id="rc-titre-correct">Final state: readiness failing, the four instances out of service but still running, database restored</title>
             <rect class="rc-base base-up" x="90" y="10" width="120" height="34" rx="4" />
-            <text class="rc-texte-svg" x="150" y="32" text-anchor="middle">base : en service</text>
+            <text class="rc-texte-svg" x="150" y="32" text-anchor="middle">database: up</text>
             <g v-for="i in finCorrecte" :key="i.n">
               <rect class="rc-instance" :class="'etat-' + i.etat" x="10" :y="60 + (i.n - 1) * 38" width="280" height="30" rx="4" />
               <text class="rc-texte-svg" x="150" :y="60 + (i.n - 1) * 38 + 20" text-anchor="middle">instance {{ i.n }} · {{ etiquetteEtat(i.etat) }}</text>
@@ -161,34 +161,34 @@ export const SchemaReactionChaine = {
           </svg>
         </div>
         <div class="rc-panneau">
-          <h3 class="rc-panneau-titre">Liveness : la faute</h3>
+          <h3 class="rc-panneau-titre">Liveness: the mistake</h3>
           <svg viewBox="0 0 300 210" role="img" aria-labelledby="rc-titre-faute" preserveAspectRatio="xMidYMid meet">
-            <title id="rc-titre-faute">État final : liveness en échec, les quatre instances tuées et redémarrées en boucle, base rétablie mais le backoff continue</title>
+            <title id="rc-titre-faute">Final state: liveness failing, the four instances killed and restarted in a loop, database restored but the backoff goes on</title>
             <rect class="rc-base base-up" x="90" y="10" width="120" height="34" rx="4" />
-            <text class="rc-texte-svg" x="150" y="32" text-anchor="middle">base : en service</text>
+            <text class="rc-texte-svg" x="150" y="32" text-anchor="middle">database: up</text>
             <g v-for="i in finFautive" :key="i.n">
               <rect class="rc-instance" :class="'etat-' + i.etat" x="10" :y="60 + (i.n - 1) * 38" width="280" height="30" rx="4" />
-              <text class="rc-texte-svg" x="150" :y="60 + (i.n - 1) * 38 + 20" text-anchor="middle">instance {{ i.n }} · {{ etiquetteEtat(i.etat) }} · {{ i.compteur }} redem.</text>
+              <text class="rc-texte-svg" x="150" :y="60 + (i.n - 1) * 38 + 20" text-anchor="middle">instance {{ i.n }} · {{ etiquetteEtat(i.etat) }} · {{ i.compteur }} restarts</text>
             </g>
           </svg>
         </div>
-        <p class="rc-note-reduite">Les deux états finaux, sans animation : à droite, les compteurs de
-        redémarrage ont bougé ; à gauche, ils sont tous restés à zéro.</p>
+        <p class="rc-note-reduite">The two final states, without animation: on the right, the restart
+        counters have moved; on the left, they all stayed at zero.</p>
       </div>
 
       <template v-else>
         <fieldset class="rc-controles">
-          <legend>Scénario à rejouer</legend>
+          <legend>Scenario to replay</legend>
           <label class="rc-case">
             <input type="checkbox" v-model="livenessInterroge" :disabled="enCours">
-            la liveness interroge la base
+            the liveness probe queries the database
           </label>
-          <button type="button" class="rc-bouton" @click="couperLaBase" :disabled="enCours">Couper la base</button>
-          <button v-if="termine" type="button" class="rc-bouton rc-bouton-rejouer" @click="rejouer">Rejouer</button>
+          <button type="button" class="rc-bouton" @click="couperLaBase" :disabled="enCours">Cut the database</button>
+          <button v-if="termine" type="button" class="rc-bouton rc-bouton-rejouer" @click="rejouer">Replay</button>
         </fieldset>
 
         <svg class="rc-svg" viewBox="0 0 640 260" role="img" aria-labelledby="rc-titre" preserveAspectRatio="xMidYMid meet">
-          <title id="rc-titre">Quatre instances et une base de données, pendant et après une coupure</title>
+          <title id="rc-titre">Four instances and a database, during and after an outage</title>
           <rect class="rc-client" x="20" y="16" width="120" height="40" rx="4" />
           <text class="rc-texte-svg" x="80" y="40" text-anchor="middle">client</text>
 
@@ -196,17 +196,17 @@ export const SchemaReactionChaine = {
             <rect class="rc-instance" :class="'etat-' + i.etat" :x="20 + (i.n - 1) * 155" y="100" width="130" height="60" rx="4" />
             <text class="rc-texte-svg" :x="20 + (i.n - 1) * 155 + 65" y="120" text-anchor="middle">instance {{ i.n }}</text>
             <text class="rc-texte-svg rc-etat-svg" :x="20 + (i.n - 1) * 155 + 65" y="138" text-anchor="middle">{{ etiquetteEtat(i.etat) }}</text>
-            <text class="rc-texte-svg rc-compteur-svg" :x="20 + (i.n - 1) * 155 + 65" y="154" text-anchor="middle">{{ i.compteur }} redémarrage(s)</text>
+            <text class="rc-texte-svg rc-compteur-svg" :x="20 + (i.n - 1) * 155 + 65" y="154" text-anchor="middle">{{ i.compteur }} restart(s)</text>
           </g>
 
           <rect class="rc-base" :class="'base-' + baseEtat" x="260" y="200" width="120" height="44" rx="4" />
-          <text class="rc-texte-svg" x="320" y="226" text-anchor="middle">base : {{ baseEtat === 'up' ? 'en service' : 'coupée' }}</text>
+          <text class="rc-texte-svg" x="320" y="226" text-anchor="middle">database: {{ baseEtat === 'up' ? 'up' : 'down' }}</text>
         </svg>
 
         <p class="rc-client-etat" role="status">{{ clientEtat }}</p>
 
         <ul class="rc-texte">
-          <li v-for="i in instances" :key="i.n">Instance {{ i.n }} : {{ etiquetteEtat(i.etat) }}, {{ i.compteur }} redémarrage(s).</li>
+          <li v-for="i in instances" :key="i.n">Instance {{ i.n }}: {{ etiquetteEtat(i.etat) }}, {{ i.compteur }} restart(s).</li>
         </ul>
       </template>
     </div>
