@@ -21,6 +21,6 @@ charge réelle, sur un vrai serveur, diagnostiquées depuis les dashboards seuls
 qui est chiffré ici a été constaté par un enchaînement d'exercices pratiques sur un
 serveur virtuel.
 
-L'objectif est d'arriver à vous former, vous lecteur, une image mentale de
-l'observabilité et de ses concepts clés. Il ne s'agit pas ici de la capacité de
+L'objectif est de donner au lecteur une image mentale de l'observabilité et de ses
+concepts clés. Il ne s'agit pas ici de la capacité de
 diagnostiquer une panne, qu'un texte de quelques lignes ne pourrait pas enseigner.

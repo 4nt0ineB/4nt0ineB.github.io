@@ -50,7 +50,7 @@ Cet article s'adresse à qui sait ce qu'est une ligne de log et a peut-être vu 
 
 Il vient d'un bilan d'auto-apprentissage aidé par l'IA : neuf pannes provoquées sous charge réelle, sur un vrai serveur, diagnostiquées depuis les dashboards seuls. Tout ce qui est chiffré ici a été constaté par un enchaînement d'exercices pratiques sur un serveur virtuel.
 
-L'objectif est d'arriver à vous former, vous lecteur, une image mentale de l'observabilité et de ses concepts clés. Il ne s'agit pas ici de la capacité de diagnostiquer une panne, qu'un texte de quelques lignes ne pourrait pas enseigner.
+L'objectif est de donner au lecteur une image mentale de l'observabilité et de ses concepts clés. Il ne s'agit pas ici de la capacité de diagnostiquer une panne, qu'un texte de quelques lignes ne pourrait pas enseigner.
 
 ---
 
