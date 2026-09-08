@@ -125,9 +125,24 @@
 }
 
 .dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em;
   font-family: var(--sans);
   font-size: 0.85em;
   color: var(--texte-faible);
+}
+
+/* Qui a tenu la plume. Le détail est dans le title, au survol. */
+.badge-ecriture {
+  padding: 0.15em 0.6em;
+  border: 1px solid var(--trait-fort);
+  border-radius: 999px;
+  font-size: 0.9em;
+  color: var(--texte-doux);
+  background: var(--fond-doux);
+  cursor: help;
 }
 
 .liste-articles .date {

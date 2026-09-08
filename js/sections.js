@@ -5,7 +5,9 @@
 // s'affiche en marge et la route porte la page : #/blog/article/page. Avec
 // une seule, #/blog/article suffit et le sommaire n'apparaît pas.
 // Dates en AAAA-MM-JJ : `publie` sert au tri de la liste, `maj` s'affiche
-// dans l'article.
+// dans l'article. `ecriture` dit qui a tenu la plume, affiché en badge à
+// côté des dates : 'main' (écrit à la main, relu par une IA au plus) ou
+// 'ia' (écrit avec une IA, relu et corrigé à la main).
 const OBS = 'blog/introduction-observabilite'
 
 export const ARTICLES = [
@@ -14,6 +16,7 @@ export const ARTICLES = [
     titre: "Introduction à l'observabilité",
     publie: '2026-09-08',
     maj: '2026-09-08',
+    ecriture: 'ia',
     pages: [
       { slug: 'accueil',              titre: "Introduction à l'observabilité", minutes: 1, fichier: `${OBS}/00-accueil.html` },
       { slug: 'prod-sans-debogueur',  titre: "La prod n'a pas de débogueur", minutes: 2, fichier: `${OBS}/01-prod-sans-debogueur.html` },
@@ -30,6 +33,11 @@ export const ARTICLES = [
     ]
   }
 ]
+
+export const ECRITURE = {
+  main: { libelle: 'Écrit à la main', detail: 'Rédigé sans IA. Une IA a pu relire.' },
+  ia: { libelle: 'Écrit avec une IA', detail: 'Rédigé avec une IA, relu et corrigé à la main.' }
+}
 
 // La page principale du site : #/ et #/cv l'affichent.
 export const CV = { slug: 'cv', titre: 'Antoine Bastos', fichier: 'cv/cv.html' }

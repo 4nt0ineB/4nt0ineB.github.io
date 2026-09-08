@@ -1,5 +1,5 @@
 import { createApp, defineComponent, ref, shallowRef, computed, onMounted, nextTick } from 'https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.esm-browser.prod.js'
-import { CV, articlesParDate, article, pageDe, voisins } from './sections.js'
+import { CV, ECRITURE, articlesParDate, article, pageDe, voisins } from './sections.js'
 import { routeCourante, lienArticle, surChangement } from './routeur.js'
 import { themeEffectif, basculerTheme } from './theme.js'
 import { enregistrer } from './composants/index.js'
@@ -85,7 +85,7 @@ const App = defineComponent({
       majAvancement()
     })
 
-    return { SITE, CV, route, blog, liste, courant, courante, sommaire, vue, erreur, theme, avancement, cote,
+    return { SITE, CV, ECRITURE, route, blog, liste, courant, courante, sommaire, vue, erreur, theme, avancement, cote,
              articles: articlesParDate(), lienArticle, dateLongue,
              bascule: () => { theme.value = basculerTheme() } }
   },
@@ -124,6 +124,8 @@ const App = defineComponent({
           <p v-if="courant" class="dates">
             Publié le <time :datetime="courant.publie">{{ dateLongue(courant.publie) }}</time><template v-if="courant.maj !== courant.publie">,
             mis à jour le <time :datetime="courant.maj">{{ dateLongue(courant.maj) }}</time></template>
+            <span v-if="courant.ecriture" class="badge-ecriture" :class="'ecriture-' + courant.ecriture"
+                  :title="ECRITURE[courant.ecriture].detail">{{ ECRITURE[courant.ecriture].libelle }}</span>
           </p>
           <component :is="vue" :key="courante.fichier" />
         </template>

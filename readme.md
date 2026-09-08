@@ -22,7 +22,8 @@ hébergeur statique.
 ## Ajouter un article
 
 Une entrée dans `ARTICLES` de `js/sections.js` (`slug`, `titre`, `publie`,
-`maj`, et ses `pages` avec `slug`, `titre`, `minutes`, `fichier`), et un
+`maj`, `ecriture` qui vaut `main` ou `ia` et devient un badge à côté des
+dates, et ses `pages` avec `slug`, `titre`, `minutes`, `fichier`), et un
 fragment `<article>` par page, avec un `<h1>` et des `<h2 id="...">`
 uniques. Le manifeste est la source unique : liste du blog, sommaire, routeur
 et navigation précédent/suivant en dérivent tous. Les routes sont
