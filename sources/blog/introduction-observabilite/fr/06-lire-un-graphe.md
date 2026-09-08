@@ -9,7 +9,7 @@ surtitre  : Chapitre 6
 Un graphe a l'air d'une fenêtre sur le système. C'en est une reconstruction, faite de
 points collectés à intervalle régulier puis passés dans une requête.
 
-## Le bord droit n'est pas un événement {#le-bord-droit}
+## Le bord droit du graphe {#le-bord-droit}
 
 On pourrait être tenté de lire tout mouvement à la droite de la courbe comme « il se
 passe quelque chose maintenant ». Mais le bord droit est simplement l'endroit où la
@@ -21,7 +21,7 @@ secondes. Une ligne qui remonte légèrement au bord droit n'annonce rien, car c
 dernier échantillon, bruité comme les autres, qui n'a pas encore de voisin pour le
 lisser. Attendons le rafraîchissement suivant avant de réveiller quelqu'un.
 
-## Plat n'est pas absent {#plat-n-est-pas-absent}
+## Une ligne plate a deux causes {#plat-n-est-pas-absent}
 
 Admettons un <jargon mot="counter">compteur</jargon> de requêtes. Il ne fait
 qu'augmenter, et il répond à « combien depuis le démarrage de ce processus ».

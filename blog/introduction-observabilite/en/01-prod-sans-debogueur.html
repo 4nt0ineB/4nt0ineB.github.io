@@ -2,7 +2,7 @@
   <p class="eyebrow">Chapter 1</p>
   <h1>Production has no debugger</h1>
 
-  <h2 id="la-boucle-perdue">The lost loop</h2>
+  <h2 id="la-boucle-perdue">The debugging loop, impossible in production</h2>
   <p>In development, we enjoy a loop so comfortable that it only gets noticed once it is
   gone: run the code, watch it fail, set a break point, run again, and the failure
   happens again, because we control the input.</p>
@@ -11,13 +11,13 @@
   for one user out of forty thousand, on one of four processes, and the state that
   caused it is already gone. The system cannot be paused, since it keeps serving users.</p>
 
-  <h2 id="ecrire-a-l-avance">Writing ahead of time</h2>
+  <h2 id="ecrire-a-l-avance">Instrumenting before the failure</h2>
   <p>What remains is what the system wrote while it was running. Observability consists in
   making it write, ahead of time, the data that will answer questions nobody is asking
   yet. Everything hangs on "ahead of time", because what was not recorded at 14:32 will
   never be found.</p>
 
-  <h2 id="trois-questions">The three questions</h2>
+  <h2 id="trois-questions">The three questions of an investigation</h2>
   <p>Every investigation asks the same three questions, in the same order:</p>
 
   <p>1. Is there a problem, and since when? 2. Where is it, in a system made of several

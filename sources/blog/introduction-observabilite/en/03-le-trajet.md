@@ -6,7 +6,7 @@ fichier   : blog/introduction-observabilite/en/03-le-trajet.html
 surtitre  : Chapter 3
 ```
 
-## Two boxes {#deux-boites}
+## Stores and pipes {#deux-boites}
 
 Most confusion about tooling disappears once each product is put into one of two boxes:
 those that keep the data, and those that move it. A lot of debate goes into tools that

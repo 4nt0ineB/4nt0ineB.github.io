@@ -6,7 +6,7 @@ fichier   : blog/introduction-observabilite/fr/03-le-trajet.html
 surtitre  : Chapitre 3
 ```
 
-## Deux boîtes {#deux-boites}
+## Stockages et tuyaux {#deux-boites}
 
 La plupart des confusions sur l'outillage disparaissent une fois chaque produit rangé
 dans l'une de deux boîtes : ceux qui gardent la donnée, et ceux qui la déplacent. On

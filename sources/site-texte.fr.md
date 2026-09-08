@@ -64,17 +64,17 @@ surtitre  : Chapitre 1
 lecture   : 2 min
 ```
 
-## La boucle perdue {#la-boucle-perdue}
+## La boucle de débogage, impossible en prod {#la-boucle-perdue}
 
 En développement, on profite d'une boucle si confortable qu'elle ne se remarque qu'une fois perdue : on exécute le code, on le regarde échouer, on pose un break point, on relance, et l'échec se reproduit, parce qu'on maîtrise l'entrée.
 
 La production rend cette boucle impossible. La panne a eu lieu une fois il y a vingt minutes, pour un utilisateur sur quarante mille, parmi quatre processus, et l'état qui l'a provoquée a déjà disparu. Impossible de mettre le système en pause, puisqu'il continue de servir les utilisateurs.
 
-## Écrire à l'avance {#ecrire-a-l-avance}
+## Instrumenter avant la panne {#ecrire-a-l-avance}
 
 Il reste ce que le système a écrit pendant qu'il tournait. L'observabilité consiste à lui faire écrire, à l'avance, des données qui permettront de répondre à des questions qu'on ne se pose pas encore. Tout tient dans « à l'avance », car ce qui n'a pas été enregistré à 14h32 ne se retrouvera jamais.
 
-## Les trois questions {#trois-questions}
+## Les trois questions d'une enquête {#trois-questions}
 
 Chaque enquête pose les mêmes trois questions, dans le même ordre :
 
@@ -213,7 +213,7 @@ surtitre  : Chapitre 3
 lecture   : 3 min
 ```
 
-## Deux boîtes {#deux-boites}
+## Stockages et tuyaux {#deux-boites}
 
 La plupart des confusions sur l'outillage disparaissent une fois chaque produit rangé dans l'une de deux boîtes : ceux qui gardent la donnée, et ceux qui la déplacent. On discute beaucoup d'outils qui ne se concurrencent pas, parce qu'ils ne sont pas dans la même boîte.
 
@@ -346,7 +346,7 @@ Une bonne instrumentation rend un moteur plein texte inutile pour le code qu'on 
 
 ---
 
-# Ce qu'on écrit soi-même
+# L'instrumentation qu'on écrit soi-même
 
 ```
 article   : introduction-observabilite
@@ -356,7 +356,7 @@ surtitre  : Chapitre 5
 lecture   : 3 min
 ```
 
-## Ce qui existe sans rien faire {#ce-qui-existe-sans-rien-faire}
+## Les métriques fournies par le framework {#ce-qui-existe-sans-rien-faire}
 
 Les frameworks modernes instrumentent déjà beaucoup d'office : les requêtes HTTP entrantes, les codes de réponse, la distribution des latences, la mémoire, le garbage collector, l'usage du pool de connexions à la base. Tout ça existe en général dès qu'on ajoute la dépendance de métriques (Micrometer pour Quarkus et Spring Boot).
 
@@ -387,7 +387,7 @@ Ce sont aussi elles qui rendent un incident lisible pour quelqu'un d'autre que l
 
 Le [chapitre 2](#/fr/blog/introduction-observabilite/trois-piliers#la-cardinalite) a donné la contrainte qui les encadre : une étiquette doit avoir un ensemble de valeurs petit, fini et connu, comme un statut ou un nom de route tiré d'une liste fixe. Jamais un identifiant, jamais une URL brute avec ses paramètres, jamais rien qui vient de la saisie utilisateur.
 
-## Une question posée à l'avance {#une-question-posee-a-l-avance}
+## La limite : une question posée à l'avance {#une-question-posee-a-l-avance}
 
 On ne peut interroger que ce qu'on a décidé d'instrumenter avant l'incident, et c'est la limite de l'approche. Si personne n'a pensé à compter les uploads rejetés, alors pendant l'incident sur les uploads rejetés, ce chiffre n'existe pas et ne peut pas être récupéré après coup.
 
@@ -413,13 +413,13 @@ lecture   : 4 min
 
 Un graphe a l'air d'une fenêtre sur le système. C'en est une reconstruction, faite de points collectés à intervalle régulier puis passés dans une requête.
 
-## Le bord droit n'est pas un événement {#le-bord-droit}
+## Le bord droit du graphe {#le-bord-droit}
 
 On pourrait être tenté de lire tout mouvement à la droite de la courbe comme « il se passe quelque chose maintenant ». Mais le bord droit est simplement l'endroit où la donnée s'arrête, c'est-à-dire maintenant, et chaque graphe finit toujours là, qu'il se passe quelque chose ou non.
 
 Un dashboard qui se rafraîchit tout seul recrée cette impression toutes les quelques secondes. Une ligne qui remonte légèrement au bord droit n'annonce rien, car c'est le dernier échantillon, bruité comme les autres, qui n'a pas encore de voisin pour le lisser. Attendons le rafraîchissement suivant avant de réveiller quelqu'un.
 
-## Plat n'est pas absent {#plat-n-est-pas-absent}
+## Une ligne plate a deux causes {#plat-n-est-pas-absent}
 
 Admettons un <jargon mot="counter">compteur</jargon> de requêtes. Il ne fait qu'augmenter, et il répond à « combien depuis le démarrage de ce processus ».
 
@@ -568,7 +568,7 @@ Une application peut donc être vivante, prête, et lente. Un p99 de huit second
 
 ---
 
-# Un signal doit atteindre quelqu'un
+# Une alerte doit atteindre quelqu'un
 
 ```
 article   : introduction-observabilite

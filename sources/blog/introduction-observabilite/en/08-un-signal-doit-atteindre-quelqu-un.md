@@ -1,4 +1,4 @@
-# A signal has to reach someone
+# An alert has to reach someone
 
 ```
 page      : alerting

@@ -6,7 +6,7 @@ fichier   : blog/introduction-observabilite/fr/01-prod-sans-debogueur.html
 surtitre  : Chapitre 1
 ```
 
-## La boucle perdue {#la-boucle-perdue}
+## La boucle de débogage, impossible en prod {#la-boucle-perdue}
 
 En développement, on profite d'une boucle si confortable qu'elle ne se remarque qu'une
 fois perdue : on exécute le code, on le regarde échouer, on pose un break point, on
@@ -17,14 +17,14 @@ minutes, pour un utilisateur sur quarante mille, parmi quatre processus, et l'é
 l'a provoquée a déjà disparu. Impossible de mettre le système en pause, puisqu'il
 continue de servir les utilisateurs.
 
-## Écrire à l'avance {#ecrire-a-l-avance}
+## Instrumenter avant la panne {#ecrire-a-l-avance}
 
 Il reste ce que le système a écrit pendant qu'il tournait. L'observabilité consiste à lui
 faire écrire, à l'avance, des données qui permettront de répondre à des questions qu'on
 ne se pose pas encore. Tout tient dans « à l'avance », car ce qui n'a pas été enregistré
 à 14h32 ne se retrouvera jamais.
 
-## Les trois questions {#trois-questions}
+## Les trois questions d'une enquête {#trois-questions}
 
 Chaque enquête pose les mêmes trois questions, dans le même ordre :
 

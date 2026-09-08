@@ -6,7 +6,7 @@ fichier   : blog/introduction-observabilite/en/01-prod-sans-debogueur.html
 surtitre  : Chapter 1
 ```
 
-## The lost loop {#la-boucle-perdue}
+## The debugging loop, impossible in production {#la-boucle-perdue}
 
 In development, we enjoy a loop so comfortable that it only gets noticed once it is
 gone: run the code, watch it fail, set a break point, run again, and the failure
@@ -16,14 +16,14 @@ Production makes this loop impossible. The failure happened once, twenty minutes
 for one user out of forty thousand, on one of four processes, and the state that caused
 it is already gone. The system cannot be paused, since it keeps serving users.
 
-## Writing ahead of time {#ecrire-a-l-avance}
+## Instrumenting before the failure {#ecrire-a-l-avance}
 
 What remains is what the system wrote while it was running. Observability consists in
 making it write, ahead of time, the data that will answer questions nobody is asking
 yet. Everything hangs on "ahead of time", because what was not recorded at 14:32 will
 never be found.
 
-## The three questions {#trois-questions}
+## The three questions of an investigation {#trois-questions}
 
 Every investigation asks the same three questions, in the same order:
 

@@ -9,7 +9,7 @@ surtitre  : Chapter 6
 A graph looks like a window onto the system. It is a reconstruction of it, made of
 points collected at a regular interval and then run through a query.
 
-## The right edge is not an event {#le-bord-droit}
+## The right edge of the graph {#le-bord-droit}
 
 One might be tempted to read any movement at the right of the curve as "something is
 happening now". But the right edge is simply where the data stops, that is, now, and
@@ -20,7 +20,7 @@ that ticks up slightly at the right edge announces nothing, because it is the la
 sample, as noisy as the others, which does not yet have a neighbour to smooth it. Let us
 wait for the next refresh before waking anyone up.
 
-## Flat is not absent {#plat-n-est-pas-absent}
+## A flat line has two causes {#plat-n-est-pas-absent}
 
 Let us assume a request <jargon mot="counter">counter</jargon>. It only goes up, and it
 answers "how many since this process started".

@@ -64,17 +64,17 @@ surtitre  : Chapter 1
 lecture   : 2 min
 ```
 
-## The lost loop {#la-boucle-perdue}
+## The debugging loop, impossible in production {#la-boucle-perdue}
 
 In development, we enjoy a loop so comfortable that it only gets noticed once it is gone: run the code, watch it fail, set a break point, run again, and the failure happens again, because we control the input.
 
 Production makes this loop impossible. The failure happened once, twenty minutes ago, for one user out of forty thousand, on one of four processes, and the state that caused it is already gone. The system cannot be paused, since it keeps serving users.
 
-## Writing ahead of time {#ecrire-a-l-avance}
+## Instrumenting before the failure {#ecrire-a-l-avance}
 
 What remains is what the system wrote while it was running. Observability consists in making it write, ahead of time, the data that will answer questions nobody is asking yet. Everything hangs on "ahead of time", because what was not recorded at 14:32 will never be found.
 
-## The three questions {#trois-questions}
+## The three questions of an investigation {#trois-questions}
 
 Every investigation asks the same three questions, in the same order:
 
@@ -213,7 +213,7 @@ surtitre  : Chapter 3
 lecture   : 3 min
 ```
 
-## Two boxes {#deux-boites}
+## Stores and pipes {#deux-boites}
 
 Most confusion about tooling disappears once each product is put into one of two boxes: those that keep the data, and those that move it. A lot of debate goes into tools that do not compete, because they are not in the same box.
 
@@ -346,7 +346,7 @@ Good instrumentation makes a full-text engine unnecessary for the code one write
 
 ---
 
-# What you write yourself
+# The instrumentation you write yourself
 
 ```
 article   : introduction-observabilite
@@ -356,7 +356,7 @@ surtitre  : Chapter 5
 lecture   : 2 min
 ```
 
-## What exists without doing anything {#ce-qui-existe-sans-rien-faire}
+## The metrics the framework provides {#ce-qui-existe-sans-rien-faire}
 
 Modern frameworks already instrument a lot out of the box: incoming HTTP requests, response codes, the latency distribution, memory, the garbage collector, the usage of the database connection pool. All of this usually exists as soon as the metrics dependency is added (Micrometer for Quarkus and Spring Boot).
 
@@ -387,7 +387,7 @@ They are also what makes an incident readable to someone other than the develope
 
 [Chapter 2](#/en/blog/introduction-observabilite/trois-piliers#la-cardinalite) gave the constraint that frames them: a label must have a small, finite, known set of values, like a status or a route name taken from a fixed list. Never an identifier, never a raw URL with its parameters, never anything that comes from user input.
 
-## A question asked in advance {#une-question-posee-a-l-avance}
+## The limit: a question asked in advance {#une-question-posee-a-l-avance}
 
 One can only query what one decided to instrument before the incident, and that is the limit of the approach. If nobody thought of counting rejected uploads, then during the incident about rejected uploads, that figure does not exist and cannot be recovered afterwards.
 
@@ -413,13 +413,13 @@ lecture   : 4 min
 
 A graph looks like a window onto the system. It is a reconstruction of it, made of points collected at a regular interval and then run through a query.
 
-## The right edge is not an event {#le-bord-droit}
+## The right edge of the graph {#le-bord-droit}
 
 One might be tempted to read any movement at the right of the curve as "something is happening now". But the right edge is simply where the data stops, that is, now, and every graph always ends there, whether something is happening or not.
 
 A dashboard that refreshes by itself recreates this impression every few seconds. A line that ticks up slightly at the right edge announces nothing, because it is the last sample, as noisy as the others, which does not yet have a neighbour to smooth it. Let us wait for the next refresh before waking anyone up.
 
-## Flat is not absent {#plat-n-est-pas-absent}
+## A flat line has two causes {#plat-n-est-pas-absent}
 
 Let us assume a request <jargon mot="counter">counter</jargon>. It only goes up, and it answers "how many since this process started".
 
@@ -568,7 +568,7 @@ An application can therefore be alive, ready, and slow. A p99 of eight seconds n
 
 ---
 
-# A signal has to reach someone
+# An alert has to reach someone
 
 ```
 article   : introduction-observabilite

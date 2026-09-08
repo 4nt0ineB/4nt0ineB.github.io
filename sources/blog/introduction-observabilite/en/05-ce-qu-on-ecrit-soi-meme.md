@@ -1,4 +1,4 @@
-# What you write yourself
+# The instrumentation you write yourself
 
 ```
 page      : instrumenter
@@ -6,7 +6,7 @@ fichier   : blog/introduction-observabilite/en/05-instrumenter.html
 surtitre  : Chapter 5
 ```
 
-## What exists without doing anything {#ce-qui-existe-sans-rien-faire}
+## The metrics the framework provides {#ce-qui-existe-sans-rien-faire}
 
 Modern frameworks already instrument a lot out of the box: incoming HTTP requests,
 response codes, the latency distribution, memory, the garbage collector, the usage of the
@@ -50,7 +50,7 @@ constraint that frames them: a label must have a small, finite, known set of val
 a status or a route name taken from a fixed list. Never an identifier, never a raw URL
 with its parameters, never anything that comes from user input.
 
-## A question asked in advance {#une-question-posee-a-l-avance}
+## The limit: a question asked in advance {#une-question-posee-a-l-avance}
 
 One can only query what one decided to instrument before the incident, and that is the
 limit of the approach. If nobody thought of counting rejected uploads, then during the

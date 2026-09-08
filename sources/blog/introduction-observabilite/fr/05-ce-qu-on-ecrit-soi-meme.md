@@ -1,4 +1,4 @@
-# Ce qu'on écrit soi-même
+# L'instrumentation qu'on écrit soi-même
 
 ```
 page      : instrumenter
@@ -6,7 +6,7 @@ fichier   : blog/introduction-observabilite/fr/05-instrumenter.html
 surtitre  : Chapitre 5
 ```
 
-## Ce qui existe sans rien faire {#ce-qui-existe-sans-rien-faire}
+## Les métriques fournies par le framework {#ce-qui-existe-sans-rien-faire}
 
 Les frameworks modernes instrumentent déjà beaucoup d'office : les requêtes HTTP
 entrantes, les codes de réponse, la distribution des latences, la mémoire, le garbage
@@ -51,7 +51,7 @@ une étiquette doit avoir un ensemble de valeurs petit, fini et connu, comme un 
 un nom de route tiré d'une liste fixe. Jamais un identifiant, jamais une URL brute avec
 ses paramètres, jamais rien qui vient de la saisie utilisateur.
 
-## Une question posée à l'avance {#une-question-posee-a-l-avance}
+## La limite : une question posée à l'avance {#une-question-posee-a-l-avance}
 
 On ne peut interroger que ce qu'on a décidé d'instrumenter avant l'incident, et c'est la
 limite de l'approche. Si personne n'a pensé à compter les uploads rejetés, alors pendant

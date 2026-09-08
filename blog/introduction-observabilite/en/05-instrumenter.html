@@ -1,8 +1,8 @@
 <article>
   <p class="eyebrow">Chapter 5</p>
-  <h1>What you write yourself</h1>
+  <h1>The instrumentation you write yourself</h1>
 
-  <h2 id="ce-qui-existe-sans-rien-faire">What exists without doing anything</h2>
+  <h2 id="ce-qui-existe-sans-rien-faire">The metrics the framework provides</h2>
   <p>Modern frameworks already instrument a lot out of the box: incoming HTTP requests,
   response codes, the latency distribution, memory, the garbage collector, the usage of
   the database connection pool. All of this usually exists as soon as the metrics
@@ -48,7 +48,7 @@
   identifier, never a raw URL with its parameters, never anything that comes from user
   input.</p>
 
-  <h2 id="une-question-posee-a-l-avance">A question asked in advance</h2>
+  <h2 id="une-question-posee-a-l-avance">The limit: a question asked in advance</h2>
   <p>One can only query what one decided to instrument before the incident, and that is the
   limit of the approach. If nobody thought of counting rejected uploads, then during the
   incident about rejected uploads, that figure does not exist and cannot be recovered
