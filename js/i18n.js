@@ -19,8 +19,10 @@ export const TEXTES = {
     suivant: 'Suivant',
     themeClair: 'Passer au thème clair',
     themeSombre: 'Passer au thème sombre',
-    clair: 'Clair',
-    sombre: 'Sombre',
+    // Le libellé du bouton de thème est le même dans les deux langues, pour
+    // que la barre ne bouge pas quand on change de langue.
+    clair: 'Light',
+    sombre: 'Dark',
     langue: 'Langue',
     sauter: 'Aller au contenu',
     ecriture: {
