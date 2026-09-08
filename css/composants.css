@@ -96,8 +96,9 @@
 .mesure-source {
   margin-left: 0.35em;
   white-space: nowrap;
-  font-size: 0.75em;
-  color: var(--texte-faible);
+  font-family: var(--sans);
+  font-size: 0.8em;
+  color: var(--texte-doux);
 }
 
 /* --- devine ----------------------------------------------------------------- */

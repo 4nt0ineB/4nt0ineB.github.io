@@ -66,17 +66,14 @@ Too narrow a window hides an event. A query asking for the increase over the las
 fifteen minutes returns zero for everything that happened before, even though the raw
 counter still carries the mark.
 
-So for a post-mortem, read the raw counter first, and only use a window once the
-incident has been located on the timeline. And when the real duration of an event
+For a post-mortem, it is therefore better to read the raw counter first, and to move to a window only once the incident has been located on the timeline. And when the real duration of an event
 matters, a source with exact timestamps is needed, such as Kubernetes events, because no
 moving average can resolve a few seconds.
 
 ## The time of the scrape {#l-heure-du-scrape}
 
 The position of a point on the timeline is the moment it was collected, not the moment
-the event took place. A container was killed at a known instant,
-<mesure valeur="11:21:31">according to the timestamp of its end, and the panel showed it at 11:23</mesure>,
-because the next collection happened then. Two minutes of error are enough to blame the
+the event took place. Let us assume a container killed at 11:21:31, according to the timestamp of its end, with a collection every two minutes. The panel shows it at 11:23, because the next collection happened then. Two minutes of error are enough to blame the
 wrong deployment. When the exact instant matters, look for a metric that carries the
 event's timestamp as its value, not the position of the sample.
 

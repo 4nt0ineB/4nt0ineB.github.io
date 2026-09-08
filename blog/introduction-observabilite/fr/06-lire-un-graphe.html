@@ -57,18 +57,14 @@
   sur les quinze dernières minutes rend zéro pour tout ce qui s'est passé avant, même si
   le compteur brut, lui, porte encore la trace.</p>
 
-  <p>Donc pour un post-mortem, lire d'abord le compteur brut, et n'utiliser une fenêtre
-  qu'une fois qu'on sait où l'incident se situe sur la ligne du temps. Et quand la durée
+  <p>Pour un post-mortem, il vaut donc mieux lire d'abord le compteur brut, et ne passer à une fenêtre qu'une fois l'incident situé sur la ligne du temps. Et quand la durée
   réelle d'un événement compte, il faut une source qui porte des horodatages exacts,
   comme les events Kubernetes, car aucune moyenne glissante ne peut résoudre quelques
   secondes.</p>
 
   <h2 id="l-heure-du-scrape">L'heure du scrape</h2>
   <p>La position d'un point sur la ligne du temps est le moment où il a été collecté, pas
-  le moment où l'événement a eu lieu. Un conteneur a été tué à un instant connu,
-  <mesure valeur="11:21:31">d'après l'horodatage de sa fin, et
-  le panneau l'a affiché à 11:23</mesure>, parce que la collecte suivante a eu lieu à ce
-  moment-là. Deux minutes d'erreur suffisent à accuser le mauvais déploiement. Quand
+  le moment où l'événement a eu lieu. Admettons un conteneur tué à 11:21:31, d'après l'horodatage de sa fin, avec une collecte toutes les deux minutes. Le panneau l'affiche à 11:23, parce que la collecte suivante a eu lieu à ce moment-là. Deux minutes d'erreur suffisent à accuser le mauvais déploiement. Quand
   l'instant exact compte, il faut chercher une métrique qui porte l'horodatage de
   l'événement comme valeur, pas la position de l'échantillon.</p>
 
