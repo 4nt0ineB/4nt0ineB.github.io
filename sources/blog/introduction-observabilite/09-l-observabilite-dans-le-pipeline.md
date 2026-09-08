@@ -2,7 +2,7 @@
 
 ```
 page      : livrer
-fichier   : chapitres/09-livrer.html
+fichier   : blog/introduction-observabilite/09-livrer.html
 surtitre  : Chapitre 9
 ```
 
@@ -29,7 +29,7 @@ Un pipeline vert n'est pas un service sain.
 Un déploiement n'est pas terminé quand la commande retourne mais quand la version neuve
 sert le trafic. Le pipeline devrait donc attendre que les pods neufs soient prêts, et les
 minutes qui suivent un déploiement méritent plus d'attention que le reste du temps. C'est
-là que le [chapitre 2](#/observabilite/trois-piliers#le-checkout-lent) s'est refermé en trois clics :
+là que le [chapitre 2](#/blog/introduction-observabilite/trois-piliers#le-checkout-lent) s'est refermé en trois clics :
 la phrase décisive était « le cache est vide depuis le déploiement de 14h02 », et elle
 n'était possible que parce que le déploiement était visible sur le graphe. Une
 annotation sur les dashboards à chaque déploiement, que Grafana fait nativement, est le

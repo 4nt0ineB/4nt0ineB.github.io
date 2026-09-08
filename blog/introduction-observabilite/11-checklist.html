@@ -8,14 +8,14 @@
   <h2 id="en-instrumentant-le-service">En instrumentant le service</h2>
   <ul>
     <li>Émettre un identifiant de trace sur chaque requête, et le mettre dans
-    <a href="#/observabilite/trois-piliers#la-colle">chaque ligne de log</a>. Rien d'autre dans cette
+    <a href="#/blog/introduction-observabilite/trois-piliers#la-colle">chaque ligne de log</a>. Rien d'autre dans cette
     liste ne compte autant.</li>
     <li>Formater chaque horodatage avec son décalage, et fixer
-    <a href="#/observabilite/lire-un-graphe#une-seule-horloge">un seul fuseau partout</a>, y compris
+    <a href="#/blog/introduction-observabilite/lire-un-graphe#une-seule-horloge">un seul fuseau partout</a>, y compris
     le défaut des vues ad hoc.</li>
-    <li>Ajouter des <a href="#/observabilite/instrumenter#les-exemplars">exemplars</a>, pour qu'un point
+    <li>Ajouter des <a href="#/blog/introduction-observabilite/instrumenter#les-exemplars">exemplars</a>, pour qu'un point
     sur un graphe puisse ouvrir une requête réelle.</li>
-    <li>Ajouter les deux ou trois <a href="#/observabilite/instrumenter#les-metriques-metier">compteurs
+    <li>Ajouter les deux ou trois <a href="#/blog/introduction-observabilite/instrumenter#les-metriques-metier">compteurs
     métier</a> qui disent à quoi sert le service. Ce sont eux qui rendent un incident
     lisible à quelqu'un d'autre que son auteur.</li>
   </ul>
@@ -23,9 +23,9 @@
   <h2 id="en-ecrivant-les-sondes">En écrivant les sondes</h2>
   <ul>
     <li>Ne jamais mettre une vérification de dépendance dans une
-    <a href="#/observabilite/sondes#jamais-de-dependance">liveness</a>. Elle va dans la readiness.</li>
+    <a href="#/blog/introduction-observabilite/sondes#jamais-de-dependance">liveness</a>. Elle va dans la readiness.</li>
     <li>Écrire le délai et le nombre d'échecs de chaque sonde, sans se fier aux défauts, et
-    donner à la liveness <a href="#/observabilite/sondes#une-sonde-qui-ne-touche-a-rien">un délai
+    donner à la liveness <a href="#/blog/introduction-observabilite/sondes#une-sonde-qui-ne-touche-a-rien">un délai
     généreux</a>. Elle existe pour attraper un processus définitivement bloqué, et elle
     ne doit jamais pouvoir échouer parce qu'il est occupé.</li>
   </ul>
@@ -33,18 +33,18 @@
   <h2 id="en-construisant-les-dashboards">En construisant les dashboards</h2>
   <ul>
     <li>Alerter et diagnostiquer sur le
-    <a href="#/observabilite/lire-un-graphe#plat-n-est-pas-absent">taux</a>, jamais sur un compteur
+    <a href="#/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent">taux</a>, jamais sur un compteur
     brut comparé à un seuil.</li>
-    <li>Chercher <a href="#/observabilite/lire-un-graphe#l-heure-du-scrape">la mesure qui porte l'instant
+    <li>Chercher <a href="#/blog/introduction-observabilite/lire-un-graphe#l-heure-du-scrape">la mesure qui porte l'instant
     de l'événement</a> quand l'heure exacte compte, plutôt que la position d'un
     échantillon.</li>
-    <li>Déclencher <a href="#/observabilite/dashboard-vert">chaque panneau une fois</a>, exprès, et
+    <li>Déclencher <a href="#/blog/introduction-observabilite/dashboard-vert">chaque panneau une fois</a>, exprès, et
     confirmer qu'il bouge. Un panneau qu'on n'a jamais vu réagir est une décoration.</li>
   </ul>
 
   <h2 id="en-montant-l-alerting">En montant l'alerting</h2>
   <ul>
-    <li>Mettre en place des <a href="#/observabilite/alerting">alertes et leurs notifications</a>,
+    <li>Mettre en place des <a href="#/blog/introduction-observabilite/alerting">alertes et leurs notifications</a>,
     téléphone ou mail, pour les pannes critiques.</li>
     <li>Corriger à la source toute alerte qui reste active en permanence, dès le premier
     jour. Le silence doit être l'état normal.</li>
@@ -52,7 +52,7 @@
 
   <h2 id="en-deployant">En déployant</h2>
   <ul>
-    <li>Garder dashboards et règles d'alerte <a href="#/observabilite/livrer">dans le dépôt</a>, et ne
+    <li>Garder dashboards et règles d'alerte <a href="#/blog/introduction-observabilite/livrer">dans le dépôt</a>, et ne
     jamais coller un panneau depuis l'interface web.</li>
     <li>Poser une annotation de déploiement sur les dashboards.</li>
     <li>Retenir qu'un run vert rapporte que l'état désiré a été écrit, et rien du tout sur

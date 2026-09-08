@@ -2,7 +2,7 @@
 
 ```
 page      : les-outils
-fichier   : chapitres/04-les-outils.html
+fichier   : blog/introduction-observabilite/04-les-outils.html
 surtitre  : Chapitre 4
 ```
 
@@ -15,7 +15,7 @@ langage.
 
 Il garde ses index en mémoire, ce qui explique sa vitesse et sa fragilité. Une étiquette
 à trop de valeurs distinctes ne le ralentit pas progressivement, elle le fait tomber
-(voir la [cardinalité](#/observabilite/trois-piliers#la-cardinalite)).
+(voir la [cardinalité](#/blog/introduction-observabilite/trois-piliers#la-cardinalite)).
 
 ## Loki {#loki}
 
@@ -61,7 +61,7 @@ La première est une bibliothèque qu'on ajoute à l'application. Elle produit l
 les traces et les logs dans un format neutre, donc le code n'est pas écrit contre
 Prometheus ou contre Tempo mais contre le standard.
 
-La seconde est le collecteur, dont le [chapitre précédent](#/observabilite/le-trajet#ce-que-le-tuyau-achete)
+La seconde est le collecteur, dont le [chapitre précédent](#/blog/introduction-observabilite/le-trajet#ce-que-le-tuyau-achete)
 donne le rôle. Sa configuration a trois étages :
 
 - les receivers acceptent la télémétrie ;
@@ -77,7 +77,7 @@ ordre.
 
 Grafana est la couche d'affichage et ne stocke rien. Il se connecte à Prometheus, Loki et
 Tempo en même temps, ce qui rend possible
-l'[enquête en trois clics](#/observabilite/trois-piliers#le-checkout-lent).
+l'[enquête en trois clics](#/blog/introduction-observabilite/trois-piliers#le-checkout-lent).
 
 Autour de lui, la plupart des composants embarquent leur propre petite interface web.
 

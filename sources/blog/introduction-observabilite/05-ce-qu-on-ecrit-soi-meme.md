@@ -2,7 +2,7 @@
 
 ```
 page      : instrumenter
-fichier   : chapitres/05-instrumenter.html
+fichier   : blog/introduction-observabilite/05-instrumenter.html
 surtitre  : Chapitre 5
 ```
 
@@ -46,7 +46,7 @@ Ce sont aussi elles qui rendent un incident lisible pour quelqu'un d'autre que l
 développeur. « La latence monte » est un fait technique. « Les paiements sont tombés à
 zéro il y a quatre minutes » est une panne, et tout le monde la comprend.
 
-Le [chapitre 2](#/observabilite/trois-piliers#la-cardinalite) a donné la contrainte qui les encadre :
+Le [chapitre 2](#/blog/introduction-observabilite/trois-piliers#la-cardinalite) a donné la contrainte qui les encadre :
 une étiquette doit avoir un ensemble de valeurs petit, fini et connu, comme un statut ou
 un nom de route tiré d'une liste fixe. Jamais un identifiant, jamais une URL brute avec
 ses paramètres, jamais rien qui vient de la saisie utilisateur.

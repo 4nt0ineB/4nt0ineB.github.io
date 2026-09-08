@@ -124,6 +124,12 @@
   align-items: baseline;
 }
 
+.dates {
+  font-family: var(--sans);
+  font-size: 0.85em;
+  color: var(--texte-faible);
+}
+
 .liste-articles .date {
   flex-shrink: 0;
   font-family: var(--sans);

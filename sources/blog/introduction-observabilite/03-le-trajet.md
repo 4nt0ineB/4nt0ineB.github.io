@@ -2,7 +2,7 @@
 
 ```
 page      : le-trajet
-fichier   : chapitres/03-le-trajet.html
+fichier   : blog/introduction-observabilite/03-le-trajet.html
 surtitre  : Chapitre 3
 ```
 
@@ -71,7 +71,7 @@ titre: Prometheus tire ses métriques, l'agent pousse ses logs
 voir: Deux colonnes animees en boucle. A gauche Prometheus qui va chercher ses metriques, a droite l'agent qui pousse ses logs vers Loki.
 :::
 
-Le pull a une conséquence qui revient au [chapitre 6](#/observabilite/lire-un-graphe#la-fenetre) : une
+Le pull a une conséquence qui revient au [chapitre 6](#/blog/introduction-observabilite/lire-un-graphe#la-fenetre) : une
 métrique n'a pas de valeur continue, elle a la valeur qu'elle avait aux instants où on
 est venu la lire. Un événement qui commence et se termine entre deux scrapes n'a jamais
 existé pour Prometheus.

@@ -12,12 +12,34 @@ La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et d
 
 ---
 
+# Antoine Bastos
+
+```
+article   : cv
+page      : cv
+fichier   : cv/cv.html
+surtitre  : 
+lecture   : - min
+```
+
+Développeur.
+
+## À faire {#a-faire}
+
+Cette page est un emplacement. Le style du CV est à concevoir à part, différent du reste du site, et son contenu vient de `career.md`. Ce qui est décidé :
+
+- pas de PDF à télécharger ;
+- aucune donnée personnelle : ni téléphone, ni adresse mail, ni adresse postale, seulement le département ;
+- sa feuille de style est `css/cv.css`, chargée pour lui seul par la classe `cv` de cet article.
+
+---
+
 # Introduction à l'observabilité
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : accueil
-fichier   : observabilite/00-accueil.html
+fichier   : blog/introduction-observabilite/00-accueil.html
 surtitre  : Introduction
 lecture   : 1 min
 ```
@@ -35,9 +57,9 @@ L'objectif est une image mentale correcte, pas la capacité de diagnostiquer une
 # La prod n'a pas de débogueur
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : prod-sans-debogueur
-fichier   : observabilite/01-prod-sans-debogueur.html
+fichier   : blog/introduction-observabilite/01-prod-sans-debogueur.html
 surtitre  : Chapitre 1
 lecture   : 2 min
 ```
@@ -81,9 +103,9 @@ Les logs ne sont pas mauvais pour autant. Ils répondent à la troisième questi
 # Trois piliers, et pourquoi exactement trois
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : trois-piliers
-fichier   : observabilite/02-trois-piliers.html
+fichier   : blog/introduction-observabilite/02-trois-piliers.html
 surtitre  : Chapitre 2
 lecture   : 5 min
 ```
@@ -175,7 +197,7 @@ Les trois piliers ne valent que si on peut passer de l'un à l'autre, et un seul
 
 - dans la trace, où il naît ;
 - dans chaque ligne de log écrite en traitant cette requête ;
-- attaché aux points de mesure, ce qui rend le pic cliquable (voir les exemplars au [chapitre 5](#/observabilite/instrumenter#les-exemplars)).
+- attaché aux points de mesure, ce qui rend le pic cliquable (voir les exemplars au [chapitre 5](#/blog/introduction-observabilite/instrumenter#les-exemplars)).
 
 C'est le travail d'instrumentation qui compte le plus, et celui qu'on saute le plus souvent. Sans lui, il n'y a pas de socle d'observabilité, il y a trois outils séparés et l'habitude de comparer des horodatages à la main.
 
@@ -184,9 +206,9 @@ C'est le travail d'instrumentation qui compte le plus, et celui qu'on saute le p
 # Le trajet d'une donnée
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : le-trajet
-fichier   : observabilite/03-le-trajet.html
+fichier   : blog/introduction-observabilite/03-le-trajet.html
 surtitre  : Chapitre 3
 lecture   : 3 min
 ```
@@ -240,7 +262,7 @@ titre: Prometheus tire ses métriques, l'agent pousse ses logs
 voir: Deux colonnes animees en boucle. A gauche Prometheus qui va chercher ses metriques, a droite l'agent qui pousse ses logs vers Loki.
 :::
 
-Le pull a une conséquence qui revient au [chapitre 6](#/observabilite/lire-un-graphe#la-fenetre) : une métrique n'a pas de valeur continue, elle a la valeur qu'elle avait aux instants où on est venu la lire. Un événement qui commence et se termine entre deux scrapes n'a jamais existé pour Prometheus.
+Le pull a une conséquence qui revient au [chapitre 6](#/blog/introduction-observabilite/lire-un-graphe#la-fenetre) : une métrique n'a pas de valeur continue, elle a la valeur qu'elle avait aux instants où on est venu la lire. Un événement qui commence et se termine entre deux scrapes n'a jamais existé pour Prometheus.
 
 ## Ce que le tuyau achète {#ce-que-le-tuyau-achete}
 
@@ -253,9 +275,9 @@ Un nom qui trompe, sur ce point : le collecteur a un exporter appelé `prometheu
 # Les outils, un par un
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : les-outils
-fichier   : observabilite/04-les-outils.html
+fichier   : blog/introduction-observabilite/04-les-outils.html
 surtitre  : Chapitre 4
 lecture   : 5 min
 ```
@@ -264,7 +286,7 @@ lecture   : 5 min
 
 Prometheus est une base de données pour des nombres dans le temps. Il porte aussi son langage de requête, PromQL, et le moteur qui évalue les règles d'alerte. Presque toute pile de métriques qu'on croisera est soit Prometheus, soit un outil qui parle son langage.
 
-Il garde ses index en mémoire, ce qui explique sa vitesse et sa fragilité. Une étiquette à trop de valeurs distinctes ne le ralentit pas progressivement, elle le fait tomber (voir la [cardinalité](#/observabilite/trois-piliers#la-cardinalite)).
+Il garde ses index en mémoire, ce qui explique sa vitesse et sa fragilité. Une étiquette à trop de valeurs distinctes ne le ralentit pas progressivement, elle le fait tomber (voir la [cardinalité](#/blog/introduction-observabilite/trois-piliers#la-cardinalite)).
 
 ## Loki {#loki}
 
@@ -288,7 +310,7 @@ OpenTelemetry, souvent écrit OTel, est un standard en deux moitiés.
 
 La première est une bibliothèque qu'on ajoute à l'application. Elle produit les métriques, les traces et les logs dans un format neutre, donc le code n'est pas écrit contre Prometheus ou contre Tempo mais contre le standard.
 
-La seconde est le collecteur, dont le [chapitre précédent](#/observabilite/le-trajet#ce-que-le-tuyau-achete) donne le rôle. Sa configuration a trois étages :
+La seconde est le collecteur, dont le [chapitre précédent](#/blog/introduction-observabilite/le-trajet#ce-que-le-tuyau-achete) donne le rôle. Sa configuration a trois étages :
 
 - les receivers acceptent la télémétrie ;
 - les processors la transforment (regroupement par lots, limites de mémoire, métadonnées d'origine) ;
@@ -298,7 +320,7 @@ Les processors ne sont pas des scripts qu'on écrit. Ce sont des composants déj
 
 ## Grafana {#grafana}
 
-Grafana est la couche d'affichage et ne stocke rien. Il se connecte à Prometheus, Loki et Tempo en même temps, ce qui rend possible l'[enquête en trois clics](#/observabilite/trois-piliers#le-checkout-lent).
+Grafana est la couche d'affichage et ne stocke rien. Il se connecte à Prometheus, Loki et Tempo en même temps, ce qui rend possible l'[enquête en trois clics](#/blog/introduction-observabilite/trois-piliers#le-checkout-lent).
 
 Autour de lui, la plupart des composants embarquent leur propre petite interface web.
 
@@ -327,9 +349,9 @@ Une bonne instrumentation rend un moteur plein texte inutile pour le code qu'on 
 # Ce qu'on écrit soi-même
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : instrumenter
-fichier   : observabilite/05-instrumenter.html
+fichier   : blog/introduction-observabilite/05-instrumenter.html
 surtitre  : Chapitre 5
 lecture   : 3 min
 ```
@@ -363,7 +385,7 @@ Une métrique est un objet qu'on déclare une fois et qu'on met à jour dans le 
 
 Ce sont aussi elles qui rendent un incident lisible pour quelqu'un d'autre que le développeur. « La latence monte » est un fait technique. « Les paiements sont tombés à zéro il y a quatre minutes » est une panne, et tout le monde la comprend.
 
-Le [chapitre 2](#/observabilite/trois-piliers#la-cardinalite) a donné la contrainte qui les encadre : une étiquette doit avoir un ensemble de valeurs petit, fini et connu, comme un statut ou un nom de route tiré d'une liste fixe. Jamais un identifiant, jamais une URL brute avec ses paramètres, jamais rien qui vient de la saisie utilisateur.
+Le [chapitre 2](#/blog/introduction-observabilite/trois-piliers#la-cardinalite) a donné la contrainte qui les encadre : une étiquette doit avoir un ensemble de valeurs petit, fini et connu, comme un statut ou un nom de route tiré d'une liste fixe. Jamais un identifiant, jamais une URL brute avec ses paramètres, jamais rien qui vient de la saisie utilisateur.
 
 ## Une question posée à l'avance {#une-question-posee-a-l-avance}
 
@@ -382,9 +404,9 @@ C'est une quantité modeste de configuration, et le lien à plus forte valeur de
 # Lire un graphe sans se tromper
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : lire-un-graphe
-fichier   : observabilite/06-lire-un-graphe.html
+fichier   : blog/introduction-observabilite/06-lire-un-graphe.html
 surtitre  : Chapitre 6
 lecture   : 4 min
 ```
@@ -463,9 +485,9 @@ Un graphe montre la forme que la requête lui a donnée, pas la forme de l'incid
 # Les sondes sont des commandes
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : sondes
-fichier   : observabilite/07-sondes.html
+fichier   : blog/introduction-observabilite/07-sondes.html
 surtitre  : Chapitre 7
 lecture   : 4 min
 ```
@@ -549,9 +571,9 @@ Une application peut donc être vivante, prête, et lente. Un p99 de huit second
 # Un signal doit atteindre quelqu'un
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : alerting
-fichier   : observabilite/08-alerting.html
+fichier   : blog/introduction-observabilite/08-alerting.html
 surtitre  : Chapitre 8
 lecture   : 2 min
 ```
@@ -586,9 +608,9 @@ Il en découle deux habitudes. La première est d'envoyer une vraie alerte, expr
 # L'observabilité dans le pipeline
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : livrer
-fichier   : observabilite/09-livrer.html
+fichier   : blog/introduction-observabilite/09-livrer.html
 surtitre  : Chapitre 9
 lecture   : 1 min
 ```
@@ -612,16 +634,16 @@ Un job de déploiement rapporte un seul fait, la commande a retourné sans erreu
 Un pipeline vert n'est pas un service sain.
 :::
 
-Un déploiement n'est pas terminé quand la commande retourne mais quand la version neuve sert le trafic. Le pipeline devrait donc attendre que les pods neufs soient prêts, et les minutes qui suivent un déploiement méritent plus d'attention que le reste du temps. C'est là que le [chapitre 2](#/observabilite/trois-piliers#le-checkout-lent) s'est refermé en trois clics : la phrase décisive était « le cache est vide depuis le déploiement de 14h02 », et elle n'était possible que parce que le déploiement était visible sur le graphe. Une annotation sur les dashboards à chaque déploiement, que Grafana fait nativement, est le meilleur rapport valeur sur effort de tout le pipeline. Sans elle, la première question de chaque incident est « est-ce qu'on a livré quelque chose récemment ? », et quelqu'un va vérifier à la main.
+Un déploiement n'est pas terminé quand la commande retourne mais quand la version neuve sert le trafic. Le pipeline devrait donc attendre que les pods neufs soient prêts, et les minutes qui suivent un déploiement méritent plus d'attention que le reste du temps. C'est là que le [chapitre 2](#/blog/introduction-observabilite/trois-piliers#le-checkout-lent) s'est refermé en trois clics : la phrase décisive était « le cache est vide depuis le déploiement de 14h02 », et elle n'était possible que parce que le déploiement était visible sur le graphe. Une annotation sur les dashboards à chaque déploiement, que Grafana fait nativement, est le meilleur rapport valeur sur effort de tout le pipeline. Sans elle, la première question de chaque incident est « est-ce qu'on a livré quelque chose récemment ? », et quelqu'un va vérifier à la main.
 
 ---
 
 # Ce qu'un dashboard vert ne dit pas
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : dashboard-vert
-fichier   : observabilite/10-dashboard-vert.html
+fichier   : blog/introduction-observabilite/10-dashboard-vert.html
 surtitre  : Chapitre 10
 lecture   : 2 min
 ```
@@ -656,9 +678,9 @@ C'est ce que le cours qui accompagne ce texte fait faire. Chaque module pose un 
 # Checklist pratique
 
 ```
-section   : observabilite
+article   : introduction-observabilite
 page      : checklist
-fichier   : observabilite/11-checklist.html
+fichier   : blog/introduction-observabilite/11-checklist.html
 surtitre  : Chapitre 11
 lecture   : 2 min
 ```
@@ -667,57 +689,35 @@ Chaque ligne vient de quelque chose qui a d'abord mal tourné, quelque part dans
 
 ## En instrumentant le service {#en-instrumentant-le-service}
 
-- Émettre un identifiant de trace sur chaque requête, et le mettre dans [chaque ligne de log](#/observabilite/trois-piliers#la-colle). Rien d'autre dans cette liste ne compte autant.
-- Formater chaque horodatage avec son décalage, et fixer [un seul fuseau partout](#/observabilite/lire-un-graphe#une-seule-horloge), y compris le défaut des vues ad hoc.
-- Ajouter des [exemplars](#/observabilite/instrumenter#les-exemplars), pour qu'un point sur un graphe puisse ouvrir une requête réelle.
-- Ajouter les deux ou trois [compteurs métier](#/observabilite/instrumenter#les-metriques-metier) qui disent à quoi sert le service. Ce sont eux qui rendent un incident lisible à quelqu'un d'autre que son auteur.
+- Émettre un identifiant de trace sur chaque requête, et le mettre dans [chaque ligne de log](#/blog/introduction-observabilite/trois-piliers#la-colle). Rien d'autre dans cette liste ne compte autant.
+- Formater chaque horodatage avec son décalage, et fixer [un seul fuseau partout](#/blog/introduction-observabilite/lire-un-graphe#une-seule-horloge), y compris le défaut des vues ad hoc.
+- Ajouter des [exemplars](#/blog/introduction-observabilite/instrumenter#les-exemplars), pour qu'un point sur un graphe puisse ouvrir une requête réelle.
+- Ajouter les deux ou trois [compteurs métier](#/blog/introduction-observabilite/instrumenter#les-metriques-metier) qui disent à quoi sert le service. Ce sont eux qui rendent un incident lisible à quelqu'un d'autre que son auteur.
 
 ## En écrivant les sondes {#en-ecrivant-les-sondes}
 
-- Ne jamais mettre une vérification de dépendance dans une [liveness](#/observabilite/sondes#jamais-de-dependance). Elle va dans la readiness.
-- Écrire le délai et le nombre d'échecs de chaque sonde, sans se fier aux défauts, et donner à la liveness [un délai généreux](#/observabilite/sondes#une-sonde-qui-ne-touche-a-rien). Elle existe pour attraper un processus définitivement bloqué, et elle ne doit jamais pouvoir échouer parce qu'il est occupé.
+- Ne jamais mettre une vérification de dépendance dans une [liveness](#/blog/introduction-observabilite/sondes#jamais-de-dependance). Elle va dans la readiness.
+- Écrire le délai et le nombre d'échecs de chaque sonde, sans se fier aux défauts, et donner à la liveness [un délai généreux](#/blog/introduction-observabilite/sondes#une-sonde-qui-ne-touche-a-rien). Elle existe pour attraper un processus définitivement bloqué, et elle ne doit jamais pouvoir échouer parce qu'il est occupé.
 
 ## En construisant les dashboards {#en-construisant-les-dashboards}
 
-- Alerter et diagnostiquer sur le [taux](#/observabilite/lire-un-graphe#plat-n-est-pas-absent), jamais sur un compteur brut comparé à un seuil.
-- Chercher [la mesure qui porte l'instant de l'événement](#/observabilite/lire-un-graphe#l-heure-du-scrape) quand l'heure exacte compte, plutôt que la position d'un échantillon.
-- Déclencher [chaque panneau une fois](#/observabilite/dashboard-vert), exprès, et confirmer qu'il bouge. Un panneau qu'on n'a jamais vu réagir est une décoration.
+- Alerter et diagnostiquer sur le [taux](#/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent), jamais sur un compteur brut comparé à un seuil.
+- Chercher [la mesure qui porte l'instant de l'événement](#/blog/introduction-observabilite/lire-un-graphe#l-heure-du-scrape) quand l'heure exacte compte, plutôt que la position d'un échantillon.
+- Déclencher [chaque panneau une fois](#/blog/introduction-observabilite/dashboard-vert), exprès, et confirmer qu'il bouge. Un panneau qu'on n'a jamais vu réagir est une décoration.
 
 ## En montant l'alerting {#en-montant-l-alerting}
 
-- Mettre en place des [alertes et leurs notifications](#/observabilite/alerting), téléphone ou mail, pour les pannes critiques.
+- Mettre en place des [alertes et leurs notifications](#/blog/introduction-observabilite/alerting), téléphone ou mail, pour les pannes critiques.
 - Corriger à la source toute alerte qui reste active en permanence, dès le premier jour. Le silence doit être l'état normal.
 
 ## En déployant {#en-deployant}
 
-- Garder dashboards et règles d'alerte [dans le dépôt](#/observabilite/livrer), et ne jamais coller un panneau depuis l'interface web.
+- Garder dashboards et règles d'alerte [dans le dépôt](#/blog/introduction-observabilite/livrer), et ne jamais coller un panneau depuis l'interface web.
 - Poser une annotation de déploiement sur les dashboards.
 - Retenir qu'un run vert rapporte que l'état désiré a été écrit, et rien du tout sur sa santé.
 
 :::regle
 Poser au système qui tourne une question dont la réponse serait différente en cas d'erreur. Pas « est-ce que ma commande a réussi », mais « le monde est-il maintenant différent de la façon dont je le voulais ».
 :::
-
----
-
-# Antoine Bastos
-
-```
-section   : cv
-page      : cv
-fichier   : cv/cv.html
-surtitre  : 
-lecture   : - min
-```
-
-Développeur.
-
-## À faire {#a-faire}
-
-Cette page est un emplacement. Le style du CV est à concevoir à part, différent du reste du site, et son contenu vient de `career.md`. Ce qui est décidé :
-
-- pas de PDF à télécharger ;
-- aucune donnée personnelle : ni téléphone, ni adresse mail, ni adresse postale, seulement le département ;
-- sa feuille de style est `css/cv.css`, chargée pour lui seul par la classe `cv` de cet article.
 
 ---

@@ -1,11 +1,12 @@
 # Site personnel
 
 Site statique en français, sans étape de build, servi tel quel par GitHub
-Pages. Trois sections dans une seule coquille Vue chargée depuis un CDN :
+Pages. Une seule coquille Vue chargée depuis un CDN, deux choses dedans :
 
-- `observabilite/` : l'introduction à l'observabilité, douze pages.
-- `blog/` : les articles, un fragment par article.
 - `cv/` : le CV, page principale du site (`#/`), à concevoir (voir son « À faire »).
+- `blog/` : les articles, du plus récent au plus ancien. Un article a une ou
+  plusieurs pages (`blog/introduction-observabilite/` en a douze), une date de
+  publication et une date de mise à jour.
 
 ## Lancer le site
 
@@ -18,13 +19,15 @@ npm start
 étape de build : les fichiers se déposent tels quels sur n'importe quel
 hébergeur statique.
 
-## Ajouter une page
+## Ajouter un article
 
-Une entrée dans `js/sections.js` (`slug`, `titre`, `minutes`, `fichier`, et
-`date` pour un article), et un fragment `<article>` dans le dossier de la
-section, avec un `<h1>` et des `<h2 id="...">` uniques. Le manifeste est la
-source unique : sommaire, routeur, liste du blog et navigation
-précédent/suivant en dérivent tous. Les routes sont `#/section/slug`.
+Une entrée dans `ARTICLES` de `js/sections.js` (`slug`, `titre`, `publie`,
+`maj`, et ses `pages` avec `slug`, `titre`, `minutes`, `fichier`), et un
+fragment `<article>` par page, avec un `<h1>` et des `<h2 id="...">`
+uniques. Le manifeste est la source unique : liste du blog, sommaire, routeur
+et navigation précédent/suivant en dérivent tous. Les routes sont
+`#/blog/article` et `#/blog/article/page`. Un article d'une seule page n'a
+pas de sommaire.
 
 Le texte s'écrit en markdown dans `sources/`, avec les blocs `:::regle`,
 `:::devine`, `:::schema`, `:::tableau`, `:::aller-plus-loin` et les balises
@@ -36,7 +39,7 @@ doit coïncider avec celui des sources.
 
 ## `npm run check`
 
-Lance `scripts/verifier.mjs` sur toutes les pages de toutes les sections :
+Lance `scripts/verifier.mjs` sur toutes les pages, CV compris :
 zéro tiret cadratin, dépliants fermés et jamais imbriqués, un seul `<h1>` par
 page, toute balise standard ou enregistrée par `js/composants/index.js`, tout
 mot de `<jargon>` présent dans `js/lexique.js` et enveloppé une seule fois,

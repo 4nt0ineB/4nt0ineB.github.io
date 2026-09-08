@@ -2,7 +2,7 @@
 
 ```
 page      : trois-piliers
-fichier   : chapitres/02-trois-piliers.html
+fichier   : blog/introduction-observabilite/02-trois-piliers.html
 surtitre  : Chapitre 2
 ```
 
@@ -131,7 +131,7 @@ travers tout. Il doit apparaître à trois endroits :
 - dans la trace, où il naît ;
 - dans chaque ligne de log écrite en traitant cette requête ;
 - attaché aux points de mesure, ce qui rend le pic cliquable (voir les exemplars au
-  [chapitre 5](#/observabilite/instrumenter#les-exemplars)).
+  [chapitre 5](#/blog/introduction-observabilite/instrumenter#les-exemplars)).
 
 C'est le travail d'instrumentation qui compte le plus, et celui qu'on saute le plus
 souvent. Sans lui, il n'y a pas de socle d'observabilité, il y a trois outils séparés et

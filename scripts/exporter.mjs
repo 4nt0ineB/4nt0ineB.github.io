@@ -20,7 +20,7 @@ import path from 'node:path'
 const RACINE = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const SORTIE = process.argv[2] ?? path.join(path.dirname(RACINE), 'site-texte.md')
 
-const { SECTIONS } = await import(pathToFileURL(path.join(RACINE, 'js/sections.js')).href)
+const { ARTICLES, CV } = await import(pathToFileURL(path.join(RACINE, 'js/sections.js')).href)
 
 // Ce que montre chaque schema. Ecrit a la main : un script ne peut pas
 // deviner ce qu'un SVG raconte. Les titres, eux, sont lus dans les composants.
@@ -273,7 +273,7 @@ const out = [
   ''
 ]
 
-for (const [nom, section] of Object.entries(SECTIONS)) for (const c of section.pages) {
+for (const [nom, pages] of [['cv', [CV]], ...ARTICLES.map(a => [a.slug, a.pages])]) for (const c of pages) {
   const html = await readFile(path.join(RACINE, c.fichier), 'utf8')
   const arbre = construire(tokeniser(html))
   const article = arbre.enfants.find(e => e.nom === 'article') ?? arbre
@@ -282,7 +282,7 @@ for (const [nom, section] of Object.entries(SECTIONS)) for (const c of section.p
   const h1 = article.enfants.find(e => e.nom === 'h1')
 
   out.push(`# ${h1 ? propre(h1.enfants.map(ligne).join('')) : c.titre}`, '')
-  out.push('```', `section   : ${nom}`, `page      : ${c.slug}`, `fichier   : ${c.fichier}`,
+  out.push('```', `article   : ${nom}`, `page      : ${c.slug}`, `fichier   : ${c.fichier}`,
     `surtitre  : ${surtitre ? propre(surtitre.enfants.map(ligne).join('')) : ''}`,
     `lecture   : ${c.minutes ?? '-'} min`, '```', '')
   await blocs(article, out)

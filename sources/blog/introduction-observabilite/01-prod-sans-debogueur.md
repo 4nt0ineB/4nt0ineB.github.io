@@ -2,7 +2,7 @@
 
 ```
 page      : prod-sans-debogueur
-fichier   : chapitres/01-prod-sans-debogueur.html
+fichier   : blog/introduction-observabilite/01-prod-sans-debogueur.html
 surtitre  : Chapitre 1
 ```
 

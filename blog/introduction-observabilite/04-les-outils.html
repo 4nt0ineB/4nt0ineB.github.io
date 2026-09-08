@@ -10,7 +10,7 @@
 
   <p>Il garde ses index en mémoire, ce qui explique sa vitesse et sa fragilité. Une
   étiquette à trop de valeurs distinctes ne le ralentit pas progressivement, elle le
-  fait tomber (voir la <a href="#/observabilite/trois-piliers#la-cardinalite">cardinalité</a>).</p>
+  fait tomber (voir la <a href="#/blog/introduction-observabilite/trois-piliers#la-cardinalite">cardinalité</a>).</p>
 
   <h2 id="loki">Loki</h2>
   <p>Loki est le Prometheus des logs : la même place dans l'architecture et la même forme,
@@ -56,7 +56,7 @@
   contre Prometheus ou contre Tempo mais contre le standard.</p>
 
   <p>La seconde est le collecteur, dont le
-  <a href="#/observabilite/le-trajet#ce-que-le-tuyau-achete">chapitre précédent</a> donne le rôle. Sa
+  <a href="#/blog/introduction-observabilite/le-trajet#ce-que-le-tuyau-achete">chapitre précédent</a> donne le rôle. Sa
   configuration a trois étages :</p>
 
   <ul>
@@ -73,7 +73,7 @@
   <h2 id="grafana">Grafana</h2>
   <p>Grafana est la couche d'affichage et ne stocke rien. Il se connecte à Prometheus, Loki
   et Tempo en même temps, ce qui rend possible
-  l'<a href="#/observabilite/trois-piliers#le-checkout-lent">enquête en trois clics</a>.</p>
+  l'<a href="#/blog/introduction-observabilite/trois-piliers#le-checkout-lent">enquête en trois clics</a>.</p>
 
   <p>Autour de lui, la plupart des composants embarquent leur propre petite interface web.</p>
 
