@@ -75,7 +75,7 @@ moving average can resolve a few seconds.
 
 The position of a point on the timeline is the moment it was collected, not the moment
 the event took place. A container was killed at a known instant,
-<mesure valeur="11:21:31" source="lab, 2026-08-26">according to the timestamp of its end, and the panel showed it at 11:23</mesure>,
+<mesure valeur="11:21:31">according to the timestamp of its end, and the panel showed it at 11:23</mesure>,
 because the next collection happened then. Two minutes of error are enough to blame the
 wrong deployment. When the exact instant matters, look for a metric that carries the
 event's timestamp as its value, not the position of the sample.

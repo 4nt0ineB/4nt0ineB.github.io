@@ -30,7 +30,7 @@ Un dashboard vert est une hypothèse, pas un résultat.
 :::
 
 Sur les neuf pannes provoquées pour ce texte, ce résultat parfait côté client est apparu
-<mesure valeur="3 fois sur 9" source="labo, 2026-08-26">avec, à chaque fois, un système en danger</mesure>.
+<mesure valeur="3 fois sur 9">avec, à chaque fois, un système en danger</mesure>.
 
 Rien dans un instrument ne distingue un signal qui ne montre rien parce que rien n'est
 cassé d'un signal qui ne montre rien parce qu'il regarde au mauvais endroit. La seule

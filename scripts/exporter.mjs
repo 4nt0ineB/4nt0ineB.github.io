@@ -266,7 +266,7 @@ const out = [
   '',
   '- `## Titre {#ancre}` : l\'ancre est la cible de liens croises, ne la renomme pas.',
   '- `<jargon mot="x">y</jargon>` : definit un terme a sa premiere occurrence dans la page.',
-  '- `<mesure valeur="..." source="...">y</mesure>` : un chiffre mesure et sa provenance.',
+  '- `<mesure valeur="...">y</mesure>` : un chiffre mesuré, marqué comme tel.',
   '- `:::regle`, `:::aller-plus-loin`, `:::devine`, `:::tableau` : des blocs, dont la prose interieure est modifiable.',
   '- `:::schema` : une fiche descriptive, informative seulement. Le schema lui-meme est du code.',
   '',

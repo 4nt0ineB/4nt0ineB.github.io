@@ -77,7 +77,7 @@ reponse: Elle échoue. Un endpoint qui ne fait rien a quand même besoin d'un th
 
 Le délai de réponse toléré vaut une seconde par défaut, et trois échecs de suite
 suffisent pour tuer. Avec ces deux défauts laissés tels quels, la sonde a échoué
-<mesure valeur="2 fois sur 3" source="labo, 2026-08-26">sous cette charge, à un cycle du crash loop, avec une application saine</mesure>.
+<mesure valeur="2 fois sur 3">sous cette charge, à un cycle du crash loop, avec une application saine</mesure>.
 Une sonde qui ne touche à rien n'est pas une sonde qui n'a besoin de rien.
 
 :::regle

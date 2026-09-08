@@ -29,7 +29,7 @@ A green dashboard is a hypothesis, not a result.
 :::
 
 Over the nine failures provoked for this text, this perfect client-side result appeared
-<mesure valeur="3 times out of 9" source="lab, 2026-08-26">with, each time, a system in danger</mesure>.
+<mesure valeur="3 times out of 9">with, each time, a system in danger</mesure>.
 
 Nothing in an instrument distinguishes a signal that shows nothing because nothing is
 broken from a signal that shows nothing because it is looking in the wrong place. The

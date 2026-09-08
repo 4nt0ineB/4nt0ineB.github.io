@@ -33,7 +33,7 @@ reponse: Nobody. The stack's default destination is called "null" and does nothi
 :::
 
 This default can stay for weeks without anyone noticing, and an alert rang for
-<mesure valeur="40 min" source="lab, 2026-08-27">on a real incident without a single message leaving the machine</mesure>.
+<mesure valeur="40 min">on a real incident without a single message leaving the machine</mesure>.
 
 Two habits follow. The first is to send a real alert, on purpose, and to confirm that it
 reaches the device meant to receive it, not only the interface. The second is to keep

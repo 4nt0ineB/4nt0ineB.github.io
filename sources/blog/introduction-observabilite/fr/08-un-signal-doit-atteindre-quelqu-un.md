@@ -34,7 +34,7 @@ reponse: Personne. La destination par défaut de la pile s'appelle « null » et
 :::
 
 Ce défaut peut rester des semaines sans que personne le remarque, et une alerte a sonné
-<mesure valeur="40 min" source="labo, 2026-08-27">sur un vrai incident sans qu'un seul message sorte de la machine</mesure>.
+<mesure valeur="40 min">sur un vrai incident sans qu'un seul message sorte de la machine</mesure>.
 
 Il en découle deux habitudes. La première est d'envoyer une vraie alerte, exprès, et de
 confirmer qu'elle arrive sur l'appareil censé la recevoir, pas seulement dans

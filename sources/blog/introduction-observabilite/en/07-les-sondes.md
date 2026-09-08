@@ -77,7 +77,7 @@ reponse: It fails. An endpoint that does nothing still needs a thread to answer,
 
 The tolerated response time is one second by default, and three failures in a row are
 enough to kill. With these two defaults left as they were, the probe failed
-<mesure valeur="2 times out of 3" source="lab, 2026-08-26">under this load, one cycle away from the crash loop, with a healthy application</mesure>.
+<mesure valeur="2 times out of 3">under this load, one cycle away from the crash loop, with a healthy application</mesure>.
 A probe that touches nothing is not a probe that needs nothing.
 
 :::regle
