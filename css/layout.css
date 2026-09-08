@@ -99,6 +99,10 @@
 }
 
 .contenu {
+  /* Avec margin auto, l'enfant de grille se dimensionne à son contenu, et un SVG
+     plus large que l'écran l'élargissait jusqu'à sa mesure. width 100% le cale sur
+     la colonne, le contenu large défile dans son bloc. */
+  width: 100%;
   max-width: var(--mesure);
   margin: 0 auto;
   padding-top: 1.5rem;
