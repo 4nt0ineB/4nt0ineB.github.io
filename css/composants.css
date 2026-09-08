@@ -82,17 +82,14 @@
 
 /* --- mesure ----------------------------------------------------------------- */
 
-.mesure {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.35em;
-  white-space: nowrap;
-}
-
+/* Du texte en ligne, qui se coupe comme la phrase autour : seule la valeur
+   est insécable. En bloc insécable, un libellé long élargissait la page sur mobile. */
 .mesure-valeur {
   font-family: var(--mono);
   font-weight: 600;
   color: var(--accent);
+  white-space: nowrap;
+  margin-right: 0.35em;
 }
 
 .mesure-libelle {
@@ -100,6 +97,8 @@
 }
 
 .mesure-source {
+  margin-left: 0.35em;
+  white-space: nowrap;
   font-size: 0.75em;
   color: var(--texte-faible);
   cursor: help;

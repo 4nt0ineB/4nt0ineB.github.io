@@ -50,7 +50,8 @@
 
 .coquille {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  /* minmax(0, 1fr) : un contenu large déborde dans sa colonne, jamais la page. */
+  grid-template-columns: 260px minmax(0, 1fr);
   gap: 2.5rem;
   max-width: 76rem;
   margin: 0 auto;
@@ -105,7 +106,7 @@
 
 /* Sans sommaire (accueil, CV), le contenu prend la grille entière. */
 .coquille.sans-sommaire {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .sommaire-vide {
@@ -228,7 +229,7 @@
   }
 
   .coquille {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: 1.5rem 1.2rem 3rem;
   }
 
