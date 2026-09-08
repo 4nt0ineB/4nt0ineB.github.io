@@ -82,6 +82,11 @@ practices
 - Continuous integration
 - Scrum
 
+## 05 contact {#contact}
+
+- [github.com/4nt0ineB](https://github.com/4nt0ineB)
+- [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
+
 antoine bastos · 2026 · cv inspired by emil ruder, tm 12, 1955
 
 ---
