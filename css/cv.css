@@ -311,8 +311,13 @@ html.page-cv .contenu {
 
 /* --- La marge : une ligne de texte tournée, comme sur la couverture ------ */
 
+/* Collée à la fenêtre : la marge suit le défilement sur toute la feuille. */
 .cv-marge {
   grid-area: marge;
+  position: sticky;
+  top: 1.5rem;
+  align-self: start;
+  height: calc(100vh - 3rem);
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
