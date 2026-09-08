@@ -83,7 +83,7 @@ stockent toutes un instant sous forme de nombre, sans fuseau attaché. Le risque
 l'affichage, et dans le texte des lignes de log.
 
 À l'affichage, chaque outil a son propre réglage de fuseau, et Grafana en a deux : un
-pour les dashboards, un pour les vues ad hoc (`default_timezone` dans `grafana.ini`).
+pour les dashboards, un pour les vues ad hoc.
 Sans décision, une même panne se lit à 12:50 sur un écran et à 14:50 sur l'autre.
 Décider de l'UTC et l'appliquer partout.
 

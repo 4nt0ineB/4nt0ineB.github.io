@@ -81,7 +81,7 @@ instant as a number, with no time zone attached. The risk is at display time, an
 text of the log lines.
 
 At display time, each tool has its own time zone setting, and Grafana has two: one for
-the dashboards, one for ad hoc views (`default_timezone` in `grafana.ini`). Without a
+the dashboards, one for ad hoc views. Without a
 decision, the same outage reads 12:50 on one screen and 14:50 on the other. Decide on
 UTC and apply it everywhere.
 
