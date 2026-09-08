@@ -442,13 +442,13 @@ No requests are arriving any more, and that is the incident. Collection, for its
 
 The two situations call for opposite responses, because a flat counter means the thing being counted has stopped happening, whereas an absent series means collection itself is broken.
 
-A raw counter is therefore rarely read as is. The tool is `rate()`, which turns it into "how many per second, now". We alert on this rate and we diagnose on this rate. The raw counter is only for reading an exact total.
+A raw counter is therefore rarely read as is. It is converted into a rate, that is "how many per second, now", by dividing what it gained by the time elapsed. We alert on this rate and we diagnose on this rate. The raw counter is only for reading an exact total.
 
 This is also why an alert that compares a raw counter to a fixed threshold is a design error and not a setting to tune. The counter only ever grows, so a threshold that makes sense in the first hour makes none in the third week. A rate, on the other hand, stays comparable from one day to the next.
 
 ## The window of a query {#la-fenetre}
 
-`rate()` computes its average over a time window, chosen at each query. This window carries two traps, which pull in opposite directions.
+A rate is computed over a time window, chosen at each query: the counter's variation over the window, divided by its length. This window carries two traps, which pull in opposite directions.
 
 Too wide a window spreads a short event out. A six-second incident, averaged over a minute, draws a bump a minute wide, and nothing in the graph is broken.
 

@@ -33,9 +33,7 @@
   being counted has stopped happening, whereas an absent series means collection itself
   is broken.</p>
 
-  <p>A raw counter is therefore rarely read as is. The tool is <code>rate()</code>, which
-  turns it into "how many per second, now". We alert on this rate and we diagnose on
-  this rate. The raw counter is only for reading an exact total.</p>
+  <p>A raw counter is therefore rarely read as is. It is converted into a rate, that is "how many per second, now", by dividing what it gained by the time elapsed. We alert on this rate and we diagnose on this rate. The raw counter is only for reading an exact total.</p>
 
   <p>This is also why an alert that compares a raw counter to a fixed threshold is a design
   error and not a setting to tune. The counter only ever grows, so a threshold that
@@ -43,8 +41,7 @@
   stays comparable from one day to the next.</p>
 
   <h2 id="la-fenetre">The window of a query</h2>
-  <p><code>rate()</code> computes its average over a time window, chosen at each query.
-  This window carries two traps, which pull in opposite directions.</p>
+  <p>A rate is computed over a time window, chosen at each query: the counter's variation over the window, divided by its length. This window carries two traps, which pull in opposite directions.</p>
 
   <p>Too wide a window spreads a short event out. A six-second incident, averaged over a
   minute, draws a bump a minute wide, and nothing in the graph is broken.</p>

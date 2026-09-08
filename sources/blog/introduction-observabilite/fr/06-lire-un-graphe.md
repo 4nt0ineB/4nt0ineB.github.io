@@ -41,9 +41,7 @@ Les deux situations réclament des réponses opposées, car un compteur plat veu
 la chose comptée a cessé de se produire, alors qu'une série absente veut dire que la
 collecte elle-même est cassée.
 
-Un compteur brut se lit donc rarement tel quel. L'outil est `rate()`, qui le transforme
-en « combien par seconde, maintenant ». On alerte sur ce taux et on diagnostique sur ce
-taux. Le compteur brut ne sert qu'à lire un total exact.
+Un compteur brut se lit donc rarement tel quel. On le convertit en taux, c'est-à-dire en « combien par seconde, maintenant », en divisant ce qu'il a gagné par le temps écoulé. On alerte sur ce taux et on diagnostique sur ce taux. Le compteur brut ne sert qu'à lire un total exact.
 
 C'est aussi pourquoi une alerte qui compare un compteur brut à un seuil fixe est une
 erreur de conception et non un réglage à corriger. Le compteur ne fait que grossir, donc
@@ -52,8 +50,7 @@ lui, reste comparable d'un jour à l'autre.
 
 ## La fenêtre d'une requête {#la-fenetre}
 
-`rate()` calcule sa moyenne sur une fenêtre de temps, qu'on choisit à chaque requête.
-Cette fenêtre porte deux pièges, qui tirent en sens opposé.
+Un taux se calcule sur une fenêtre de temps, choisie à chaque requête : la variation du compteur sur la fenêtre, divisée par sa durée. Cette fenêtre porte deux pièges, qui tirent en sens opposé.
 
 Une fenêtre trop large étale un événement court. Un incident de six secondes, moyenné
 sur une minute, dessine une bosse d'une minute de large, et rien n'est cassé dans le
