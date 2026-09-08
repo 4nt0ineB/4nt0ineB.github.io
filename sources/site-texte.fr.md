@@ -28,13 +28,13 @@ ingénieur logiciel
 
 Seine-et-Marne, France
 
-Backend Java, performance, modernisation de code existant et migration de données. Chez Lunatech depuis 2024, en mission chez ses clients.
+Backend Java, performance, modernisation de code existant et migration de données. Chez Lunatech depuis 2024.
 
 ## 02 parcours {#parcours}
 
 1. mars à août 2026 CARIAD, groupe Volkswagen lead dev en binôme avec un apprenti, relu par un senior, via Lunatech Chez la filiale logicielle du groupe Volkswagen, migration d'un outil de gestion des accès, d'un monolithe rendu côté serveur vers React et une API REST. Le motif Strangler Fig, endpoint par endpoint derrière un feature flag, avec retour arrière instantané et sans régression. Java · Spring Boot · React 19 · TypeScript · Vitest
-2. juillet 2025 à mars 2026 DARVA, Domaine Client développeur backend, via Lunatech Chez un éditeur de services pour l'assurance, migration de toutes les données clients de l'ancien CRM vers le référentiel client. Huit batchs récurrents ramenés sous cinq minutes, et un batch unique de trente mille enregistrements ramené de huit heures à moins d'une heure et demie. Une saturation mémoire de la JVM en recette, diagnostiquée sur heap dump et corrigée dans le modèle de données. Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins
-3. janvier à juillet 2025 DARVA, Exiris développeur full-stack, via Lunatech Sur la plateforme de lettre recommandée électronique, des fonctionnalités de recherche et de contrôle des certificats, et la migration des tests de Lighthouse et Cypress vers une seule suite Playwright, sans interrompre la CI. Java · Quarkus · React · TypeScript · Playwright · Jenkins
+2. juillet 2025 à mars 2026 DARVA, Domaine Client développeur backend, via Lunatech Chez un éditeur de services pour l'assurance, migration de toutes les données clients de l'ancien CRM vers le référentiel client. Huit batchs récurrents ramenés sous cinq minutes, et le batch de migration des données de trente mille clients ramené de huit heures à moins d'une heure et demie. Une saturation mémoire de la JVM en recette diagnostiquée sur heap dump et corrigée dans le modèle de données. Java · Quarkus · Hibernate Reactive · Mutiny · MariaDB · Jenkins
+3. janvier à juillet 2025 DARVA, Exiris développeur full-stack, via Lunatech Plateforme de lettre recommandée électronique : des fonctionnalités de recherche et de contrôle des certificats, et le passage de Lighthouse à Playwright dans la suite de tests. Java · Quarkus · React · TypeScript · Playwright · Jenkins
 4. mai à août 2024 Open Food Facts développeur backend, stage de master, en anglais Intégration du CRM Odoo par XML-RPC dans le monolithe Perl de la plateforme producteurs, import de trois cents organisations, et refonte du routage en handlers typés, adoptée comme standard du projet. Perl · Docker · Linux
 5. été 2022 VLA, catalogue raisonné freelance, seul développeur Le catalogue en ligne des six cent cinquante œuvres d'un peintre, du devis à la mise en production. Le site est toujours en ligne. Python · Django · JavaScript · Docker · Nginx
 
