@@ -67,3 +67,13 @@ hash ne demande aucune configuration serveur.
 la main : `prefers-reduced-motion` sur chaque schéma, la largeur de 375 px
 sans défilement horizontal, la bascule de thème sur chaque schéma, et chaque
 ancre `#/section/slug#id` ouverte dans un onglet neuf.
+
+## À faire, quand le premier article arrive
+
+- **Plusieurs langues.** La langue en tête de route (`#/en/blog/slug`, rien pour
+  le français), une entrée par langue dans le manifeste reliée par un `id`
+  commun, un bouton de langue dans l'en-tête affiché seulement quand la page
+  courante a une traduction, l'attribut `lang` du document qui suit la route.
+  Le CV suit la même règle.
+- **Un lexique par langue**, et le vérificateur qui choisit celui de la langue
+  de la page.
