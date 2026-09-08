@@ -41,7 +41,7 @@ Backend Java, performance, modernisation de code existant et migration de donné
 ## 03 formation {#formation}
 
 1. Master en informatique, ingénierie logicielle et données Université Gustave Eiffel, 2025
-2. TOEIC 945 anglais professionnel, 2025
+2. TOEIC score 945, anglais professionnel, 2025
 
 ## 04 outils {#outils}
 

@@ -41,7 +41,7 @@ Java backend, performance, legacy modernisation and data migration. At Lunatech 
 ## 03 education {#formation}
 
 1. Master's in Computer Science, Software and Data Engineering Université Gustave Eiffel, 2025
-2. TOEIC 945 professional English, 2025
+2. TOEIC score 945, professional English, 2025
 
 ## 04 tools {#outils}
 

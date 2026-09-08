@@ -198,8 +198,10 @@ html.page-cv .contenu {
   grid-area: parcours;
 }
 
+/* Le filet passe par le centre des carrés : celui du titre, à carre/2 du
+   bord, et ceux des étapes, décalés d'autant vers la gauche. */
 .cv-axe {
-  margin-left: calc(var(--carre) / 2);
+  margin-left: calc(var(--carre) / 2 - 0.5px);
   border-left: 1px solid var(--cv-encre);
   padding-bottom: 1rem;
 }
