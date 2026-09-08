@@ -14,10 +14,10 @@ export const SchemaPullPush = {
         <text class="pp-texte" x="235" y="170" text-anchor="middle">the service</text>
 
         <g class="pp-boucle-pull">
-          <path class="pp-fleche-aller" d="M155,60 H300 A20,20 0 0 1 320,80 V140" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#fleche-pull)" />
-          <path class="pp-fleche-retour" d="M300,150 H180 A20,20 0 0 1 160,130 V80" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#fleche-pull)" />
+          <path class="pp-fleche-aller" d="M150,48 H260 A15,15 0 0 1 275,63 V132" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#fleche-pull)" />
+          <path class="pp-fleche-retour" d="M195,140 V87 A15,15 0 0 0 180,72 H158" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#fleche-pull)" />
         </g>
-        <text class="pp-legende-svg" x="85" y="20" text-anchor="middle">pulls, on a fixed interval</text>
+        <text class="pp-legende-svg" x="20" y="20">pulls, on a fixed interval</text>
 
         <rect class="pp-boite" x="490" y="140" width="130" height="50" rx="4" />
         <text class="pp-texte" x="555" y="170" text-anchor="middle">the service</text>
@@ -28,7 +28,7 @@ export const SchemaPullPush = {
         <circle class="pp-paquet pp-paquet-1" cx="555" cy="140" r="6" />
         <circle class="pp-paquet pp-paquet-2" cx="555" cy="140" r="6" />
         <circle class="pp-paquet pp-paquet-3" cx="555" cy="140" r="6" />
-        <text class="pp-legende-svg" x="555" y="20" text-anchor="middle">pushes, as soon as an event exists</text>
+        <text class="pp-legende-svg" x="620" y="20" text-anchor="end">pushes, as soon as an event exists</text>
 
         <defs>
           <marker id="fleche-pull" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
