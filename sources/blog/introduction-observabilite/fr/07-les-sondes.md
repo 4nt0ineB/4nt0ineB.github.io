@@ -2,7 +2,7 @@
 
 ```
 page      : sondes
-fichier   : blog/introduction-observabilite/07-sondes.html
+fichier   : blog/introduction-observabilite/fr/07-sondes.html
 surtitre  : Chapitre 7
 ```
 

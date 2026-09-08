@@ -2,7 +2,7 @@
 
 ```
 page      : lire-un-graphe
-fichier   : blog/introduction-observabilite/06-lire-un-graphe.html
+fichier   : blog/introduction-observabilite/fr/06-lire-un-graphe.html
 surtitre  : Chapitre 6
 ```
 

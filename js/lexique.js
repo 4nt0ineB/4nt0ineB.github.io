@@ -1,5 +1,6 @@
-// mot => définition courte, en français, une phrase.
+// Par langue, mot => définition courte, une phrase.
 export const LEXIQUE = {
+  fr: {
   scrape: "La collecte : Prometheus se connecte au service et lit ses compteurs, à intervalle régulier.",
   liveness: "La sonde qui demande « ce processus est-il définitivement bloqué ? ». Son échec tue le conteneur.",
   readiness: "La sonde qui demande « cette instance peut-elle recevoir du trafic maintenant ? ». Son échec la retire du service, sans rien détruire.",
@@ -29,4 +30,36 @@ export const LEXIQUE = {
   'kube-proxy': "Le composant qui traduit un Service Kubernetes en règles de redirection réseau, une par connexion, pas par requête.",
   pod: "La plus petite unité déployable de Kubernetes : un ou plusieurs conteneurs qui partagent réseau et stockage.",
   GitOps: "Une pratique où l'état désiré d'un système vit dans un dépôt git, et où un agent applique en continu ce que le dépôt décrit."
+  },
+  en: {
+    scrape: 'The collection: Prometheus connects to the service and reads its counters, at a fixed interval.',
+    liveness: 'The probe that asks "is this process stuck for good?". Its failure kills the container.',
+    readiness: 'The probe that asks "can this instance take traffic right now?". Its failure removes it from the service, without destroying anything.',
+    'startup probe': 'The probe that protects start-up: until it has succeeded once, liveness and readiness do not run.',
+    span: 'A segment of a trace: a timed operation, with a start and an end, which can contain other segments.',
+    exemplar: 'A link attached to a data point, pointing to the precise trace that produced it.',
+    trace: 'The full journey of one request through one or several services, rebuilt from its segments (the spans).',
+    gauge: 'A value that goes up and down, like memory in use or the number of open connections.',
+    counter: 'A value that only increases (or restarts at zero on restart), like the number of requests received.',
+    histogram: 'A set of counters per value bucket, from which a median or a p95 can be computed afterwards.',
+    throttling: 'The brake the kernel applies to a container that has used its whole CPU quota before the end of its period.',
+    bulkhead: 'A concurrency limit: beyond a number of requests in flight, the next ones are refused immediately.',
+    'rate limit': 'A throughput limit: beyond a number of requests per second, the next ones are refused, whatever their duration.',
+    OOMKill: 'The killing of a container by the Linux kernel when its memory exceeds the cgroup limit. The process gets a SIGKILL, without warning.',
+    'crash loop': 'A container that restarts over and over, each new start failing in turn for the same reason.',
+    autoscaler: 'The mechanism that adds or removes instances of a service according to an observed metric, such as average CPU.',
+    request: 'The amount of a resource a container reserves up front: it drives placement, it is not an upper limit.',
+    limit: 'The ceiling a container cannot exceed: beyond it, it is throttled (CPU) or killed (memory).',
+    heap: 'The memory area where a virtual machine such as the JVM allocates its objects, managed by a garbage collector.',
+    'working set': 'The memory a container really uses at a given moment, measured by the kernel, not declared by the application.',
+    "dead man's switch": 'An alert that must stay active all the time, whose silence signals the failure of the alerting system itself.',
+    receiver: 'The destination of an alert in Alertmanager (a notification channel, a webhook, or no destination).',
+    pull: 'A collection model where the observer fetches the data from the target, at its own pace (the Prometheus model).',
+    push: 'A collection model where the target sends its data to a collector itself, without waiting to be asked.',
+    cardinality: 'The number of distinct combinations the labels of a metric can take: too high a cardinality exhausts the memory of the metrics server.',
+    'N+1': 'The flaw of loading a list, then one separate database query per item: one planned query becomes N+1.',
+    'kube-proxy': 'The component that turns a Kubernetes Service into network redirection rules, one per connection, not per request.',
+    pod: 'The smallest deployable unit in Kubernetes: one or several containers sharing network and storage.',
+    GitOps: 'A practice where the desired state of a system lives in a git repository, and an agent continuously applies what the repository describes.'
+  }
 }

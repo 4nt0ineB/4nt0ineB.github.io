@@ -1,0 +1,25 @@
+# An introduction to observability
+
+```
+page      : accueil
+fichier   : blog/introduction-observabilite/en/00-accueil.html
+surtitre  : Introduction
+```
+
+The code is running in production and one morning, someone says the application is slow.
+There is no debugger, and no way to reproduce the context of the problem. If
+observability has been set up, a developer has something to work with. Otherwise, good
+luck.
+
+This article is for someone who knows what a log line is and may have seen a Grafana
+dashboard on a colleague's screen, without ever having built or run what produces those
+graphs. No knowledge of observability tooling (Prometheus, Kubernetes, and so on) or of
+the related notions is assumed, and jargon is explained the first time it appears.
+
+It comes from an AI-assisted self-training review: nine failures provoked under real
+load, on a real server, diagnosed from the dashboards alone. Every figure in it was
+observed through a series of hands-on exercises on a virtual server.
+
+The goal is to give the reader a mental picture of observability and its key concepts.
+It is not about the ability to diagnose an outage, which a text of a few lines could not
+teach.

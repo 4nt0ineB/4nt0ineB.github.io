@@ -1,0 +1,70 @@
+<article>
+  <p class="eyebrow">Chapter 11</p>
+  <h1>A practical checklist</h1>
+
+  <p>Every line comes from something that first went wrong, somewhere in this text.</p>
+
+  <h2 id="en-instrumentant-le-service">When instrumenting the service</h2>
+  <ul>
+    <li>Emit a trace identifier on every request, and put it in
+    <a href="#/en/blog/introduction-observabilite/trois-piliers#la-colle">every log
+    line</a>. Nothing else on this list matters as much.</li>
+    <li>Format every timestamp with its offset, and set
+    <a href="#/en/blog/introduction-observabilite/lire-un-graphe#une-seule-horloge">a
+    single time zone everywhere</a>, including the default of ad hoc views.</li>
+    <li>Add
+    <a href="#/en/blog/introduction-observabilite/instrumenter#les-exemplars">exemplars</a>,
+    so that a point on a graph can open a real request.</li>
+    <li>Add the two or three
+    <a href="#/en/blog/introduction-observabilite/instrumenter#les-metriques-metier">business
+    counters</a> that say what the service is for. They are what makes an incident
+    readable to someone other than its author.</li>
+  </ul>
+
+  <h2 id="en-ecrivant-les-sondes">When writing the probes</h2>
+  <ul>
+    <li>Never put a dependency check in a
+    <a href="#/en/blog/introduction-observabilite/sondes#jamais-de-dependance">liveness
+    probe</a>. It goes in the readiness probe.</li>
+    <li>Write the timeout and the failure count of every probe, without relying on the
+    defaults, and give the liveness probe
+    <a href="#/en/blog/introduction-observabilite/sondes#une-sonde-qui-ne-touche-a-rien">a
+    generous timeout</a>. It exists to catch a process stuck for good, and it must never
+    be able to fail because the process is busy.</li>
+  </ul>
+
+  <h2 id="en-construisant-les-dashboards">When building the dashboards</h2>
+  <ul>
+    <li>Alert and diagnose on the
+    <a href="#/en/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent">rate</a>,
+    never on a raw counter compared to a threshold.</li>
+    <li>Look for
+    <a href="#/en/blog/introduction-observabilite/lire-un-graphe#l-heure-du-scrape">the
+    measurement that carries the instant of the event</a> when the exact time matters,
+    rather than the position of a sample.</li>
+    <li>Trigger <a href="#/en/blog/introduction-observabilite/dashboard-vert">every panel
+    once</a>, on purpose, and confirm that it moves. A panel one has never seen react is
+    decoration.</li>
+  </ul>
+
+  <h2 id="en-montant-l-alerting">When setting up alerting</h2>
+  <ul>
+    <li>Set up <a href="#/en/blog/introduction-observabilite/alerting">alerts and their
+    notifications</a>, phone or e-mail, for critical failures.</li>
+    <li>Fix at the source any alert that stays active permanently, from day one. Silence
+    must be the normal state.</li>
+  </ul>
+
+  <h2 id="en-deployant">When deploying</h2>
+  <ul>
+    <li>Keep dashboards and alerting rules
+    <a href="#/en/blog/introduction-observabilite/livrer">in the repository</a>, and
+    never paste a panel from the web interface.</li>
+    <li>Put a deployment annotation on the dashboards.</li>
+    <li>Remember that a green run reports that the desired state was written, and nothing at
+    all about its health.</li>
+  </ul>
+
+  <regle>Ask the running system a question whose answer would be different in case of error.
+  Not "did my command succeed", but "is the world now different from how I wanted it".</regle>
+</article>

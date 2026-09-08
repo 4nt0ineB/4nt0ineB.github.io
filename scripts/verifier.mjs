@@ -190,34 +190,34 @@ for (const c of PAGES) {
   const nOuvrantes = (html.match(/<aller-plus-loin\b[^>]*>/g) ?? []).length
   const nFermantes = (html.match(/<\/aller-plus-loin>/g) ?? []).length
   if (nOuvrantes !== nFermantes) {
-    echec(`${(c.slug ?? c.fichier)} : ${nOuvrantes} ouverture(s) et ${nFermantes} fermeture(s) de <aller-plus-loin>, balise mal fermee`)
+    echec(`${c.fichier} : ${nOuvrantes} ouverture(s) et ${nFermantes} fermeture(s) de <aller-plus-loin>, balise mal fermee`)
   }
   if (depliantsImbriques(html)) {
-    echec(`${(c.slug ?? c.fichier)} : un <aller-plus-loin> imbrique dans un autre, c'est interdit`)
+    echec(`${c.fichier} : un <aller-plus-loin> imbrique dans un autre, c'est interdit`)
   }
 
   // 2b. décompte de mots, hors dépliants. Une observation, pas une limite :
   // un indicateur cesse d'en être un quand il devient une cible.
   const principal = compterMots(sansDepliants(html))
   const total = compterMots(html)
-  infos.push(`${(c.slug ?? c.fichier).padEnd(24)} ${String(principal).padStart(5)} mots  (${total} avec les dépliants)`)
+  infos.push(`${c.fichier.padEnd(24)} ${String(principal).padStart(5)} mots  (${total} avec les dépliants)`)
 
   // 3. un seul h1, insensible à la casse
   const h1 = (html.match(/<h1\b[^>]*>/gi) ?? []).length
-  if (h1 !== 1) echec(`${(c.slug ?? c.fichier)} : ${h1} balise(s) h1, il en faut exactement une`)
+  if (h1 !== 1) echec(`${c.fichier} : ${h1} balise(s) h1, il en faut exactement une`)
 
   // 4. toute balise rencontrée est un élément HTML/SVG standard, ou un
   // composant réellement enregistré par js/composants/index.js. Sans trait
   // d'union (regle, mesure, devine, jargon) comme avec (aller-plus-loin).
   for (const balise of balisesUtilisees(html)) {
     if (!ELEMENTS_STANDARD.has(balise) && !enregistrees.has(balise)) {
-      echec(`${(c.slug ?? c.fichier)} : <${balise}> n'est enregistré dans aucun composant`)
+      echec(`${c.fichier} : <${balise}> n'est enregistré dans aucun composant`)
     }
   }
 
   // 5. tout mot de jargon a une définition
   for (const mot of motsDeJargon(html)) {
-    if (!(mot in LEXIQUE)) echec(`${(c.slug ?? c.fichier)} : jargon "${mot}" absent du lexique`)
+    if (!(mot in (LEXIQUE[c.locale] ?? {}))) echec(`${c.fichier} : jargon "${mot}" absent du lexique ${c.locale}`)
   }
 
   // 5b. un mot de jargon n'est enveloppé qu'une fois par page, à sa
@@ -227,7 +227,7 @@ for (const c of PAGES) {
     compteJargon[m[1]] = (compteJargon[m[1]] ?? 0) + 1
   }
   for (const [mot, n] of Object.entries(compteJargon)) {
-    if (n > 1) echec(`${(c.slug ?? c.fichier)} : jargon "${mot}" enveloppé ${n} fois, une seule suffit`)
+    if (n > 1) echec(`${c.fichier} : jargon "${mot}" enveloppé ${n} fois, une seule suffit`)
   }
 
   // 6. chaque h2 porte un identifiant non vide, et deux h2 du même chapitre
@@ -235,7 +235,7 @@ for (const c of PAGES) {
   const idsH2 = idsDeH2(html)
   for (const id of idsH2) {
     if (id === null || id === '') {
-      echec(`${(c.slug ?? c.fichier)} : un h2 sans identifiant valide (id absent ou vide), son ancre serait morte`)
+      echec(`${c.fichier} : un h2 sans identifiant valide (id absent ou vide), son ancre serait morte`)
     }
   }
   const comptages = new Map()
@@ -244,7 +244,7 @@ for (const c of PAGES) {
     comptages.set(id, (comptages.get(id) ?? 0) + 1)
   }
   for (const [id, n] of comptages) {
-    if (n > 1) echec(`${(c.slug ?? c.fichier)} : identifiant "${id}" utilisé par ${n} balises h2, l'ancre est ambiguë`)
+    if (n > 1) echec(`${c.fichier} : identifiant "${id}" utilisé par ${n} balises h2, l'ancre est ambiguë`)
   }
 }
 

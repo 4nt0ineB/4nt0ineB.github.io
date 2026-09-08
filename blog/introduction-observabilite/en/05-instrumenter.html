@@ -1,0 +1,69 @@
+<article>
+  <p class="eyebrow">Chapter 5</p>
+  <h1>What you write yourself</h1>
+
+  <h2 id="ce-qui-existe-sans-rien-faire">What exists without doing anything</h2>
+  <p>Modern frameworks already instrument a lot out of the box: incoming HTTP requests,
+  response codes, the latency distribution, memory, the garbage collector, the usage of
+  the database connection pool. All of this usually exists as soon as the metrics
+  dependency is added (Micrometer for Quarkus and Spring Boot).</p>
+
+  <p>No need to rebuild it. The work that belongs to the developer is the layer nobody else
+  can guess, namely what the application does for the business.</p>
+
+  <h2 id="les-quatre-types">The four kinds of metric</h2>
+  <p>A metric is an object declared once and updated in the code.</p>
+
+  <tableau-mesure legende="The four kinds of metric and what each is for.">
+    <table>
+      <thead>
+        <tr><th>kind</th><th>behaviour</th><th>used for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><jargon mot="counter">counter</jargon></td><td>only goes up</td><td>requests served, orders created, errors</td></tr>
+        <tr><td><jargon mot="gauge">gauge</jargon></td><td>goes up and down</td><td>queue length, active connections, cached items</td></tr>
+        <tr><td><jargon mot="histogram">histogram</jargon> (or timer)</td><td>records a distribution</td><td>durations, so that the p95 can be asked for</td></tr>
+        <tr><td>value summary</td><td>a distribution of non-temporal values</td><td>order amount, payload size</td></tr>
+      </tbody>
+    </table>
+  </tableau-mesure>
+
+  <p>Worth knowing: an average latency is worth almost nothing, since it is dominated by
+  the many fast requests and hides the slow ones. A percentile, on the contrary,
+  describes the experience of the least lucky users, and that is what makes a histogram
+  useful.</p>
+
+  <h2 id="les-metriques-metier">Business metrics</h2>
+  <p><code>orders_created_total</code>. <code>cart_value_euros</code>.
+  <code>password_resets_total</code>. These are legitimate metrics, and impossible to
+  instrument automatically, since no framework knows what an order is.</p>
+
+  <p>They are also what makes an incident readable to someone other than the developer.
+  "Latency is rising" is a technical fact. "Payments dropped to zero four minutes ago"
+  is an outage, and everyone understands it.</p>
+
+  <p><a href="#/en/blog/introduction-observabilite/trois-piliers#la-cardinalite">Chapter
+  2</a> gave the constraint that frames them: a label must have a small, finite, known
+  set of values, like a status or a route name taken from a fixed list. Never an
+  identifier, never a raw URL with its parameters, never anything that comes from user
+  input.</p>
+
+  <h2 id="une-question-posee-a-l-avance">A question asked in advance</h2>
+  <p>One can only query what one decided to instrument before the incident, and that is the
+  limit of the approach. If nobody thought of counting rejected uploads, then during the
+  incident about rejected uploads, that figure does not exist and cannot be recovered
+  afterwards.</p>
+
+  <p>Logs have the symmetrical limit and strength, because they answer questions nobody had
+  anticipated and aggregate badly. This symmetry is the reason for keeping both.</p>
+
+  <h2 id="les-exemplars">Exemplars</h2>
+  <p>An <jargon mot="exemplar">exemplar</jargon> is a small pointer attached to a data
+  point, carrying the identifier of one precise request that contributed to that point.
+  It is what turns "the p95 went up" into "here is a real slow request, to look at
+  closely".</p>
+
+  <p>It is a modest amount of configuration, and the highest-value link in the whole stack,
+  since it turns a statistic into a specimen. Without it, going from a graph to a trace
+  means copying timestamps into a search bar and hoping.</p>
+</article>

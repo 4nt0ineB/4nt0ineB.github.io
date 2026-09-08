@@ -1,0 +1,84 @@
+<article>
+  <p class="eyebrow">Chapter 3</p>
+  <h1>The journey of a data point</h1>
+
+  <h2 id="deux-boites">Two boxes</h2>
+  <p>Most confusion about tooling disappears once each product is put into one of two
+  boxes: those that keep the data, and those that move it. A lot of debate goes into
+  tools that do not compete, because they are not in the same box.</p>
+
+  <tableau-mesure legende="The map of the stack: each tool, its box, and whether it keeps the data.">
+    <table>
+      <thead>
+        <tr><th>tool</th><th>box</th><th>keeps the data?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Prometheus</td><td>storage, for metrics</td><td>yes, and it also runs the queries and the alerts</td></tr>
+        <tr><td>Loki</td><td>storage, for logs</td><td>yes</td></tr>
+        <tr><td>Tempo</td><td>storage, for traces</td><td>yes</td></tr>
+        <tr><td>OpenTelemetry Collector</td><td>pipe</td><td>no</td></tr>
+        <tr><td>Grafana Alloy</td><td>pipe</td><td>no</td></tr>
+        <tr><td>Grafana</td><td>display</td><td>no</td></tr>
+      </tbody>
+    </table>
+  </tableau-mesure>
+
+  <p>This stack was chosen because it is proven, free, fits on an 8 GB machine, and Grafana
+  can read all three stores. Other choices exist and the next page names one.</p>
+
+  <p>This map answers "what is this component". It does not answer "how does the data reach
+  my screen", which is a question of movement.</p>
+
+  <h2 id="de-l-application-a-l-ecran">From the application to the screen</h2>
+  <p>An instrumented application emits its three pillars through three different paths.</p>
+
+  <ul>
+    <li>Its metrics go nowhere. It exposes them on an HTTP endpoint, <code>/metrics</code>,
+    and Prometheus comes to read them.</li>
+    <li>Its traces leave over OTLP to the OpenTelemetry collector, which routes them to
+    Tempo.</li>
+    <li>Its logs go to its standard output, where an agent running on the machine, Alloy,
+    reads them, labels them and pushes them to Loki. The application does nothing for
+    this, which is the strength of an agent, since it collects without any cooperation
+    from the code.</li>
+  </ul>
+
+  <p>Grafana reads the three stores and puts them on the same screen. In parallel,
+  Prometheus evaluates its alerting rules, and a fired alert can reach a human.</p>
+
+  <schema-trajet></schema-trajet>
+
+  <h2 id="pull-contre-push">Pull versus push</h2>
+  <p>Two of these three paths go one way and the third the other, and this asymmetry is not
+  arbitrary.</p>
+
+  <p>Prometheus does <jargon mot="pull">pull</jargon>. The application sends its metrics
+  nowhere, it displays its current counters as text on <code>/metrics</code>, and
+  Prometheus connects to this endpoint every fifteen or thirty seconds to note what it
+  sees. This operation is called a <jargon mot="scrape">scrape</jargon>.</p>
+
+  <p>Logs and traces, on the other hand, are <jargon mot="push">pushed</jargon>. An event
+  happens when it happens, so something has to send it at the moment it occurs. A state,
+  on the contrary, is measured on demand. One cannot ask a process what it logged in the
+  last thirty seconds, but one can always ask it how much memory it is using now.</p>
+
+  <schema-pull-push></schema-pull-push>
+
+  <p>Pull has a consequence that comes back in
+  <a href="#/en/blog/introduction-observabilite/lire-un-graphe#la-fenetre">chapter
+  6</a>: a metric has no continuous value, it has the value it had at the instants
+  someone came to read it. An event that starts and ends between two scrapes never
+  existed for Prometheus.</p>
+
+  <h2 id="ce-que-le-tuyau-achete">What the pipe buys</h2>
+  <p>The collector keeps nothing, so one may wonder what it is for. It is there so that the
+  application only knows a single destination. Replacing Tempo with something else
+  becomes a change in the collector's configuration, not a redeployment of forty
+  services.</p>
+
+  <p>A misleading name on this point: the collector has an exporter called
+  <code>prometheus</code>, and it sends nothing to Prometheus. It imitates it, by
+  translating the metrics into its text format and exposing them on a
+  <code>/metrics</code> that Prometheus comes to scrape like any other target. The pull
+  model stays intact even there.</p>
+</article>

@@ -27,20 +27,27 @@ dates, et ses `pages` avec `slug`, `titre`, `minutes`, `fichier`), et un
 fragment `<article>` par page, avec un `<h1>` et des `<h2 id="...">`
 uniques. Le manifeste est la source unique : liste du blog, sommaire, routeur
 et navigation précédent/suivant en dérivent tous. Les routes sont
-`#/blog/article` et `#/blog/article/page`. Un article d'une seule page n'a
-pas de sommaire.
+`#/fr/blog/article` et `#/fr/blog/article/page`. Un article d'une seule page
+n'a pas de sommaire.
+
+Chaque article et le CV ont une entrée par langue (`fr`, `en`). Une langue
+absente veut dire pas de traduction : l'article ne figure pas dans la liste de
+cette langue et le bouton de langue n'apparaît pas. Les chaînes de l'interface
+et des composants vivent dans `js/i18n.js`, le lexique des bulles de jargon
+dans `js/lexique.js`, un objet par langue. Les textes dessinés dans les schémas
+SVG sont en français dans les deux langues, c'est un reste à faire.
 
 Le texte s'écrit en markdown dans `sources/`, avec les blocs `:::regle`,
 `:::devine`, `:::schema`, `:::tableau`, `:::aller-plus-loin` et les balises
 `<jargon>` et `<mesure>`. La conversion en fragment HTML se fait à la main
 (ou par une IA) en une passe, il n'y a pas d'importateur : les pages sont
 courtes et le site est petit. `scripts/exporter.mjs` fait le chemin inverse
-et sert de contrôle : `sources/site-texte.md` est son résultat, et son texte
+et sert de contrôle : `sources/site-texte.fr.md` et `sources/site-texte.en.md` sont son résultat (`node scripts/exporter.mjs en`), et son texte
 doit coïncider avec celui des sources.
 
 ## `npm run check`
 
-Lance `scripts/verifier.mjs` sur toutes les pages, CV compris :
+Lance `scripts/verifier.mjs` sur toutes les pages des deux langues, CV compris :
 zéro tiret cadratin, dépliants fermés et jamais imbriqués, un seul `<h1>` par
 page, toute balise standard ou enregistrée par `js/composants/index.js`, tout
 mot de `<jargon>` présent dans `js/lexique.js` et enveloppé une seule fois,
@@ -71,13 +78,3 @@ hash ne demande aucune configuration serveur.
 la main : `prefers-reduced-motion` sur chaque schéma, la largeur de 375 px
 sans défilement horizontal, la bascule de thème sur chaque schéma, et chaque
 ancre `#/section/slug#id` ouverte dans un onglet neuf.
-
-## À faire, quand le premier article arrive
-
-- **Plusieurs langues.** La langue en tête de route (`#/en/blog/slug`, rien pour
-  le français), une entrée par langue dans le manifeste reliée par un `id`
-  commun, un bouton de langue dans l'en-tête affiché seulement quand la page
-  courante a une traduction, l'attribut `lang` du document qui suit la route.
-  Le CV suit la même règle.
-- **Un lexique par langue**, et le vérificateur qui choisit celui de la langue
-  de la page.

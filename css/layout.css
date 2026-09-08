@@ -160,6 +160,28 @@
   margin-right: auto;
 }
 
+/* Langue et thème, côte à côte à droite de l'en-tête. */
+.boutons-entete {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.bascule-langue {
+  padding: 0.4em 0.9em;
+  font-size: 0.85rem;
+  line-height: 1;
+  color: var(--texte);
+  text-decoration: none;
+  border: 1px solid var(--trait);
+  border-radius: 999px;
+  background: var(--fond-eleve);
+}
+
+.bascule-langue:hover {
+  border-color: var(--trait-fort);
+}
+
 /* Enfant en flux de .entete, aligné au titre par le space-between du parent.
    Une pilule et non un cercle : le libellé est un mot (« Sombre », « Clair »),
    pas une icône, et un cercle de 2,4rem le laissait déborder. */

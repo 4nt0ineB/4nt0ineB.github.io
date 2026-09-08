@@ -11,16 +11,17 @@
 // Les identifiants des <h2> sont conserves en suffixe {#ancre} : ce sont des
 // cibles de liens croises, les perdre casserait 27 renvois.
 //
-// Usage : node scripts/exporter.mjs [chemin de sortie]
+// Usage : node scripts/exporter.mjs [fr|en] [chemin de sortie]
 
 import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import path from 'node:path'
 
 const RACINE = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
-const SORTIE = process.argv[2] ?? path.join(path.dirname(RACINE), 'site-texte.md')
+const LOCALE = process.argv[2] ?? 'fr'
+const SORTIE = process.argv[3] ?? path.join(RACINE, 'sources', `site-texte.${LOCALE}.md`)
 
-const { ARTICLES, CV } = await import(pathToFileURL(path.join(RACINE, 'js/sections.js')).href)
+const { toutesLesPages } = await import(pathToFileURL(path.join(RACINE, 'js/sections.js')).href)
 
 // Ce que montre chaque schema. Ecrit a la main : un script ne peut pas
 // deviner ce qu'un SVG raconte. Les titres, eux, sont lus dans les composants.
@@ -273,7 +274,7 @@ const out = [
   ''
 ]
 
-for (const [nom, pages] of [['cv', [CV]], ...ARTICLES.map(a => [a.slug, a.pages])]) for (const c of pages) {
+for (const c of toutesLesPages().filter(p => p.locale === LOCALE)) {
   const html = await readFile(path.join(RACINE, c.fichier), 'utf8')
   const arbre = construire(tokeniser(html))
   const article = arbre.enfants.find(e => e.nom === 'article') ?? arbre
@@ -282,7 +283,7 @@ for (const [nom, pages] of [['cv', [CV]], ...ARTICLES.map(a => [a.slug, a.pages]
   const h1 = article.enfants.find(e => e.nom === 'h1')
 
   out.push(`# ${h1 ? propre(h1.enfants.map(ligne).join('')) : c.titre}`, '')
-  out.push('```', `article   : ${nom}`, `page      : ${c.slug}`, `fichier   : ${c.fichier}`,
+  out.push('```', `article   : ${c.article}`, `page      : ${c.slug}`, `fichier   : ${c.fichier}`,
     `surtitre  : ${surtitre ? propre(surtitre.enfants.map(ligne).join('')) : ''}`,
     `lecture   : ${c.minutes ?? '-'} min`, '```', '')
   await blocs(article, out)

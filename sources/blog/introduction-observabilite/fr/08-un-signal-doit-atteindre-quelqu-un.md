@@ -2,7 +2,7 @@
 
 ```
 page      : alerting
-fichier   : blog/introduction-observabilite/08-alerting.html
+fichier   : blog/introduction-observabilite/fr/08-alerting.html
 surtitre  : Chapitre 8
 ```
 

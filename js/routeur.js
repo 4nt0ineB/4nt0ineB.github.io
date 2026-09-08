@@ -1,16 +1,22 @@
 // Routage par hash, pas par l'API History : le hash fonctionne depuis
 // n'importe quel hébergeur statique sans réécriture côté serveur, GitHub
-// Pages compris. Formes : #/ (le CV), #/cv, #/blog, #/blog/article,
-// #/blog/article/page, et #ancre en suffixe.
+// Pages compris. Formes : #/fr (le CV), #/fr/cv, #/fr/blog,
+// #/fr/blog/article, #/fr/blog/article/page, et #ancre en suffixe. Sans
+// langue en tête, la langue par défaut est prise.
+import { LOCALES, LOCALE_DEFAUT } from './i18n.js'
+
 export function routeCourante () {
   const brut = window.location.hash.replace(/^#\/?/, '')
   const [chemin, ancre = null] = brut.split('#')
-  const [section = '', article = '', page = ''] = chemin.split('/')
-  return { section: section || null, article: article || null, page: page || null, ancre }
+  const parts = chemin.split('/').filter(Boolean)
+  const locale = LOCALES.includes(parts[0]) ? parts.shift() : LOCALE_DEFAUT
+  const [section = null, article = null, page = null] = parts
+  return { locale, section, article, page, ancre }
 }
 
-export function lienArticle (article, page = null, ancre = null) {
-  const base = page ? `#/blog/${article}/${page}` : `#/blog/${article}`
+export function lien (locale, section = null, article = null, page = null, ancre = null) {
+  const parts = [locale, section, article, page].filter(Boolean)
+  const base = `#/${parts.join('/')}`
   return ancre ? `${base}#${ancre}` : base
 }
 

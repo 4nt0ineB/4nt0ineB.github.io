@@ -7,6 +7,8 @@
 // import CDN dans son graphe. C'est ce qui permet au verificateur d'importer ce
 // module sous Node, qui refuse les imports https en module ES. Sans ca il
 // faudrait un chargeur reseau maison, et npm run check exigerait Internet.
+import { t } from '../../i18n.js'
+
 export const Devine = {
   props: {
     question: { type: String, required: true },
@@ -17,6 +19,7 @@ export const Devine = {
     return { choix: null, repondu: false }
   },
   methods: {
+    t,
     choisir (i) { this.choix = i; this.repondu = true }
   },
   template: `
@@ -31,7 +34,7 @@ export const Devine = {
                 @click="choisir(i)">{{ o }}</button>
       </div>
       <p v-if="repondu" class="devine-verdict" role="status">
-        {{ choix === bonne ? 'Exact.' : 'Non, et c’est tout l’intérêt.' }}
+        {{ choix === bonne ? t('devineExact') : t('devineFaux') }}
       </p>
       <div v-if="repondu" class="devine-reponse"><slot name="reponse"></slot></div>
     </div>

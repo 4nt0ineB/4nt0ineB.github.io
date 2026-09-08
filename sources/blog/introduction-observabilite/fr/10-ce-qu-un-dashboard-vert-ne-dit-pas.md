@@ -2,7 +2,7 @@
 
 ```
 page      : dashboard-vert
-fichier   : blog/introduction-observabilite/10-dashboard-vert.html
+fichier   : blog/introduction-observabilite/fr/10-dashboard-vert.html
 surtitre  : Chapitre 10
 ```
 

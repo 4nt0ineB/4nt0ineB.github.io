@@ -1,0 +1,64 @@
+# Production has no debugger
+
+```
+page      : prod-sans-debogueur
+fichier   : blog/introduction-observabilite/en/01-prod-sans-debogueur.html
+surtitre  : Chapter 1
+```
+
+## The lost loop {#la-boucle-perdue}
+
+In development, we enjoy a loop so comfortable that it only gets noticed once it is
+gone: run the code, watch it fail, set a break point, run again, and the failure
+happens again, because we control the input.
+
+Production makes this loop impossible. The failure happened once, twenty minutes ago,
+for one user out of forty thousand, on one of four processes, and the state that caused
+it is already gone. The system cannot be paused, since it keeps serving users.
+
+## Writing ahead of time {#ecrire-a-l-avance}
+
+What remains is what the system wrote while it was running. Observability consists in
+making it write, ahead of time, the data that will answer questions nobody is asking
+yet. Everything hangs on "ahead of time", because what was not recorded at 14:32 will
+never be found.
+
+## The three questions {#trois-questions}
+
+Every investigation asks the same three questions, in the same order:
+
+1. Is there a problem, and since when?
+2. Where is it, in a system made of several parts?
+3. Why, exactly?
+
+They are different questions, and they call for different data, because data that
+answers the first one well answers the third one badly. The reason is mathematical, not
+historical, and the next chapter lays it out. For now, let us keep this sequence in
+mind: detect, locate, explain.
+
+:::regle
+Almost every bad investigation starts in the middle, by searching for a word in the
+logs.
+:::
+
+## Why adding logs stops being enough {#pourquoi-les-logs-cassent}
+
+Adding logs is every developer's reflex, and the reflex is right. It breaks in three
+distinct ways.
+
+It breaks on volume. One line per request, at forty thousand requests a minute, is a
+lot of text. Storing it stays affordable, but searching it does not, since searching
+means reading everything again.
+
+It breaks on aggregation. "How many orders failed in the last hour" is a counting
+question, and a log line is not a count. One can certainly recount on every dashboard
+refresh and every alert evaluation, at the cost of rereading gigabytes of text - ouch.
+
+It breaks across processes. When a request touches four services, its story scatters
+into four separate piles of text, on four machines, tied together by nothing but an
+approximate timestamp. Reassembling one request by hand is still possible, but not for
+the hundred requests that failed in the same minute.
+
+Logs are not bad for all that. They answer the third question better than any other
+tool, because they keep the detail. They are unsuited to the first two, and rushing to
+them first is the most common mistake.

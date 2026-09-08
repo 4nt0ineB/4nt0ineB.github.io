@@ -2,7 +2,7 @@
 
 ```
 page      : accueil
-fichier   : blog/introduction-observabilite/00-accueil.html
+fichier   : blog/introduction-observabilite/fr/00-accueil.html
 surtitre  : Introduction
 ```
 
