@@ -172,19 +172,37 @@
   gap: 0.6rem;
 }
 
-.bascule-langue {
-  padding: 0.4em 0.9em;
-  font-size: 0.85rem;
+/* Les deux langues côte à côte, la courante en plein. */
+.langues {
+  display: inline-flex;
+  font-size: 0.8rem;
   line-height: 1;
-  color: var(--texte);
-  text-decoration: none;
   border: 1px solid var(--trait);
   border-radius: 999px;
+  overflow: hidden;
   background: var(--fond-eleve);
 }
 
-.bascule-langue:hover {
-  border-color: var(--trait-fort);
+.langue {
+  padding: 0.45em 0.8em;
+  color: var(--texte-doux);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.langue:hover {
+  color: var(--texte);
+}
+
+.langue.est-courante {
+  background: var(--texte);
+  color: var(--fond);
+  font-weight: 600;
+}
+
+.langue.est-absente {
+  opacity: 0.4;
 }
 
 /* Enfant en flux de .entete, aligné au titre par le space-between du parent.

@@ -7,6 +7,8 @@ import { enregistrer } from './composants/index.js'
 import { observer } from './visibilite.js'
 
 const SITE = 'Antoine Bastos'
+// Ordre d'affichage du sélecteur de langue, décision d'Antoine.
+const ORDRE_LANGUES = ['en', 'fr']
 
 // Une page compile une fois par session. Sans ce cache, chaque retour
 // sur une page la recompilerait.
@@ -63,6 +65,14 @@ const App = defineComponent({
       return lien(autre, 'blog', courant.value.slug, page)
     })
 
+    // Les deux langues côte à côte : la courante en évidence, l'autre en lien
+    // si la page existe dans cette langue, sinon en grisé.
+    const langues = computed(() => ORDRE_LANGUES.map(code => ({
+      code,
+      courante: code === locale.value,
+      href: code === locale.value ? null : autreLangue.value
+    })))
+
     function dateLongue (iso) {
       return new Intl.DateTimeFormat(T.value.dateFormat, { dateStyle: 'long' }).format(new Date(`${iso}T00:00:00`))
     }
@@ -111,7 +121,7 @@ const App = defineComponent({
     })
 
     return { SITE, T, locale, route, blog, liste, courant, version, courante, estCv, sommaire, vue, erreur, theme,
-             avancement, cote, autreLangue, lien, dateLongue,
+             avancement, cote, autreLangue, langues, lien, dateLongue,
              articles: computed(() => articlesParDate(locale.value)),
              bascule: () => { theme.value = basculerTheme() } }
   },
@@ -124,7 +134,13 @@ const App = defineComponent({
         <a :href="lien(locale, 'blog')" :aria-current="blog ? 'page' : null">{{ T.blog }}</a>
       </nav>
       <div class="boutons-entete">
-        <a v-if="autreLangue" class="bascule-langue" :href="autreLangue" :hreflang="locale === 'fr' ? 'en' : 'fr'">{{ T.autreLangue }}</a>
+        <nav class="langues" :aria-label="T.langue">
+          <template v-for="l in langues" :key="l.code">
+            <span v-if="l.courante" class="langue est-courante" aria-current="page">{{ l.code }}</span>
+            <a v-else-if="l.href" class="langue" :href="l.href" :hreflang="l.code">{{ l.code }}</a>
+            <span v-else class="langue est-absente" aria-disabled="true">{{ l.code }}</span>
+          </template>
+        </nav>
         <button v-if="!estCv" type="button" class="bascule-theme" @click="bascule"
                 :aria-label="theme === 'dark' ? T.themeClair : T.themeSombre">
           {{ theme === 'dark' ? T.clair : T.sombre }}

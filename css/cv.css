@@ -28,18 +28,27 @@ html.page-cv .progression {
   background: var(--cv-encre);
 }
 
-html.page-cv .titre-site,
 html.page-cv .sections a,
-html.page-cv .bascule-langue,
-html.page-cv .titre-site:hover,
-html.page-cv .sections a:hover {
+html.page-cv .sections a:hover,
+html.page-cv .langue {
   color: var(--cv-encre);
 }
 
-html.page-cv .bascule-langue {
+/* Le nom est déjà en grand sur la feuille : la barre ne le répète pas.
+   visibility garde sa place, pour que « Blog » reste au centre. */
+html.page-cv .titre-site {
+  visibility: hidden;
+}
+
+html.page-cv .langues {
   background: transparent;
   border: 1px solid var(--cv-encre);
   border-radius: 0;
+}
+
+html.page-cv .langue.est-courante {
+  background: var(--cv-encre);
+  color: var(--cv-fond);
 }
 
 html.page-cv .contenu {

@@ -21,7 +21,7 @@ export const TEXTES = {
     themeSombre: 'Passer au thème sombre',
     clair: 'Clair',
     sombre: 'Sombre',
-    autreLangue: 'English',
+    langue: 'Langue',
     sauter: 'Aller au contenu',
     ecriture: {
       main: { libelle: 'Écrit à la main', detail: 'Rédigé sans IA. Une IA a pu relire.' },
@@ -52,7 +52,7 @@ export const TEXTES = {
     themeSombre: 'Switch to dark theme',
     clair: 'Light',
     sombre: 'Dark',
-    autreLangue: 'Français',
+    langue: 'Language',
     sauter: 'Skip to content',
     ecriture: {
       main: { libelle: 'Handwritten', detail: 'Written without AI. An AI may have proofread it.' },
