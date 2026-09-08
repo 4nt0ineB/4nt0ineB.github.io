@@ -24,8 +24,7 @@ html.page-cv body {
   color: var(--cv-encre);
 }
 
-/* Le nom est déjà en grand sur la feuille : la barre ne le répète pas.
-   visibility garde sa place, pour que « Blog » reste au centre. */
+/* Le nom est déjà en grand sur la feuille : la barre ne le répète pas. */
 html.page-cv .titre-site {
   visibility: hidden;
 }

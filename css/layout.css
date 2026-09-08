@@ -93,11 +93,16 @@
   text-underline-offset: 0.3em;
 }
 
-/* Langue et thème, côte à côte à droite de la barre. */
+/* Section, langue et thème, groupés à droite de la barre : le nom seul à
+   gauche, tout le reste tient ensemble. */
 .boutons-entete {
   display: flex;
   align-items: center;
   gap: 0.6rem;
+}
+
+.boutons-entete .sections {
+  margin-right: 0.8rem;
 }
 
 /* Les deux langues côte à côte, la courante en plein. */

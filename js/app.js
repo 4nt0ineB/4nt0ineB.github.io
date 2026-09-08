@@ -139,10 +139,10 @@ const App = defineComponent({
     <header class="entete">
       <div class="entete-int">
       <a class="titre-site" :href="lien(locale)">{{ SITE }}</a>
-      <nav class="sections" aria-label="Sections">
-        <a :href="lien(locale, 'blog')" :aria-current="blog ? 'page' : null">{{ T.blog }}</a>
-      </nav>
       <div class="boutons-entete">
+        <nav class="sections" aria-label="Sections">
+          <a :href="lien(locale, 'blog')" :aria-current="blog ? 'page' : null">{{ T.blog }}</a>
+        </nav>
         <nav class="langues" :aria-label="T.langue">
           <template v-for="l in langues" :key="l.code">
             <span v-if="l.courante" class="langue est-courante" aria-current="page">{{ l.code }}</span>
