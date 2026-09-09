@@ -24,7 +24,7 @@ lecture   : - min
 
 Ingénieur logiciel
 
-Systèmes backend, applications à forte composante données, migrations.
+Systèmes backend, applications métier, migrations de données.
 
 Seine-et-Marne, France
 
@@ -129,7 +129,7 @@ Observabilité · Kubernetes · Prometheus
 
 ## À propos {#a-propos}
 
-Ingénieur logiciel en Seine-et-Marne. Je travaille surtout sur des systèmes backend et des applications métier chargées en données. Master en informatique, Université Gustave Eiffel, 2025. Français, anglais professionnel.
+Ingénieur logiciel en Seine-et-Marne. Je travaille surtout sur des systèmes backend et des applications métier. Master en informatique, Université Gustave Eiffel, 2025. Français, anglais professionnel.
 
 Antoine Bastos
 Ingénieur logiciel, France

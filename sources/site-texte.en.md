@@ -24,7 +24,7 @@ lecture   : - min
 
 Software engineer
 
-Backend systems, data-heavy applications, migrations.
+Backend systems, business applications, data migrations.
 
 Seine-et-Marne, France
 
@@ -129,7 +129,7 @@ Observability · Kubernetes · Prometheus
 
 ## About {#a-propos}
 
-Software engineer in Seine-et-Marne, France. I mostly work on backend systems and data-heavy business applications. Master's in computer science, Université Gustave Eiffel, 2025. French, professional English.
+Software engineer in Seine-et-Marne, France. I mostly work on backend systems and business applications. Master's in computer science, Université Gustave Eiffel, 2025. French, professional English.
 
 Antoine Bastos
 Software engineer, France
