@@ -1,6 +1,6 @@
 # Texte du site, export pour relecture
 
-Genere par `node scripts/exporter.mjs` depuis les fragments de chaque section, le 2026-09-08.
+Genere par `node scripts/exporter.mjs` depuis les fragments de chaque section, le 2026-09-09.
 
 La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et doit rester en place :
 
@@ -18,6 +18,92 @@ La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et d
 article   : cv
 page      : cv
 fichier   : cv/cv.fr.html
+surtitre  : 
+lecture   : - min
+```
+
+01
+
+Ingénieur logiciel
+
+Seine-et-Marne, France
+
+Développeur backend Java, Quarkus et Spring. Migrations de données, modernisation de code existant, performance. Chez Lunatech depuis 2024.
+
+- [github.com/4nt0ineB](https://github.com/4nt0ineB)
+- [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
+
+## 02 Réalisations {#realisations}
+
+1. [Introduction à l'observabilité](#/fr/blog/introduction-observabilite) Douze pages sur les métriques, les logs et les traces, écrites à partir de neuf pannes reproduites sur une machine de test. Publié sur ce site.
+2. [Open Food Facts, trente-quatre PR fusionnées](https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged) En quatre mois, dans le monolithe Perl de la plateforme : intégration du CRM Odoo, import de trois cents organisations, refonte du routage adoptée comme standard du projet.
+3. [Catalogue raisonné de Vonick Laubreton](https://laubreton.com) Six cent cinquante œuvres en ligne, du devis à la mise en production, seul développeur. En ligne depuis 2022.
+
+## 03 Parcours {#parcours}
+
+1. mars à août 2026 CARIAD, groupe Volkswagen Lead dev, via Lunatech Migration d'un outil back-office de gestion des permissions, d'un rendu côté serveur à une API REST et un frontend React. Mise en place du pattern Strangler Fig, endpoint par endpoint et derrière un feature flag, pour un retour arrière instantané et sans régression. Java · Spring Boot · React · TypeScript · Vitest
+2. juillet 2025 à mars 2026 DARVA, Domaine Client Développeur backend, via Lunatech Migration du CRM vers une nouvelle solution. Développement et mise en production du batch de migration des données de trente mille clients : temps d'exécution ramené de huit heures à une heure et demie. Java · Quarkus · Hibernate Reactive · Mutiny · Kafka · MariaDB · Jenkins
+3. janvier à juillet 2025 DARVA, Exiris Développeur full-stack, via Lunatech Plateforme de lettre recommandée électronique : fonctionnalités de recherche et de contrôle des certificats. Migration de tests vers Playwright. Java · Quarkus · React · TypeScript · Playwright · Jenkins
+4. mai à août 2024 Open Food Facts Développeur backend, stage de master, en anglais Intégration du CRM Odoo par XML-RPC dans le monolithe Perl de la plateforme producteurs, import de trois cents organisations, et refonte du routage en handlers typés, adoptée comme standard du projet. Perl · Docker · Linux
+5. été 2022 VLA, catalogue raisonné Freelance, seul développeur Catalogue en ligne des six cent cinquante œuvres du peintre Vonick Laubreton, du devis à la mise en production. Python · Django · JavaScript · Docker · Nginx
+
+## 04 Formation {#formation}
+
+1. Master en informatique, ingénierie logicielle et données Université Gustave Eiffel, 2025
+2. TOEIC Score 945, anglais professionnel, 2025
+
+## 05 Contact {#contact}
+
+- [github.com/4nt0ineB](https://github.com/4nt0ineB)
+- [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
+
+## 06 Outils {#outils}
+
+langages
+
+- Java
+- TypeScript
+- Python
+- SQL
+
+frameworks
+
+- Quarkus
+- Spring Boot
+- Hibernate
+- React
+- Mutiny et Vert.x
+
+données et infra
+
+- PostgreSQL
+- MariaDB
+- Docker
+- Jenkins
+- Linux
+
+ia
+
+- Claude Code
+- Gemini CLI
+- GitHub Copilot
+
+pratiques
+
+- Architecture hexagonale
+- Strangler Fig
+- Tests Playwright
+- Intégration continue
+- Scrum
+
+---
+
+# Antoine Bastos
+
+```
+article   : cv
+page      : fancy
+fichier   : cv/fancy/cv.fr.html
 surtitre  : 
 lecture   : - min
 ```

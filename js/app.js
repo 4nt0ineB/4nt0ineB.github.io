@@ -1,5 +1,5 @@
 import { createApp, defineComponent, ref, shallowRef, computed, onMounted, nextTick } from 'https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.esm-browser.prod.js'
-import { CV, articlesParDate, article, pageDe, voisins } from './sections.js'
+import { versionCv, articlesParDate, article, pageDe, voisins } from './sections.js'
 import { routeCourante, lien, surChangement } from './routeur.js'
 import { LOCALES, TEXTES } from './i18n.js'
 import { themeEffectif, basculerTheme } from './theme.js'
@@ -38,9 +38,11 @@ const App = defineComponent({
     // elle dérive du manifeste, donc elle ne peut pas se désynchroniser.
     const liste = computed(() => blog.value && route.value.article === null)
     const courant = computed(() => blog.value && route.value.article ? article(route.value.article) : null)
+    const cv = computed(() => blog.value ? null : versionCv(route.value.article))
+    const estFancy = computed(() => cv.value?.slug === 'fancy')
     // La version de l'article ou du CV dans la langue courante, ou null.
     const version = computed(() => {
-      if (route.value.section === null || route.value.section === 'cv') return CV[locale.value] ?? null
+      if (!blog.value) return cv.value?.[locale.value] ?? null
       return courant.value?.[locale.value] ?? null
     })
     const courante = computed(() => {
@@ -58,7 +60,10 @@ const App = defineComponent({
     const autreLangue = computed(() => {
       const autre = LOCALES.find(l => l !== locale.value)
       if (liste.value) return lien(autre, 'blog')
-      if (estCv.value) return CV[autre] ? lien(autre) : null
+      if (estCv.value) {
+        if (!cv.value?.[autre]) return null
+        return estFancy.value ? lien(autre, 'cv', cv.value.slug) : lien(autre)
+      }
       const v = courant.value?.[autre]
       if (!v) return null
       const page = courante.value && v.pages.some(p => p.slug === courante.value.slug) ? courante.value.slug : null
@@ -94,9 +99,9 @@ const App = defineComponent({
       document.documentElement.lang = demande.locale
       erreur.value = null
       vue.value = null
-      // La feuille du CV couvre toute la page, en-tête compris : la classe se
-      // pose sur la racine, hors de portée de la coquille.
-      document.documentElement.classList.toggle('page-cv', estCv.value && courante.value !== null)
+      // La feuille du CV fancy couvre toute la page, en-tête compris : la
+      // classe se pose sur la racine, hors de portée de la coquille.
+      document.documentElement.classList.toggle('page-cv', estFancy.value && courante.value !== null)
       if (liste.value) { document.title = `${T.value.blog} | ${SITE}`; window.scrollTo(0, 0); return }
       if (courante.value === null) { erreur.value = 'introuvable'; return }
       try {
@@ -128,7 +133,7 @@ const App = defineComponent({
       majAvancement()
     })
 
-    return { SITE, T, locale, route, blog, liste, courant, version, courante, estCv, sommaire, vue, erreur, theme,
+    return { SITE, T, locale, route, blog, liste, courant, version, courante, estCv, estFancy, sommaire, vue, erreur, theme,
              avancement, cote, autreLangue, langues, lien, dateLongue, numero, numeroPage,
              articles: computed(() => articlesParDate(locale.value)),
              bascule: () => { theme.value = basculerTheme() } }
@@ -150,7 +155,7 @@ const App = defineComponent({
             <span v-else class="langue est-absente" aria-disabled="true">{{ l.code }}</span>
           </template>
         </nav>
-        <button v-if="!estCv" type="button" class="bascule-theme" @click="bascule"
+        <button v-if="!estFancy" type="button" class="bascule-theme" @click="bascule"
                 :aria-label="theme === 'dark' ? T.themeClair : T.themeSombre">
           {{ theme === 'dark' ? T.clair : T.sombre }}
         </button>
@@ -167,7 +172,7 @@ const App = defineComponent({
         </a>
       </nav>
       <main id="contenu" class="contenu">
-        <cv-palettes v-if="estCv && vue" />
+        <cv-palettes v-if="estFancy && vue" />
         <template v-if="liste">
           <p class="repere"><span class="carre"></span></p>
           <h1>{{ T.blog }}</h1>

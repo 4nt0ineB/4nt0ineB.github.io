@@ -1,6 +1,6 @@
 // Routage par hash, pas par l'API History : le hash fonctionne depuis
 // n'importe quel hébergeur statique sans réécriture côté serveur, GitHub
-// Pages compris. Formes : #/fr (le CV), #/fr/cv, #/fr/blog,
+// Pages compris. Formes : #/fr (le CV), #/fr/cv, #/fr/cv/fancy, #/fr/blog,
 // #/fr/blog/article, #/fr/blog/article/page, et #ancre en suffixe. Sans
 // langue en tête, la langue par défaut est prise.
 import { LOCALES, LOCALE_DEFAUT } from './i18n.js'

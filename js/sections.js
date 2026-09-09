@@ -64,6 +64,21 @@ export const CV = {
   en: { titre: 'Antoine Bastos', fichier: 'cv/cv.en.html' }
 }
 
+// La première version du CV, d'après Ruder (aplat de couleur, palettes,
+// marge tournée) : gardée telle quelle sous #/fr/cv/fancy.
+export const CV_FANCY = {
+  slug: 'fancy',
+  fr: { titre: 'Antoine Bastos', fichier: 'cv/fancy/cv.fr.html' },
+  en: { titre: 'Antoine Bastos', fichier: 'cv/fancy/cv.en.html' }
+}
+
+// La version du CV visée par une route : `article` vaut null pour la
+// version publique, 'fancy' pour la première.
+export function versionCv (article) {
+  if (article === null) return CV
+  return article === CV_FANCY.slug ? CV_FANCY : null
+}
+
 // Du plus récent au plus ancien, dans une langue donnée.
 export function articlesParDate (locale) {
   return ARTICLES.filter(a => a[locale]).sort((a, b) => b.publie.localeCompare(a.publie))
@@ -90,7 +105,7 @@ export function voisins (version, slug) {
 export function toutesLesPages () {
   const pages = []
   for (const locale of ['fr', 'en']) {
-    if (CV[locale]) pages.push({ locale, article: 'cv', slug: 'cv', ...CV[locale] })
+    for (const v of [CV, CV_FANCY]) if (v[locale]) pages.push({ locale, article: 'cv', slug: v.slug, ...v[locale] })
     for (const a of ARTICLES) for (const p of a[locale]?.pages ?? []) pages.push({ locale, article: a.slug, ...p })
   }
   return pages

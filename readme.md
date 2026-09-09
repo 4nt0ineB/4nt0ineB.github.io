@@ -3,13 +3,13 @@
 Site statique en français, sans étape de build, servi tel quel par GitHub
 Pages. Une seule coquille Vue chargée depuis un CDN, deux choses dedans :
 
-- `cv/` : le CV, page principale du site (`#/`). Sa feuille `css/cv.css` a sa propre
-  identité (une référence : la couverture de Ruder pour les Typographische
-  Monatsblätter de 1955), et ses paires fond/encre se choisissent dans la page
-  (`cv-palettes`), à part du thème clair/sombre du reste du site. Le blog reprend
-  la même grammaire (sans, chiffres en mono, carrés pleins, filets d'un pixel,
-  aucun arrondi), mais sa surface de lecture reste papier ou noir : la paire
-  fond/encre choisie ne colore que la barre du haut.
+- `cv/` : le CV, page principale du site (`#/`), sobre, au thème clair/sombre du
+  site. `cv/fancy/` (`#/fr/cv/fancy`) garde la première version : une référence,
+  la couverture de Ruder pour les Typographische Monatsblätter de 1955, et des
+  paires fond/encre qui se choisissent dans la page (`cv-palettes`). Les deux
+  partagent `css/cv.css`. Le blog reprend la même grammaire (sans, chiffres en
+  mono, carrés pleins, filets d'un pixel, aucun arrondi) ; la paire fond/encre
+  ne colore que la barre du haut.
 - `blog/` : les articles, du plus récent au plus ancien. Un article a une ou
   plusieurs pages (`blog/introduction-observabilite/` en a douze), une date de
   publication et une date de mise à jour.

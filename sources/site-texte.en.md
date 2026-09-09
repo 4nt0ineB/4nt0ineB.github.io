@@ -1,6 +1,6 @@
 # Texte du site, export pour relecture
 
-Genere par `node scripts/exporter.mjs` depuis les fragments de chaque section, le 2026-09-08.
+Genere par `node scripts/exporter.mjs` depuis les fragments de chaque section, le 2026-09-09.
 
 La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et doit rester en place :
 
@@ -18,6 +18,92 @@ La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et d
 article   : cv
 page      : cv
 fichier   : cv/cv.en.html
+surtitre  : 
+lecture   : - min
+```
+
+01
+
+Software engineer
+
+Seine-et-Marne, France
+
+Java backend developer, Quarkus and Spring. Data migrations, legacy modernisation, performance. At Lunatech since 2024.
+
+- [github.com/4nt0ineB](https://github.com/4nt0ineB)
+- [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
+
+## 02 Work {#realisations}
+
+1. [An introduction to observability](#/en/blog/introduction-observabilite) Twelve pages on metrics, logs and traces, written from nine failures reproduced on a test machine. Published on this site.
+2. [Open Food Facts, thirty-four merged PRs](https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged) In four months, in the platform's Perl monolith: Odoo CRM integration, import of three hundred organisations, a routing rewrite adopted as the project standard.
+3. [Vonick Laubreton's catalogue raisonné](https://laubreton.com) Six hundred and fifty works online, from the quote to production, sole developer. Online since 2022.
+
+## 03 Career {#parcours}
+
+1. March to August 2026 CARIAD, Volkswagen Group Lead developer, through Lunatech Migration of a back-office permission-management tool, from server-side rendering to a REST API and a React frontend. The Strangler Fig pattern, endpoint by endpoint and behind a feature flag, for instant rollback and no regression. Java · Spring Boot · React · TypeScript · Vitest
+2. July 2025 to March 2026 DARVA, Domaine Client Backend developer, through Lunatech Migration of the CRM to a new solution. Development and production release of the data migration batch for thirty thousand customers: run time brought from eight hours down to an hour and a half. Java · Quarkus · Hibernate Reactive · Mutiny · Kafka · MariaDB · Jenkins
+3. January to July 2025 DARVA, Exiris Full-stack developer, through Lunatech Electronic registered mail platform: search features and certificate checks. Test migration to Playwright. Java · Quarkus · React · TypeScript · Playwright · Jenkins
+4. May to August 2024 Open Food Facts Backend developer, master's internship, in English Odoo CRM integration over XML-RPC in the Perl monolith of the producer platform, import of three hundred organisations, and a rewrite of the routing into typed handlers, adopted as the project standard. Perl · Docker · Linux
+5. summer 2022 VLA, catalogue raisonné Freelance, sole developer Online catalogue of the six hundred and fifty works of painter Vonick Laubreton, from the quote to production. Python · Django · JavaScript · Docker · Nginx
+
+## 04 Education {#formation}
+
+1. Master's in computer science, software and data engineering Université Gustave Eiffel, 2025
+2. TOEIC Score 945, professional English, 2025
+
+## 05 Contact {#contact}
+
+- [github.com/4nt0ineB](https://github.com/4nt0ineB)
+- [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
+
+## 06 Tools {#outils}
+
+languages
+
+- Java
+- TypeScript
+- Python
+- SQL
+
+frameworks
+
+- Quarkus
+- Spring Boot
+- Hibernate
+- React
+- Mutiny and Vert.x
+
+data and infra
+
+- PostgreSQL
+- MariaDB
+- Docker
+- Jenkins
+- Linux
+
+ai
+
+- Claude Code
+- Gemini CLI
+- GitHub Copilot
+
+practices
+
+- Hexagonal architecture
+- Strangler Fig
+- Playwright tests
+- Continuous integration
+- Scrum
+
+---
+
+# Antoine Bastos
+
+```
+article   : cv
+page      : fancy
+fichier   : cv/fancy/cv.en.html
 surtitre  : 
 lecture   : - min
 ```
