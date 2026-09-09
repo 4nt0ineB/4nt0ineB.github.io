@@ -827,7 +827,7 @@ Over the nine failures provoked for this text, this perfect client-side result a
 
 Nothing in an instrument distinguishes a signal that shows nothing because nothing is broken from a signal that shows nothing because it is looking in the wrong place. The only way to settle it is to make something fail on purpose, at a chosen moment, while watching. Trigger every panel once and confirm that it moves, because a panel one has never seen react is decoration. Send an alert and wait for the phone. Kill a pod under load and read what the restart counter shows, that is, zero, since the killed pod no longer exists.
 
-This is what the course that goes with this text makes you do. Each module sets a scene on a disposable cluster, sends load, asks for a written prediction before the first dashboard is opened, then breaks something. The written bet is what separates reading a conclusion from learning it: "the zero-failure column is the worst" teaches something to whoever bet on it, and nothing to whoever reads it in a table.
+This is what the course that goes with this text makes you do. Each module sets a scene on a disposable cluster, sends load, asks for a written prediction before the first dashboard is opened, then breaks something. The written prediction is what separates reading a conclusion from learning it: "the zero-failure column is the worst" teaches something to whoever committed to it, and nothing to whoever reads it in a table.
 
 ---
 
