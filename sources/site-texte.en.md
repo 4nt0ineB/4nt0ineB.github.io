@@ -24,7 +24,7 @@ lecture   : - min
 
 Software engineer
 
-Backend systems, data-heavy applications, migrations, developer tooling.
+Backend systems, data-heavy applications, migrations.
 
 Seine-et-Marne, France
 
@@ -32,7 +32,7 @@ Seine-et-Marne, France
 - [LinkedIn](https://www.linkedin.com/in/antoineba6/)
 - [CV](#/en/cv)
 
-I mostly work on Java backend systems, data migrations and business applications, at Lunatech since 2024. Outside of that, I build a software product and write about the engineering problems I run into.
+I mostly work on Java backend systems, data migrations and business applications, at Lunatech since 2024.
 
 ## Selected work {#travaux}
 
@@ -104,7 +104,7 @@ Java · Quarkus · React · Playwright
 
 [Full experience → CV](#/en/cv)
 
-## Writing {#ecrits}
+## Blog {#ecrits}
 
 2026-09
 
@@ -124,7 +124,6 @@ Observability · Kubernetes · Prometheus
 - Data modelling
 - Observability
 - Simulation
-- Developer tooling
 - Software architecture
 - AI-assisted development
 

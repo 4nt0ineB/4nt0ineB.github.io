@@ -24,7 +24,7 @@ lecture   : - min
 
 Ingénieur logiciel
 
-Systèmes backend, applications à forte composante données, migrations, outillage du développeur.
+Systèmes backend, applications à forte composante données, migrations.
 
 Seine-et-Marne, France
 
@@ -32,7 +32,7 @@ Seine-et-Marne, France
 - [LinkedIn](https://www.linkedin.com/in/antoineba6/)
 - [CV](#/fr/cv)
 
-Je travaille surtout sur des systèmes backend Java, des migrations de données et des applications métier, chez Lunatech depuis 2024. En dehors, je construis un produit logiciel et j'écris sur les problèmes d'ingénierie que je rencontre.
+Je travaille surtout sur des systèmes backend Java, des migrations de données et des applications métier, chez Lunatech depuis 2024.
 
 ## Travaux choisis {#travaux}
 
@@ -104,7 +104,7 @@ Java · Quarkus · React · Playwright
 
 [Parcours complet → CV](#/fr/cv)
 
-## Écrits {#ecrits}
+## Blog {#ecrits}
 
 2026-09
 
@@ -124,7 +124,6 @@ Observabilité · Kubernetes · Prometheus
 - Modélisation des données
 - Observabilité
 - Simulation
-- Outillage du développeur
 - Architecture logicielle
 - Développement assisté par IA
 

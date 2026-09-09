@@ -7,7 +7,7 @@ Pages. Une seule coquille Vue chargée depuis un CDN, trois choses dedans :
   pas un CV : identité, travaux choisis, expérience en bref, écrits, outils et
   sujets, à propos. Serif pour le nom et les titres, sans pour le corps, mono
   pour les dates et les piles, des filets et du blanc, aucun bandeau ni carte
-  (`css/accueil.css`). La barre du site est sa navigation : Travaux, Écrits,
+  (`css/accueil.css`). La barre du site est sa navigation : Travaux, Blog,
   CV, GitHub.
 - `cv/` : le CV complet (`#/fr/cv`), vers lequel l'accueil renvoie : un bandeau
   à l'encre, puis l'expérience en résultats à puces et une colonne de côté, au

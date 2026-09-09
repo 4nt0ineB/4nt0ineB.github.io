@@ -5,7 +5,7 @@ export const LOCALE_DEFAUT = 'fr'
 
 export const TEXTES = {
   fr: {
-    blog: 'Écrits',
+    blog: 'Blog',
     travaux: 'Travaux',
     cv: 'CV',
     aucunArticle: "Aucun article pour l'instant.",
@@ -14,7 +14,7 @@ export const TEXTES = {
     chargement: 'Chargement de la page.',
     introuvable: 'Page introuvable',
     introuvableDetail: "Cette page n'existe pas.",
-    lesArticles: 'Les écrits',
+    lesArticles: 'Les articles du blog',
     lAccueil: "l'accueil",
     ou: 'ou',
     precedent: 'Précédent',
@@ -40,7 +40,7 @@ export const TEXTES = {
     dateFormat: 'fr-FR'
   },
   en: {
-    blog: 'Writing',
+    blog: 'Blog',
     travaux: 'Work',
     cv: 'CV',
     aucunArticle: 'No articles yet.',
@@ -49,7 +49,7 @@ export const TEXTES = {
     chargement: 'Loading the page.',
     introuvable: 'Page not found',
     introuvableDetail: 'This page does not exist.',
-    lesArticles: 'The writing',
+    lesArticles: 'The blog posts',
     lAccueil: 'the home page',
     ou: 'or',
     precedent: 'Previous',
