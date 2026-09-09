@@ -42,7 +42,7 @@ Lead developer, through Lunatech
 - Migration of a back-office permission-management tool, from server-side rendering to a REST API and a React frontend.
 - Strangler Fig strategy: the new frontend served alongside the old one behind a feature flag, endpoint-by-endpoint migration, instant rollback.
 - Authorisation rework: a role, operation and scope matrix, pinned by a test suite, replaces the scattered inherited checks; two latent bugs fixed along the way.
-- Mentoring of a junior developer through code review and pairing.
+- Mentoring of an apprentice developer through code review and pairing.
 
 Java, Spring Boot, React, TypeScript, Vitest
 
@@ -52,8 +52,8 @@ July 2025 to March 2026
 
 Backend developer, through Lunatech
 
-- Migration of thirty thousand customers' data to a new master data system synchronised with Salesforce: batch taken over midway, completed and released to production.
-- Salesforce calls parallelised, queries and Hibernate Reactive session handling reworked: the batch went from over eight hours to under an hour and a half.
+- Migration of thirty thousand customers' data to a new master data system: batch taken over midway, completed and released to production.
+- CRM calls parallelised, queries and Hibernate Reactive session handling reworked: the batch went from over eight hours to under an hour and a half.
 - Eight recurring business batches optimised, from tens of minutes or crashes to a few minutes.
 - JVM memory saturation in acceptance testing diagnosed alone from heap dumps, nested joins simplified.
 - Functional documentation of the business rules, which did not exist until then.

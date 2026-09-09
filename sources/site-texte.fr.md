@@ -42,7 +42,7 @@ Lead dev, via Lunatech
 - Migration d'un outil back-office de gestion des permissions, d'un rendu côté serveur vers une API REST et un frontend React.
 - Stratégie Strangler Fig : le nouveau frontend servi en parallèle de l'ancien derrière un feature flag, migration endpoint par endpoint, retour arrière instantané.
 - Refonte des autorisations : une matrice rôle, opération et périmètre, figée par une suite de tests, remplace les contrôles dispersés hérités ; deux bugs latents corrigés au passage.
-- Encadrement d'un développeur junior par revue de code et binômage.
+- Encadrement d'un développeur apprenti par revue de code et binômage.
 
 Java, Spring Boot, React, TypeScript, Vitest
 
@@ -52,8 +52,8 @@ juillet 2025 à mars 2026
 
 Développeur backend, via Lunatech
 
-- Migration des données de trente mille clients vers un nouveau référentiel synchronisé avec Salesforce : batch repris en cours de route, terminé et mis en production.
-- Appels Salesforce parallélisés, requêtes et gestion de session Hibernate Reactive revues : le batch passe de plus de huit heures à moins d'une heure et demie.
+- Migration des données de trente mille clients vers un nouveau référentiel : batch repris en cours de route, terminé et mis en production.
+- Appels au CRM parallélisés, requêtes et gestion de session Hibernate Reactive revues : le batch passe de plus de huit heures à moins d'une heure et demie.
 - Huit batchs métier récurrents optimisés, de plusieurs dizaines de minutes ou de plantages à quelques minutes.
 - Saturation mémoire de la JVM en recette diagnostiquée seul par heap dump, jointures imbriquées simplifiées.
 - Documentation fonctionnelle des règles métier, inexistante jusque-là.
