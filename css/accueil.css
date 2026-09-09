@@ -1,0 +1,291 @@
+/* L'accueil (#/fr) : la carte de visite, dans le registre d'un document
+   d'ingénierie. Serif pour le nom et les titres de section, sans pour le
+   corps, mono pour les dates, les piles et les libellés courts. Pas de
+   bandeau, pas de carte, pas de carré : des filets d'un pixel et du blanc,
+   au thème clair/sombre du site. */
+
+.section-accueil .contenu {
+  max-width: 68rem;
+  padding-top: 0;
+}
+
+.accueil {
+  font-family: var(--sans);
+  color: var(--texte);
+}
+
+.accueil :where(h1, h2, h3, p, ul, dl, dd) {
+  margin: 0;
+  color: inherit;
+}
+
+.accueil :where(ul) {
+  list-style: none;
+  padding: 0;
+}
+
+.accueil :where(li + li) {
+  margin-top: 0;
+}
+
+.accueil a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--trait-fort);
+  text-underline-offset: 0.2em;
+}
+
+.accueil a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* Un titre de section : serif, modeste, au-dessus d'un filet. */
+.accueil h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+.accueil h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.accueil p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+/* Les métadonnées : mono, petit, encre atténuée. */
+.accueil-lieu,
+.travail-date,
+.travail-pile,
+.mission-date,
+.mission-pile {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--texte-faible);
+}
+
+/* Chaque section est séparée de la précédente par un filet ; l'espace au-
+   dessus et au-dessous fait le rythme, section par section. */
+.accueil > section,
+.accueil-index,
+.accueil-pied {
+  border-top: 1px solid var(--trait-fort);
+}
+
+/* --- Identité : compact ------------------------------------------------- */
+
+.accueil-identite {
+  padding: 3.5rem 0 3rem;
+}
+
+.accueil h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.accueil-role {
+  font-size: 1.1rem;
+  margin-bottom: 1.4rem;
+}
+
+.accueil-domaines {
+  max-width: 44ch;
+  margin-bottom: 1.2rem;
+}
+
+.accueil-lieu {
+  margin-bottom: 0.6rem;
+}
+
+.accueil-liens {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+.accueil-liens li + li::before {
+  content: "\00b7";
+  margin: 0 0.6em;
+  color: var(--texte-faible);
+}
+
+.accueil-intro {
+  margin-top: 2rem;
+  color: var(--texte-doux);
+}
+
+/* --- Travaux choisis : ample -------------------------------------------- */
+
+.accueil-travaux {
+  padding: 3rem 0 3.5rem;
+}
+
+.travail {
+  padding: 1.8rem 0;
+}
+
+.travail + .travail {
+  border-top: 1px solid var(--trait);
+}
+
+.travail-tete {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+
+.travail-date {
+  white-space: nowrap;
+}
+
+.travail-role {
+  color: var(--texte-doux);
+  margin-bottom: 0.8rem;
+}
+
+.travail-pile {
+  margin-top: 0.8rem;
+}
+
+.travail-lien {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+}
+
+/* --- Expérience et écrits : la date en marge ---------------------------- */
+
+.accueil-experience,
+.accueil-ecrits {
+  padding: 3rem 0;
+}
+
+.mission {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  column-gap: 2rem;
+}
+
+.mission + .mission {
+  margin-top: 2rem;
+}
+
+.mission-date {
+  padding-top: 0.25rem;
+}
+
+.mission-role {
+  color: var(--texte-doux);
+  margin-bottom: 0.6rem;
+}
+
+.mission-pile {
+  margin-top: 0.6rem;
+}
+
+.accueil-suite {
+  margin-top: 2.5rem;
+  padding-left: 11rem;
+  font-size: 0.9rem;
+}
+
+/* --- Outils et sujets : deux colonnes, compact -------------------------- */
+
+.accueil-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 4rem;
+  padding: 3rem 0;
+}
+
+.accueil-index h2 {
+  margin-bottom: 1.2rem;
+}
+
+.familles dt {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.9rem;
+}
+
+.familles dt:first-child {
+  margin-top: 0;
+}
+
+.familles dd,
+.sujets li {
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.familles dd {
+  color: var(--texte-doux);
+}
+
+/* --- À propos et pied : minimal ----------------------------------------- */
+
+.accueil-a-propos {
+  padding: 3rem 0;
+}
+
+.accueil-a-propos h2 {
+  margin-bottom: 1rem;
+}
+
+.accueil-pied {
+  padding: 2rem 0 1rem;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.accueil-pied p {
+  font-size: inherit;
+  margin-bottom: 0.8rem;
+}
+
+@media (max-width: 800px) {
+  .accueil-identite {
+    padding: 2rem 0 2.4rem;
+  }
+
+  .accueil-travaux,
+  .accueil-experience,
+  .accueil-ecrits,
+  .accueil-index,
+  .accueil-a-propos {
+    padding: 2.4rem 0;
+  }
+
+  /* La date au-dessus du titre, comme dans les missions. */
+  .travail-tete {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .mission {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.3rem;
+  }
+
+  .accueil-suite {
+    padding-left: 0;
+  }
+
+  .accueil-index {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2.4rem;
+  }
+}

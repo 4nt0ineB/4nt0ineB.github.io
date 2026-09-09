@@ -1,7 +1,15 @@
 /* La coquille : barre, sommaire, colonne de lecture. Le blog reprend la
-   grammaire de la feuille du CV (sans, chiffres en mono, carrés pleins,
-   filets d'un pixel), mais sa surface de lecture reste papier ou noir, au
-   thème clair/sombre. La paire fond/encre du CV ne colore que la barre. */
+   grammaire de la feuille du CV fancy (sans, chiffres en mono, carrés
+   pleins, filets d'un pixel), mais sa surface de lecture reste papier ou
+   noir, au thème clair/sombre.
+
+   La barre prend les couleurs de la page, sauf sur le CV fancy où elle
+   reprend sa paire fond/encre (voir css/cv.css, qui redéfinit --barre-*). */
+
+:root {
+  --barre-fond:  var(--fond);
+  --barre-encre: var(--texte);
+}
 
 /* --- Primitives partagées avec le CV ------------------------------------ */
 
@@ -46,14 +54,15 @@
   height: 3px;
   /* --avancement est un ratio de 0 à 1, posé par app.js au défilement. */
   width: calc(var(--avancement, 0) * 100%);
-  background: var(--cv-encre);
+  background: var(--barre-encre);
   transition: width var(--duree) ease-out;
 }
 
 .entete {
-  background: var(--cv-fond);
-  color: var(--cv-encre);
+  background: var(--barre-fond);
+  color: var(--barre-encre);
   font-family: var(--sans);
+  border-bottom: 1px solid var(--trait);
 }
 
 .entete-int {
@@ -75,9 +84,7 @@
 .sections {
   display: flex;
   gap: 1.4rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.16em;
-  text-transform: lowercase;
+  font-size: 0.9rem;
 }
 
 .sections a {
@@ -122,8 +129,8 @@
 }
 
 .langue.est-courante {
-  background: var(--cv-encre);
-  color: var(--cv-fond);
+  background: var(--barre-encre);
+  color: var(--barre-fond);
   font-weight: 600;
 }
 
@@ -146,8 +153,8 @@
 }
 
 .bascule-theme:hover {
-  background: var(--cv-encre);
-  color: var(--cv-fond);
+  background: var(--barre-encre);
+  color: var(--barre-fond);
 }
 
 /* --- La coquille -------------------------------------------------------- */
@@ -162,7 +169,7 @@
   padding: 2rem 1.5rem 4rem;
 }
 
-/* Sans sommaire (accueil, CV), le contenu prend la grille entière. */
+/* Sans sommaire (accueil, CV, liste), le contenu prend la grille entière. */
 .coquille.sans-sommaire {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -339,6 +346,10 @@
   .entete-int {
     flex-wrap: wrap;
     gap: 0.8rem;
+  }
+
+  .boutons-entete {
+    flex-wrap: wrap;
   }
 
   .coquille {

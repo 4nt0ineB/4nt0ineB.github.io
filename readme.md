@@ -1,17 +1,23 @@
 # Site personnel
 
 Site statique en français, sans étape de build, servi tel quel par GitHub
-Pages. Une seule coquille Vue chargée depuis un CDN, deux choses dedans :
+Pages. Une seule coquille Vue chargée depuis un CDN, trois choses dedans :
 
-- `cv/` : la vitrine, page principale du site (`#/`) : un bandeau à l'encre,
-  puis l'expérience en résultats à puces et une colonne de côté, au thème
-  clair/sombre du site (`css/vitrine.css`). `cv/fancy/` (`#/fr/cv/fancy`) garde
+- `accueil/` : la page principale (`#/fr`), une carte de visite d'ingénieur et
+  pas un CV : identité, travaux choisis, expérience en bref, écrits, outils et
+  sujets, à propos. Serif pour le nom et les titres, sans pour le corps, mono
+  pour les dates et les piles, des filets et du blanc, aucun bandeau ni carte
+  (`css/accueil.css`). La barre du site est sa navigation : Travaux, Écrits,
+  CV, GitHub.
+- `cv/` : le CV complet (`#/fr/cv`), vers lequel l'accueil renvoie : un bandeau
+  à l'encre, puis l'expérience en résultats à puces et une colonne de côté, au
+  thème clair/sombre du site (`css/vitrine.css`). `cv/fancy/` (`#/fr/cv/fancy`) garde
   la première version du CV : une référence, la couverture de Ruder pour les
   Typographische Monatsblätter de 1955, des paires fond/encre qui se choisissent
   dans la page (`cv-palettes`), sa feuille `css/cv.css`. Le blog reprend la
   grammaire de cette première version (sans, chiffres en mono, carrés pleins,
-  filets d'un pixel, aucun arrondi) ; la paire fond/encre ne colore que la barre
-  du haut.
+  filets d'un pixel, aucun arrondi) ; la paire fond/encre ne colore la barre du
+  haut que sur cette page.
 - `blog/` : les articles, du plus récent au plus ancien. Un article a une ou
   plusieurs pages (`blog/introduction-observabilite/` en a douze), une date de
   publication et une date de mise à jour.
@@ -38,7 +44,7 @@ et navigation précédent/suivant en dérivent tous. Les routes sont
 `#/fr/blog/article` et `#/fr/blog/article/page`. Un article d'une seule page
 n'a pas de sommaire.
 
-Chaque article et le CV ont une entrée par langue (`fr`, `en`). Une langue
+Chaque article, l'accueil et le CV ont une entrée par langue (`fr`, `en`). Une langue
 absente veut dire pas de traduction : l'article ne figure pas dans la liste de
 cette langue et le bouton de langue n'apparaît pas. Les chaînes de l'interface
 et des composants vivent dans `js/i18n.js`, le lexique des bulles de jargon
@@ -56,7 +62,7 @@ doit coïncider avec celui des sources.
 
 ## `npm run check`
 
-Lance `scripts/verifier.mjs` sur toutes les pages des deux langues, CV compris :
+Lance `scripts/verifier.mjs` sur toutes les pages des deux langues, accueil et CV compris :
 zéro tiret cadratin, dépliants fermés et jamais imbriqués, un seul `<h1>` par
 page, toute balise standard ou enregistrée par `js/composants/index.js`, tout
 mot de `<jargon>` présent dans `js/lexique.js` et enveloppé une seule fois,

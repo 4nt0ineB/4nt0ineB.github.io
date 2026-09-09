@@ -57,7 +57,14 @@ export const ARTICLES = [
   }
 ]
 
-// La page principale du site : #/fr et #/fr/cv l'affichent.
+// La page principale du site, #/fr : la carte de visite, pas le CV.
+export const ACCUEIL = {
+  slug: 'accueil',
+  fr: { titre: 'Antoine Bastos', fichier: 'accueil/accueil.fr.html' },
+  en: { titre: 'Antoine Bastos', fichier: 'accueil/accueil.en.html' }
+}
+
+// Le CV complet, #/fr/cv : le document vers lequel l'accueil renvoie.
 export const CV = {
   slug: 'cv',
   fr: { titre: 'Antoine Bastos', fichier: 'cv/cv.fr.html' },
@@ -72,9 +79,11 @@ export const CV_FANCY = {
   en: { titre: 'Antoine Bastos', fichier: 'cv/fancy/cv.en.html' }
 }
 
-// La version du CV visée par une route : `article` vaut null pour la
-// version publique, 'fancy' pour la première.
-export function versionCv (article) {
+// La page hors blog visée par une route : l'accueil sans section, le CV
+// sous `cv`, sa première version sous `cv/fancy`. null sinon.
+export function pageFixe (section, article) {
+  if (section === null) return article === null ? ACCUEIL : null
+  if (section !== CV.slug) return null
   if (article === null) return CV
   return article === CV_FANCY.slug ? CV_FANCY : null
 }
@@ -105,7 +114,7 @@ export function voisins (version, slug) {
 export function toutesLesPages () {
   const pages = []
   for (const locale of ['fr', 'en']) {
-    for (const v of [CV, CV_FANCY]) if (v[locale]) pages.push({ locale, article: 'cv', slug: v.slug, ...v[locale] })
+    for (const v of [ACCUEIL, CV, CV_FANCY]) if (v[locale]) pages.push({ locale, article: v === ACCUEIL ? 'accueil' : 'cv', slug: v.slug, ...v[locale] })
     for (const a of ARTICLES) for (const p of a[locale]?.pages ?? []) pages.push({ locale, article: a.slug, ...p })
   }
   return pages

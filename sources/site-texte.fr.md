@@ -15,6 +15,135 @@ La prose est en markdown, modifiable librement. Ce qui suit est fonctionnel et d
 # Antoine Bastos
 
 ```
+article   : accueil
+page      : accueil
+fichier   : accueil/accueil.fr.html
+surtitre  : 
+lecture   : - min
+```
+
+Ingénieur logiciel
+
+Systèmes backend, applications à forte composante données, migrations, outillage du développeur.
+
+Seine-et-Marne, France
+
+- [GitHub](https://github.com/4nt0ineB)
+- [LinkedIn](https://www.linkedin.com/in/antoineba6/)
+- [CV](#/fr/cv)
+
+Je travaille surtout sur des systèmes backend Java, des migrations de données et des applications métier, chez Lunatech depuis 2024. En dehors, je construis un produit logiciel et j'écris sur les problèmes d'ingénierie que je rencontre.
+
+## Travaux choisis {#travaux}
+
+### Produit web personnel, non public
+
+depuis 2026
+
+Développement en solo
+
+Un produit web sur un monorepo TypeScript, banc d'essai d'un développement mené en spec-driven (OpenSpec) avec plusieurs agents Claude Code, un orchestrateur et des revues automatisées.
+
+TypeScript · React · OpenSpec · Claude Code
+
+### Open Food Facts
+
+2024
+
+Contributeur backend, open source
+
+Intégration du CRM Odoo dans le monolithe Perl de la plateforme producteurs, et refonte du module de routage en handlers typés, adoptée comme standard du projet.
+
+Perl · Docker · Linux
+
+[Trente-quatre PR fusionnées ↗](https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged)
+
+### Catalogue raisonné VLA
+
+2022
+
+Freelance, seul développeur
+
+Catalogue en ligne de six cent cinquante œuvres d'un peintre : devis, maquettes, deux revues, déploiement.
+
+Python · Django · Docker · Nginx
+
+[laubreton.com ↗](https://laubreton.com)
+
+## Expérience {#experience}
+
+depuis 2026
+
+### CARIAD, groupe Volkswagen
+
+Lead dev, via Lunatech
+
+Migration d'un back-office de permissions vers une API REST et un frontend React, endpoint par endpoint derrière un feature flag. Refonte du modèle d'autorisations en une matrice rôle, opération, périmètre.
+
+Java · Spring Boot · React · TypeScript
+
+2025 à 2026
+
+### DARVA, Domaine Client
+
+Développeur backend, via Lunatech
+
+Migration des données clients d'un assureur vers un nouveau référentiel. Batch repris et optimisé, de huit heures à moins d'une heure et demie.
+
+Java · Quarkus · Hibernate Reactive · Kafka
+
+2025
+
+### DARVA, Exiris
+
+Développeur full-stack, via Lunatech
+
+Plateforme de lettre recommandée électronique. Tests de non-régression migrés vers Playwright.
+
+Java · Quarkus · React · Playwright
+
+[Parcours complet → CV](#/fr/cv)
+
+## Écrits {#ecrits}
+
+2026-09
+
+### [Introduction à l'observabilité](#/fr/blog/introduction-observabilite)
+
+Douze pages, à partir de neuf pannes reproduites sur une machine de test.
+
+Observabilité · Kubernetes · Prometheus
+
+[Lire →](#/fr/blog/introduction-observabilite)
+
+## Outils {#outils}
+
+## Sujets {#sujets}
+
+- Systèmes distribués
+- Modélisation des données
+- Observabilité
+- Simulation
+- Outillage du développeur
+- Architecture logicielle
+- Développement assisté par IA
+
+## À propos {#a-propos}
+
+Ingénieur logiciel en Seine-et-Marne. Je travaille surtout sur des systèmes backend et des applications métier chargées en données. Master en informatique, Université Gustave Eiffel, 2025. Français, anglais professionnel.
+
+Antoine Bastos
+Ingénieur logiciel, France
+
+- [GitHub](https://github.com/4nt0ineB)
+- [LinkedIn](https://www.linkedin.com/in/antoineba6/)
+- [CV](#/fr/cv)
+
+---
+
+# Antoine Bastos
+
+```
 article   : cv
 page      : cv
 fichier   : cv/cv.fr.html

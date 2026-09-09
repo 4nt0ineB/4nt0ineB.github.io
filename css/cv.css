@@ -5,10 +5,10 @@
 
    Les couleurs sont des paires fond/encre que le lecteur choisit
    (composant cv-palettes), indépendantes du thème clair/sombre du reste du
-   site ; la barre du site les reprend sur toutes les pages. Tout ce qui est
-   propre à cette feuille se porte sur .cv ou sur html.page-cv, pour que le
-   blog et la vitrine n'en héritent rien. La vitrine publique (#/fr) a sa
-   propre feuille, css/vitrine.css. */
+   site ; la barre du site les reprend sur cette page seulement. Tout ce qui
+   est propre à cette feuille se porte sur .cv ou sur html.page-cv, pour que
+   le blog, l'accueil et la vitrine n'en héritent rien. Le CV public
+   (#/fr/cv) a sa propre feuille, css/vitrine.css. */
 
 :root {
   --cv-fond:  #f5c543;
@@ -21,6 +21,15 @@
 :root[data-cv-palette="papier"] { --cv-fond: #f4f1ea; --cv-encre: #141414; }
 
 /* --- La page entière prend la feuille, en-tête compris ------------------- */
+
+html.page-cv {
+  --barre-fond:  var(--cv-fond);
+  --barre-encre: var(--cv-encre);
+}
+
+html.page-cv .entete {
+  border-bottom: 0;
+}
 
 html.page-cv body {
   background: var(--cv-fond);

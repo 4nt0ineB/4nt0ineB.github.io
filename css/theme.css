@@ -1,8 +1,9 @@
 :root {
   color-scheme: light;
 
-  --fond:            #ffffff;
-  --fond-doux:       #f6f6f4;
+  /* Un blanc légèrement chaud, celui d'un papier, pas celui d'un écran. */
+  --fond:            #fbfaf7;
+  --fond-doux:       #f3f1ec;
   --fond-eleve:      #ffffff;
   --texte:           #16161a;
   --texte-doux:      #55555f;

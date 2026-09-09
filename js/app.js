@@ -1,5 +1,5 @@
 import { createApp, defineComponent, ref, shallowRef, computed, onMounted, nextTick } from 'https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.esm-browser.prod.js'
-import { versionCv, articlesParDate, article, pageDe, voisins } from './sections.js'
+import { pageFixe, CV, articlesParDate, article, pageDe, voisins } from './sections.js'
 import { routeCourante, lien, surChangement } from './routeur.js'
 import { LOCALES, TEXTES } from './i18n.js'
 import { themeEffectif, basculerTheme } from './theme.js'
@@ -38,11 +38,14 @@ const App = defineComponent({
     // elle dérive du manifeste, donc elle ne peut pas se désynchroniser.
     const liste = computed(() => blog.value && route.value.article === null)
     const courant = computed(() => blog.value && route.value.article ? article(route.value.article) : null)
-    const cv = computed(() => blog.value ? null : versionCv(route.value.article))
-    const estFancy = computed(() => cv.value?.slug === 'fancy')
-    // La version de l'article ou du CV dans la langue courante, ou null.
+    // La page hors blog : accueil, CV ou CV fancy.
+    const fixe = computed(() => blog.value ? null : pageFixe(route.value.section, route.value.article))
+    const estAccueil = computed(() => fixe.value?.slug === 'accueil')
+    const estCv = computed(() => fixe.value !== null && !estAccueil.value)
+    const estFancy = computed(() => fixe.value?.slug === 'fancy')
+    // La version de l'article ou de la page fixe dans la langue courante, ou null.
     const version = computed(() => {
-      if (!blog.value) return cv.value?.[locale.value] ?? null
+      if (!blog.value) return fixe.value?.[locale.value] ?? null
       return courant.value?.[locale.value] ?? null
     })
     const courante = computed(() => {
@@ -50,7 +53,6 @@ const App = defineComponent({
       if (courant.value) return pageDe(version.value, route.value.page)
       return version.value
     })
-    const estCv = computed(() => !blog.value)
     const sommaire = computed(() => courant.value && version.value && courante.value !== null && version.value.pages.length > 1)
     const cote = computed(() => courant.value && version.value && courante.value
       ? voisins(version.value, courante.value.slug) : { precedent: null, suivant: null })
@@ -60,9 +62,10 @@ const App = defineComponent({
     const autreLangue = computed(() => {
       const autre = LOCALES.find(l => l !== locale.value)
       if (liste.value) return lien(autre, 'blog')
-      if (estCv.value) {
-        if (!cv.value?.[autre]) return null
-        return estFancy.value ? lien(autre, 'cv', cv.value.slug) : lien(autre)
+      if (fixe.value) {
+        if (!fixe.value[autre]) return null
+        if (estAccueil.value) return lien(autre)
+        return estFancy.value ? lien(autre, CV.slug, fixe.value.slug) : lien(autre, CV.slug)
       }
       const v = courant.value?.[autre]
       if (!v) return null
@@ -108,7 +111,7 @@ const App = defineComponent({
         const c = await chargerFragment(courante.value.fichier)
         if (route.value !== demande) return
         vue.value = c
-        document.title = estCv.value ? SITE : `${courante.value.titre} | ${SITE}`
+        document.title = estAccueil.value ? SITE : `${estCv.value ? T.value.cv : courante.value.titre} | ${SITE}`
         await nextTick()
         if (route.value !== demande) return
         const cible = demande.ancre ? document.getElementById(demande.ancre) : null
@@ -133,7 +136,7 @@ const App = defineComponent({
       majAvancement()
     })
 
-    return { SITE, T, locale, route, blog, liste, courant, version, courante, estCv, estFancy, sommaire, vue, erreur, theme,
+    return { SITE, T, locale, route, blog, liste, courant, version, courante, estAccueil, estCv, estFancy, sommaire, vue, erreur, theme,
              avancement, cote, autreLangue, langues, lien, dateLongue, numero, numeroPage,
              articles: computed(() => articlesParDate(locale.value)),
              bascule: () => { theme.value = basculerTheme() } }
@@ -146,7 +149,10 @@ const App = defineComponent({
       <a class="titre-site" :href="lien(locale)">{{ SITE }}</a>
       <div class="boutons-entete">
         <nav class="sections" aria-label="Sections">
+          <a :href="lien(locale, null, null, null, 'travaux')">{{ T.travaux }}</a>
           <a :href="lien(locale, 'blog')" :aria-current="blog ? 'page' : null">{{ T.blog }}</a>
+          <a :href="lien(locale, 'cv')" :aria-current="estCv ? 'page' : null">{{ T.cv }}</a>
+          <a href="https://github.com/4nt0ineB" target="_blank" rel="noopener">GitHub</a>
         </nav>
         <nav class="langues" :aria-label="T.langue">
           <template v-for="l in langues" :key="l.code">
@@ -162,7 +168,7 @@ const App = defineComponent({
       </div>
       </div>
     </header>
-    <div class="coquille" :class="{ 'sans-sommaire': !sommaire, 'section-cv': estCv }">
+    <div class="coquille" :class="{ 'sans-sommaire': !sommaire, 'section-cv': estCv, 'section-accueil': estAccueil }">
       <nav v-if="sommaire" class="sommaire" aria-label="Sommaire">
         <a v-for="(p, i) in version.pages" :key="p.slug" :href="lien(locale, 'blog', courant.slug, p.slug)"
            :aria-current="p.slug === courante.slug ? 'page' : null">
@@ -197,7 +203,7 @@ const App = defineComponent({
         <p v-else-if="!erreur">{{ T.chargement }}</p>
         <div v-else>
           <h1>{{ T.introuvable }}</h1>
-          <p>{{ T.introuvableDetail }} <a :href="lien(locale, 'blog')">{{ T.lesArticles }}</a>, {{ T.ou }} <a :href="lien(locale)">{{ T.leCv }}</a>.</p>
+          <p>{{ T.introuvableDetail }} <a :href="lien(locale, 'blog')">{{ T.lesArticles }}</a>, {{ T.ou }} <a :href="lien(locale)">{{ T.lAccueil }}</a>.</p>
         </div>
         <nav v-if="cote.precedent || cote.suivant" class="nav-chapitre">
           <a v-if="cote.precedent" :href="lien(locale, 'blog', courant.slug, cote.precedent.slug)">{{ T.precedent }} : {{ cote.precedent.titre }}</a>
