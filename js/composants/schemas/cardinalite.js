@@ -43,7 +43,7 @@ export const SchemaCardinalite = {
     },
     verdict () {
       return this.rompu
-        ? 'the database keeps its indexes in memory, and it does not degrade gracefully: it goes down'
+        ? 'the series multiply past what an in-memory index survives: memory runs out and the server becomes unstable'
         : 'a metrics database takes this without effort'
     }
   },

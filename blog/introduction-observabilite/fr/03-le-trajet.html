@@ -24,9 +24,11 @@
     </table>
   </tableau-mesure>
 
-  <p>Cette pile a été choisie parce qu'elle est rodée, libre, et tient sur une machine de 8
-  Go, et que Grafana sait lire les trois stockages. D'autres choix existent et la page
-  suivante en cite un.</p>
+  <p>Bien d'autres piles mettent en œuvre les mêmes idées. Celle-ci a été choisie parce
+  qu'elle est rodée, libre, et tient sur une machine de 8 Go, et que Grafana sait lire
+  les trois stockages. Elle sert de pile de référence pour la suite du texte, afin que
+  chaque notion ait un composant réel en face d'elle, mais les notions comptent plus que
+  les produits. La page suivante cite un autre choix.</p>
 
   <p>Cette carte répond à « qu'est-ce que ce composant ». Elle ne répond pas à « comment la
   donnée arrive sur mon écran », qui est une question de mouvement.</p>
@@ -70,8 +72,9 @@
   <p>Le pull a une conséquence qui revient au
   <a href="#/fr/blog/introduction-observabilite/lire-un-graphe#la-fenetre">chapitre 6</a> : une métrique n'a pas de valeur
   continue, elle a la valeur qu'elle avait aux instants où on est venu la lire. Un
-  événement qui commence et se termine entre deux scrapes n'a jamais existé pour
-  Prometheus.</p>
+  état passager qui apparaît et disparaît entre deux scrapes n'a jamais existé pour
+  Prometheus. Un compteur, lui, garde la marque de l'événement qui l'a incrémenté, et le
+  scrape suivant voit l'augmentation.</p>
 
   <h2 id="ce-que-le-tuyau-achete">À quoi sert le collecteur</h2>
   <p>Le collecteur ne garde rien, donc on peut se demander à quoi il sert. Il sert à ce que

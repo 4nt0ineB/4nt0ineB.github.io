@@ -23,13 +23,14 @@
         <tr><td><jargon mot="counter">counter</jargon></td><td>only goes up</td><td>requests served, orders created, errors</td></tr>
         <tr><td><jargon mot="gauge">gauge</jargon></td><td>goes up and down</td><td>queue length, active connections, cached items</td></tr>
         <tr><td><jargon mot="histogram">histogram</jargon> (or timer)</td><td>records a distribution</td><td>durations, so that the p95 can be asked for</td></tr>
-        <tr><td>value summary</td><td>a distribution of non-temporal values</td><td>order amount, payload size</td></tr>
+        <tr><td>distribution summary (Micrometer)</td><td>a distribution of non-temporal values</td><td>order amount, payload size</td></tr>
       </tbody>
     </table>
   </tableau-mesure>
 
-  <p>Worth knowing: an average latency is worth almost nothing, since it is dominated by
-  the many fast requests and hides the slow ones. A percentile, on the contrary,
+  <p>Worth knowing: an average latency describes badly what users experience, since it is
+  dominated by the many fast requests and hides the slow ones. It is useful for sizing,
+  not for judging the tail of the distribution. A percentile, on the contrary,
   describes the experience of the least lucky users, and that is what makes a histogram
   useful.</p>
 

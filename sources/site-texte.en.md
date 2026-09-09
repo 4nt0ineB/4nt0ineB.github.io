@@ -421,7 +421,7 @@ lecture   : 4 min
 
 ## Detect, locate, explain {#detecter-localiser-expliquer}
 
-The three pillars of observability are the metric, the <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of doing the same job but three floors of the same investigation. Each answers one of the three questions of the previous chapter.
+The three pillars of observability are the metric, the <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of doing the same job but three floors of the same investigation. Each answers one of the three questions of the previous chapter. For the investigations in this text, a useful model is: metrics detect, traces locate, logs explain. It is not an exclusive one, because a trace can also explain a cause and a log can detect an outage.
 
 :::tableau legende="The three pillars, the question each answers, its role in the investigation."
 
@@ -472,7 +472,7 @@ Why not a single tool that does all of this?
 
 A metric is aggregated ahead of time. When a request fails, a counter goes from 3 to 4, and that is all. The user, the URL, the call stack, the request identifier: everything is thrown away, on purpose, at write time. In exchange, this counter is permanent and almost free, including when queried over six weeks, since the answer was computed when the data arrived.
 
-What remains is to make this metric able to explain. If we labelled the counter with the user's identifier, we would no longer have one metric but as many metrics as the system has users. Adding the URL with its parameters would multiply again. Prometheus keeps its indexes in memory, so it does not degrade gracefully and would collapse under its own weight.
+What remains is to make this metric able to explain. If we labelled the counter with the user's identifier, we would no longer have one metric but as many metrics as the system has users. Adding the URL with its parameters would multiply again. Prometheus keeps its indexes in memory, and it is not one label with forty thousand values that exhausts it, it is the multiplication. With status, route and method already in place, the customer identifier takes the count to 5 × 20 × 6 × 40 000, twenty-four million possible series, and a URL with its parameters has no count at all.
 
 :::schema schema-cardinalite
 titre: Number of series stored by the metric, on a logarithmic scale
@@ -481,20 +481,20 @@ voir: Des cases a cocher, une par etiquette de metrique (statut 5 valeurs, route
 
 :::devine
 question: We add a customer identifier label to a metric. What happens?
-options: ['Queries slow down a little', 'Storage grows proportionally', 'The database goes down']
+options: ['Queries slow down a little', 'Storage grows proportionally', 'The number of series explodes, and the server memory with it']
 bonne: 2
 
 reponse:
 
-Each label value creates one more series, kept in memory. Forty thousand customers make forty thousand series for this one counter, and the index is not designed to degrade gradually.
+Each label value creates one more series, kept in memory. Forty thousand series on their own, Prometheus can hold. But the label combines with the ones already there, and the count runs into millions of possible series. The server runs out of memory and becomes unstable, without degrading gradually.
 
 :::
 
-A metric can therefore never give per-request detail. The property that makes it cheap is precisely the one that throws the detail away.
+A metric series therefore does not keep the identity of every request. The property that makes it cheap is precisely the one that throws the detail away.
 
-A trace does the opposite and keeps every instance with its full causality, so it costs far more. This is why production systems only keep one in ten or one in a hundred, and why one cannot alert on them: an alarm built on a sample misses the events that were not sampled.
+A trace does the opposite and keeps every instance with its full causality, so it costs far more. This is why production systems often keep only a fraction, one in ten or one in a hundred, and why nobody alerts on them: an alarm built on a sample misses the events that were not sampled.
 
-No future tool will merge the three, because a metric detailed enough to explain destroys its own database, and a trace complete enough to alert on costs the price of all the traffic.
+No tool does all three well at once, because a metric detailed enough to explain destroys its own database, and a trace complete enough to alert on costs the price of all the traffic.
 
 ## Not everything is a request {#tout-n-est-pas-une-requete}
 
@@ -539,7 +539,7 @@ Most confusion about tooling disappears once each product is put into one of two
 
 :::
 
-This stack was chosen because it is proven, free, fits on an 8 GB machine, and Grafana can read all three stores. Other choices exist and the next page names one.
+Many stacks implement the same ideas. This one was chosen because it is proven, free, fits on an 8 GB machine, and Grafana can read all three stores. It serves as the reference stack for the rest of the text, so that every notion has a real component attached to it, but the notions matter more than the products. The next page names another choice.
 
 This map answers "what is this component". It does not answer "how does the data reach my screen", which is a question of movement.
 
@@ -571,7 +571,7 @@ titre: Prometheus pulls its metrics, the agent pushes its logs
 voir: Deux colonnes animees en boucle. A gauche Prometheus qui va chercher ses metriques, a droite l'agent qui pousse ses logs vers Loki.
 :::
 
-Pull has a consequence that comes back in [chapter 6](#/en/blog/introduction-observabilite/lire-un-graphe#la-fenetre): a metric has no continuous value, it has the value it had at the instants someone came to read it. An event that starts and ends between two scrapes never existed for Prometheus.
+Pull has a consequence that comes back in [chapter 6](#/en/blog/introduction-observabilite/lire-un-graphe#la-fenetre): a metric has no continuous value, it has the value it had at the instants someone came to read it. A transient state that appears and disappears between two scrapes never existed for Prometheus. A counter is different: the event that incremented it leaves a value behind, and the next scrape sees the increase.
 
 ## What the collector is for {#ce-que-le-tuyau-achete}
 
@@ -595,7 +595,7 @@ lecture   : 4 min
 
 Prometheus is a database for numbers over time. It also carries its query language, PromQL, and the engine that evaluates alerting rules. Almost every metrics stack one will come across is either Prometheus or a tool that speaks its language.
 
-It keeps its indexes in memory, which explains both its speed and its fragility. A label with too many distinct values does not slow it down gradually, it brings it down (see [cardinality](#/en/blog/introduction-observabilite/trois-piliers#la-cardinalite)).
+It keeps its indexes in memory, which explains both its speed and its fragility. A label whose values multiply without bound does not slow it down gradually, it exhausts its memory (see [cardinality](#/en/blog/introduction-observabilite/trois-piliers#la-cardinalite)).
 
 ## Loki {#loki}
 
@@ -603,13 +603,11 @@ Loki is the Prometheus of logs: the same place in the architecture and the same 
 
 Loki never indexes the content of the log line. It indexes a set of labels defined ahead of time, per time window. A search on these labels is cheap. Once the type of log and the period are targeted, what remains is a text search, like a grep. This choice makes it far cheaper than a full-text search engine, and worse at finding a precise identifier in everything that was ever logged.
 
-Hence the most common Loki mistake, and a classic interview question. Labels create physically separate streams, so the cardinality constraint applies here as is. The severity level is fine, there are five of them (info, debug, warn, error, trace). A label for the user identifier or the trace identifier destroys the system, and those go into the content of the line, where a text filter finds them.
+Hence the most common Loki mistake, and a classic interview question. Labels create physically separate streams, so the cardinality constraint applies here as is. The severity level is fine, there are five of them (info, debug, warn, error, trace). A label for the user identifier or the trace identifier destroys the system, and those go into structured metadata, which Loki provides for such high-cardinality values, or failing that into the content of the line, where a text filter finds them.
 
 ## Tempo {#tempo}
 
-Tempo is the storage for traces, and it follows Loki's philosophy, a minimal index. It indexes the trace identifier, never the detail of each <jargon mot="span">span</jargon>, and puts the rest in cheap bulk storage.
-
-This is a deliberate bet on how traces are used, because the main path is "I already have a trace identifier, from a log line or an exemplar, show me the tree". Searching traces by arbitrary attribute at high volume calls for another design, more expensive to run (the Elasticsearch, Logstash, Kibana stack, known as ELK).
+Tempo is the storage for traces. The cheapest and most direct path is still the trace identifier: "I already have an identifier, from a log line or an exemplar, show me the tree". Tempo can also search traces with its query language, TraceQL, by <jargon mot="span">span</jargon> attribute, by duration or by structure. But those searches scan the traces themselves, and they have nothing in common with the index of a metrics database.
 
 A trace that has just been sent is not immediately searchable, since it goes through an ingestion buffer and becomes queryable a minute or two later. Do not conclude "there are no traces" twenty seconds after triggering a request.
 
@@ -684,11 +682,11 @@ A metric is an object declared once and updated in the code.
 | <jargon mot="counter">counter</jargon> | only goes up | requests served, orders created, errors |
 | <jargon mot="gauge">gauge</jargon> | goes up and down | queue length, active connections, cached items |
 | <jargon mot="histogram">histogram</jargon> (or timer) | records a distribution | durations, so that the p95 can be asked for |
-| value summary | a distribution of non-temporal values | order amount, payload size |
+| distribution summary (Micrometer) | a distribution of non-temporal values | order amount, payload size |
 
 :::
 
-Worth knowing: an average latency is worth almost nothing, since it is dominated by the many fast requests and hides the slow ones. A percentile, on the contrary, describes the experience of the least lucky users, and that is what makes a histogram useful.
+Worth knowing: an average latency describes badly what users experience, since it is dominated by the many fast requests and hides the slow ones. It is useful for sizing, not for judging the tail of the distribution. A percentile, on the contrary, describes the experience of the least lucky users, and that is what makes a histogram useful.
 
 ## Business metrics {#les-metriques-metier}
 
@@ -757,7 +755,7 @@ This is also why an alert that compares a raw counter to a fixed threshold is a 
 
 A rate is computed over a time window, chosen at each query: the counter's variation over the window, divided by its length. This window carries two traps, which pull in opposite directions.
 
-Too wide a window spreads a short event out. A six-second incident, averaged over a minute, draws a bump a minute wide, and nothing in the graph is broken.
+Too wide a window spreads a short event out. A six-second incident, averaged over a minute, draws a bump a minute wide, and nothing in the graph is broken. That bump is the one of an ideal moving average. Prometheus's rate() works on the observed points and extrapolates at the edges of the window, so a real query gives a slightly different figure, but the shape is the same.
 
 :::schema schema-fenetre-rate
 titre: A real 6-second incident, and what a moving average shows of it depending on the chosen window width
@@ -805,7 +803,7 @@ lecture   : 4 min
 
 A healthcheck is an HTTP endpoint a service exposes to say whether it is fine, and that another program calls at a regular interval. Docker, a load balancer or an orchestrator all have one. On Kubernetes, the agent running on each machine (kubelet) asks the question, and it is called a probe.
 
-A probe looks like monitoring but it is a command, since the kubelet acts on the answer, immediately and without asking. And if the service runs on Kubernetes, probes exist, whether they were configured or not.
+A probe looks like monitoring but it is a command, since the kubelet acts on the answer, immediately and without asking. On Kubernetes, a probe only exists if it is declared, and without one the kubelet treats the container as alive and ready.
 
 ## Two probes, and what each failure triggers {#deux-sondes}
 
@@ -837,7 +835,7 @@ titre: Four instances and a database, during and after an outage
 voir: Quatre instances et une base. Un interrupteur « la liveness interroge la base », un bouton pour couper la base. Le compteur de redemarrages reste a zero dans le bon scenario et grimpe dans le mauvais.
 :::
 
-The test to apply: if the remedy is not "kill this process and start a new one", that check has no place in a liveness probe. Dependency checks go in the readiness probe, whose verdict removes a pod from the Service without destroying anything.
+The test to apply: if the remedy is not "kill this process and start a new one", that check has no place in a liveness probe. A dependency check may go in the readiness probe, whose verdict removes a pod from the Service without destroying anything. Removing that pod still has to help, because if twenty pods depend on the same database and all fail their readiness probe, the Service has nobody left behind it. A service that can still answer in a degraded mode, from a cache or on some routes, is sometimes better off staying ready.
 
 When in doubt, it is perfectly fine not to declare a liveness probe at all. The kubelet will then never kill the process, and that is a far safer default than a badly written probe.
 
@@ -862,14 +860,14 @@ The tolerated response time is one second by default, and three failures in a ro
 A liveness probe must not be able to fail because of load.
 :::
 
-When it is sensitive to load, a passing overload becomes a <jargon mot="crash loop">crash loop</jargon>, and the crash loop destroys the capacity that would have absorbed the overload. The remedy is not to add capacity but to write the two values, wider than their defaults. It is the readiness probe that is allowed to react to load, because it removes traffic without destroying anything.
+When it is sensitive to load, a passing overload becomes a <jargon mot="crash loop">crash loop</jargon>, and the crash loop destroys the capacity that would have absorbed the overload. The first remedy is to write the two values, wider than their defaults, so that a passing load does not become a restart loop. The saturation itself still has to be addressed separately. It is the readiness probe that is allowed to react to load, because it removes traffic without destroying anything.
 
 ## Two failure messages that mean the opposite {#deux-messages-opposes}
 
-When reading probe failures in the events, this distinction is the fastest diagnosis:
+When reading probe failures in the events, this distinction is the first sorting:
 
 - "connection refused": nothing is listening. The process is starting, or it is dead.
-- "deadline exceeded" or "timeout": something is listening and did not answer in time. That is saturation, and the process is probably fine.
+- "deadline exceeded" or "timeout": something is listening and did not answer in time. Under heavy load, that is a strong clue of saturation. But a deadlock, a garbage collector pause or a dependency called by mistake give the same message, so it is a signal to interpret and not a diagnosis.
 
 ## A single bit of output {#un-seul-bit-de-sortie}
 
@@ -891,9 +889,9 @@ lecture   : 2 min
 
 Everything above assumes someone is looking at a dashboard. At three in the morning, nobody is looking, and that is what an alert is for.
 
-An alert is a query on the metrics, with a duration. Prometheus evaluates it every thirty seconds, and when it stays true for the whole duration, it fires it. What remains is to deliver it somewhere, an e-mail, a chat channel or a notification on a phone, and that is a separate setting, with its own destination. The duration is there so as not to wake someone up for a single unlucky sample. "Memory above 90 % for five minutes" is an alert, "memory above 90 %" is a nuisance.
+An alert is a query on the metrics, with a duration. Prometheus evaluates it every thirty seconds, and when it stays true for the whole duration, it fires it. It does not deliver it itself: it hands it to a routing component (Alertmanager, in the Prometheus stack), which groups it and sends it to a destination, an e-mail, a chat channel or a notification on a phone. That destination is a separate setting. Grafana, for its part, displays alerts but does not deliver them. The duration is there so as not to wake someone up for a single unlucky sample. "Memory above 90 % for five minutes" is an alert, "memory above 90 %" is a nuisance.
 
-Let us assume an observability stack installed two weeks ago with its default settings. A pod stops being ready, the alert fires, and it shows up in Grafana's alert list.
+Let us assume the kube-prometheus-stack, installed two weeks ago with its default settings. A pod stops being ready, the alert fires, and it shows up in Grafana's alert list.
 
 :::devine
 question: Is anyone notified?
@@ -902,7 +900,7 @@ bonne: 1
 
 reponse:
 
-Nobody. The stack's default destination is called "null" and does nothing, so that a fresh installation does not send messages where nobody has configured anything. The alert shows up, and the chain stops there.
+Nobody. In this stack, the routing's default destination is called "null" and does nothing, so that a fresh installation does not send messages where nobody has configured anything. The alert shows up, and the chain stops there.
 
 :::
 

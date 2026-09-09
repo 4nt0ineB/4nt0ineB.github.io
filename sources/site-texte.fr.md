@@ -421,7 +421,7 @@ lecture   : 5 min
 
 ## Détecter, localiser, expliquer {#detecter-localiser-expliquer}
 
-Les trois piliers de l'observabilité sont la métrique, la <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une des trois questions du chapitre précédent.
+Les trois piliers de l'observabilité sont la métrique, la <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une panne.
 
 :::tableau legende="Les trois piliers, la question qu'ils répondent, leur rôle dans l'enquête."
 
@@ -472,7 +472,7 @@ La <jargon mot="cardinalité">cardinalité</jargon> est le nombre de combinaison
 
 Une métrique est agrégée à l'avance. Quand une requête échoue, un compteur passe de 3 à 4, et c'est tout. L'utilisateur, l'URL, la pile d'appels, l'identifiant de la requête : tout est jeté, exprès, au moment de l'écriture. En échange, ce compteur est permanent et presque gratuit, l'interroger sur six semaines y compris, puisque la réponse a été calculée quand la donnée est arrivée.
 
-Reste à rendre cette métrique capable d'expliquer. Si on étiquetait le compteur avec l'identifiant de l'utilisateur, on n'aurait plus une seule métrique mais autant de métriques que le système a d'utilisateurs. Ajouter l'URL avec ses paramètres multiplierait encore. Prometheus garde ses index en mémoire, donc il ne se dégrade pas en douceur et tomberait sous son propre poids.
+Reste à rendre cette métrique capable d'expliquer. Si on étiquetait le compteur avec l'identifiant de l'utilisateur, on n'aurait plus une seule métrique mais autant de métriques que le système a d'utilisateurs. Ajouter l'URL avec ses paramètres multiplierait encore. Prometheus garde ses index en mémoire, et ce n'est pas une étiquette de quarante mille valeurs qui l'épuise, c'est la multiplication. Avec le statut, la route et la méthode déjà en place, l'identifiant client porte le compte à 5 × 20 × 6 × 40 000, soit vingt-quatre millions de séries possibles, et une URL avec ses paramètres n'a même pas de compte.
 
 :::schema schema-cardinalite
 titre: Number of series stored by the metric, on a logarithmic scale
@@ -481,20 +481,20 @@ voir: Des cases a cocher, une par etiquette de metrique (statut 5 valeurs, route
 
 :::devine
 question: On ajoute une étiquette d'identifiant client à une métrique. Que se passe-t-il ?
-options: ['Les requêtes ralentissent un peu', 'Le stockage grossit proportionnellement', 'La base tombe']
+options: ['Les requêtes ralentissent un peu', 'Le stockage grossit proportionnellement', 'Le nombre de séries explose, et la mémoire du serveur avec']
 bonne: 2
 
 reponse:
 
-Chaque valeur d'étiquette crée une série de plus, gardée en mémoire. Quarante mille clients font quarante mille séries pour ce seul compteur, et l'index n'est pas conçu pour se dégrader progressivement.
+Chaque valeur d'étiquette crée une série de plus, gardée en mémoire. Quarante mille séries seules, Prometheus les tient. Mais l'étiquette se combine avec celles qui existent déjà, et le compte passe à des millions de séries possibles. La mémoire du serveur s'épuise et il devient instable, sans se dégrader progressivement.
 
 :::
 
-Une métrique ne peut donc jamais donner le détail par requête. La propriété qui la rend bon marché est justement celle qui jette le détail.
+Une série de métrique ne garde donc pas l'identité de chaque requête. La propriété qui la rend bon marché est justement celle qui jette le détail.
 
-Une trace fait l'inverse et garde chaque instance avec sa causalité complète, donc elle coûte bien plus cher. C'est pourquoi les systèmes en production n'en gardent qu'une sur dix ou une sur cent, et c'est pourquoi on ne peut pas alerter dessus : une alarme construite sur un échantillon rate les événements qui n'ont pas été échantillonnés.
+Une trace fait l'inverse et garde chaque instance avec sa causalité complète, donc elle coûte bien plus cher. C'est pourquoi les systèmes en production n'en gardent souvent qu'une fraction, une sur dix ou une sur cent, et c'est pourquoi on n'alerte pas dessus : une alarme construite sur un échantillon rate les événements qui n'ont pas été échantillonnés.
 
-Aucun futur outil ne fusionnera les trois, car une métrique assez détaillée pour expliquer détruit sa propre base, et une trace assez complète pour alerter coûte le prix de tout le trafic.
+Aucun outil ne fait bien les trois à la fois, car une métrique assez détaillée pour expliquer détruit sa propre base, et une trace assez complète pour alerter coûte le prix de tout le trafic.
 
 ## Tout n'est pas une requête {#tout-n-est-pas-une-requete}
 
@@ -539,7 +539,7 @@ La plupart des confusions sur l'outillage disparaissent une fois chaque produit 
 
 :::
 
-Cette pile a été choisie parce qu'elle est rodée, libre, et tient sur une machine de 8 Go, et que Grafana sait lire les trois stockages. D'autres choix existent et la page suivante en cite un.
+Bien d'autres piles mettent en œuvre les mêmes idées. Celle-ci a été choisie parce qu'elle est rodée, libre, et tient sur une machine de 8 Go, et que Grafana sait lire les trois stockages. Elle sert de pile de référence pour la suite du texte, afin que chaque notion ait un composant réel en face d'elle, mais les notions comptent plus que les produits. La page suivante cite un autre choix.
 
 Cette carte répond à « qu'est-ce que ce composant ». Elle ne répond pas à « comment la donnée arrive sur mon écran », qui est une question de mouvement.
 
@@ -571,7 +571,7 @@ titre: Prometheus pulls its metrics, the agent pushes its logs
 voir: Deux colonnes animees en boucle. A gauche Prometheus qui va chercher ses metriques, a droite l'agent qui pousse ses logs vers Loki.
 :::
 
-Le pull a une conséquence qui revient au [chapitre 6](#/fr/blog/introduction-observabilite/lire-un-graphe#la-fenetre) : une métrique n'a pas de valeur continue, elle a la valeur qu'elle avait aux instants où on est venu la lire. Un événement qui commence et se termine entre deux scrapes n'a jamais existé pour Prometheus.
+Le pull a une conséquence qui revient au [chapitre 6](#/fr/blog/introduction-observabilite/lire-un-graphe#la-fenetre) : une métrique n'a pas de valeur continue, elle a la valeur qu'elle avait aux instants où on est venu la lire. Un état passager qui apparaît et disparaît entre deux scrapes n'a jamais existé pour Prometheus. Un compteur, lui, garde la marque de l'événement qui l'a incrémenté, et le scrape suivant voit l'augmentation.
 
 ## À quoi sert le collecteur {#ce-que-le-tuyau-achete}
 
@@ -595,7 +595,7 @@ lecture   : 5 min
 
 Prometheus est une base de données pour des nombres dans le temps. Il porte aussi son langage de requête, PromQL, et le moteur qui évalue les règles d'alerte. Presque toute pile de métriques qu'on croisera est soit Prometheus, soit un outil qui parle son langage.
 
-Il garde ses index en mémoire, ce qui explique sa vitesse et sa fragilité. Une étiquette à trop de valeurs distinctes ne le ralentit pas progressivement, elle le fait tomber (voir la [cardinalité](#/fr/blog/introduction-observabilite/trois-piliers#la-cardinalite)).
+Il garde ses index en mémoire, ce qui explique sa vitesse et sa fragilité. Une étiquette dont les valeurs se multiplient sans borne ne le ralentit pas progressivement, elle épuise sa mémoire (voir la [cardinalité](#/fr/blog/introduction-observabilite/trois-piliers#la-cardinalite)).
 
 ## Loki {#loki}
 
@@ -603,13 +603,11 @@ Loki est le Prometheus des logs : la même place dans l'architecture et la même
 
 Loki n'indexe jamais le contenu de la ligne de log. Il indexe un ensemble d'étiquettes définies à l'avance, par fenêtre de temps. Une recherche sur ces étiquettes est bon marché. Une fois le type de log et la période ciblés, il ne reste qu'une recherche de texte, comme un grep. Ce choix le rend bien moins cher qu'un moteur de recherche plein texte, et moins bon pour retrouver un identifiant précis dans tout ce qui a jamais été loggé.
 
-D'où l'erreur Loki la plus courante, et une question d'entretien classique. Les étiquettes créent des flux physiquement séparés, donc la contrainte de cardinalité s'applique ici telle quelle. Le niveau de sévérité passe bien, il y en a cinq (info, debug, warn, error, trace). Une étiquette pour l'identifiant utilisateur ou l'identifiant de trace détruit le système, et ceux-là vont dans le contenu de la ligne, où un filtre texte les retrouve.
+D'où l'erreur Loki la plus courante, et une question d'entretien classique. Les étiquettes créent des flux physiquement séparés, donc la contrainte de cardinalité s'applique ici telle quelle. Le niveau de sévérité passe bien, il y en a cinq (info, debug, warn, error, trace). Une étiquette pour l'identifiant utilisateur ou l'identifiant de trace détruit le système, et ceux-là vont dans les structured metadata, que Loki prévoit pour ces valeurs à forte cardinalité, ou à défaut dans le contenu de la ligne, où un filtre texte les retrouve.
 
 ## Tempo {#tempo}
 
-Tempo est le stockage pour les traces, et il suit la philosophie de Loki, un index minimal. Il indexe l'identifiant de trace, jamais le détail de chaque <jargon mot="span">span</jargon>, et met le reste dans un stockage en masse bon marché.
-
-C'est un pari délibéré sur la façon dont les traces servent, car le chemin principal est « j'ai déjà un identifiant de trace, venu d'une ligne de log ou d'un exemplar, montre-moi l'arbre ». Chercher des traces par attribut arbitraire à fort volume demande une autre conception, plus chère à faire tourner (la stack Elasticsearch, Logstash, Kibana, dite ELK).
+Tempo est le stockage pour les traces. Le chemin le moins cher et le plus direct reste l'identifiant de trace : « j'ai déjà un identifiant, venu d'une ligne de log ou d'un exemplar, montre-moi l'arbre ». Tempo sait aussi chercher des traces avec son langage de requête, TraceQL, par attribut de <jargon mot="span">span</jargon>, par durée ou par structure. Mais ces recherches parcourent les traces elles-mêmes, et elles n'ont rien de commun avec l'index d'une base de métriques.
 
 Une trace qui vient d'être envoyée n'est pas immédiatement cherchable, puisqu'elle passe par un tampon d'ingestion et devient interrogeable une minute ou deux plus tard. Ne pas conclure « il n'y a pas de traces » vingt secondes après avoir déclenché une requête.
 
@@ -684,11 +682,11 @@ Une métrique est un objet qu'on déclare une fois et qu'on met à jour dans le 
 | <jargon mot="counter">counter</jargon> | ne fait qu'augmenter | requêtes servies, commandes créées, erreurs |
 | <jargon mot="gauge">gauge</jargon> | monte et descend | longueur de file, connexions actives, éléments en cache |
 | <jargon mot="histogram">histogram</jargon> (ou timer) | enregistre une distribution | des durées, pour pouvoir demander le p95 |
-| résumé de valeurs | une distribution de valeurs non temporelles | montant d'une commande, taille d'une charge utile |
+| distribution summary (Micrometer) | une distribution de valeurs non temporelles | montant d'une commande, taille d'une charge utile |
 
 :::
 
-À savoir : une latence moyenne ne vaut presque rien, puisqu'elle est dominée par les nombreuses requêtes rapides et cache les lentes. Un percentile décrit au contraire l'expérience des utilisateurs les moins chanceux, et c'est ce qui fait l'utilité d'un histogram.
+À savoir : une latence moyenne décrit mal ce que vivent les utilisateurs, puisqu'elle est dominée par les nombreuses requêtes rapides et cache les lentes. Elle sert à dimensionner, pas à juger la queue de la distribution. Un percentile décrit au contraire l'expérience des utilisateurs les moins chanceux, et c'est ce qui fait l'utilité d'un histogram.
 
 ## Les métriques métier {#les-metriques-metier}
 
@@ -757,7 +755,7 @@ C'est aussi pourquoi une alerte qui compare un compteur brut à un seuil fixe es
 
 Un taux se calcule sur une fenêtre de temps, choisie à chaque requête : la variation du compteur sur la fenêtre, divisée par sa durée. Cette fenêtre porte deux pièges, qui tirent en sens opposé.
 
-Une fenêtre trop large étale un événement court. Un incident de six secondes, moyenné sur une minute, dessine une bosse d'une minute de large, et rien n'est cassé dans le graphe.
+Une fenêtre trop large étale un événement court. Un incident de six secondes, moyenné sur une minute, dessine une bosse d'une minute de large, et rien n'est cassé dans le graphe. Cette bosse est celle d'une moyenne mobile idéale. La fonction rate() de Prometheus travaille sur les points observés et extrapole aux bords de la fenêtre, donc une requête réelle donne un chiffre un peu différent, mais la forme est la même.
 
 :::schema schema-fenetre-rate
 titre: A real 6-second incident, and what a moving average shows of it depending on the chosen window width
@@ -805,7 +803,7 @@ lecture   : 4 min
 
 Un healthcheck est un endpoint HTTP qu'un service expose pour dire s'il va bien, et qu'un autre programme appelle à intervalle régulier. Docker, un load balancer ou un orchestrateur en ont tous un. Sur Kubernetes, c'est l'agent qui tourne sur chaque machine (kubelet) qui pose la question, et on parle de sonde.
 
-Une sonde ressemble à de la supervision mais c'est une commande, puisque le kubelet agit sur la réponse, tout de suite et sans demander. Et si le service tourne sur Kubernetes, des sondes existent, qu'elles aient été configurées ou non.
+Une sonde ressemble à de la supervision mais c'est une commande, puisque le kubelet agit sur la réponse, tout de suite et sans demander. Sur Kubernetes, une sonde n'existe que si on la déclare, et sans sonde le kubelet tient le conteneur pour vivant et prêt.
 
 ## Deux sondes, et ce que déclenche chaque échec {#deux-sondes}
 
@@ -837,7 +835,7 @@ titre: Four instances and a database, during and after an outage
 voir: Quatre instances et une base. Un interrupteur « la liveness interroge la base », un bouton pour couper la base. Le compteur de redemarrages reste a zero dans le bon scenario et grimpe dans le mauvais.
 :::
 
-Le test à appliquer : si le remède n'est pas « tuer ce processus et en démarrer un nouveau », cette vérification n'a rien à faire dans une liveness. Les vérifications de dépendance vont dans la readiness, dont le verdict retire un pod du Service sans rien détruire.
+Le test à appliquer : si le remède n'est pas « tuer ce processus et en démarrer un nouveau », cette vérification n'a rien à faire dans une liveness. Une vérification de dépendance peut aller dans la readiness, dont le verdict retire un pod du Service sans rien détruire. Encore faut-il que retirer ce pod aide, car si vingt pods dépendent de la même base et échouent tous leur readiness, le Service n'a plus personne derrière lui. Un service qui peut encore répondre en mode dégradé, depuis un cache ou sur certaines routes, gagne parfois à rester prêt.
 
 Dans le doute, on peut tout à fait ne pas déclarer de liveness du tout. Le kubelet ne tuera alors jamais le processus, et c'est un défaut bien plus sûr qu'une sonde mal écrite.
 
@@ -862,14 +860,14 @@ Le délai de réponse toléré vaut une seconde par défaut, et trois échecs de
 Une liveness ne doit pas pouvoir échouer à cause de la charge.
 :::
 
-Quand elle y est sensible, une surcharge passagère devient un <jargon mot="crash loop">crash loop</jargon>, et le crash loop détruit la capacité qui aurait absorbé la surcharge. Le remède n'est pas d'ajouter de la capacité mais d'écrire les deux valeurs, plus larges que leurs défauts. C'est la readiness qui a le droit de réagir à la charge, parce qu'elle retire du trafic sans rien détruire.
+Quand elle y est sensible, une surcharge passagère devient un <jargon mot="crash loop">crash loop</jargon>, et le crash loop détruit la capacité qui aurait absorbé la surcharge. Le premier remède est d'écrire les deux valeurs, plus larges que leurs défauts, pour qu'une charge passagère ne devienne pas une boucle de redémarrages. La saturation, elle, reste à traiter à part. C'est la readiness qui a le droit de réagir à la charge, parce qu'elle retire du trafic sans rien détruire.
 
 ## Deux messages d'échec qui veulent dire le contraire {#deux-messages-opposes}
 
-En lisant des échecs de sonde dans les events, cette distinction est le diagnostic le plus rapide :
+En lisant des échecs de sonde dans les events, cette distinction est le premier tri :
 
 - « connection refused » : rien n'écoute. Le processus démarre, ou il est mort.
-- « deadline exceeded » ou « timeout » : quelque chose écoute et n'a pas répondu à temps. C'est de la saturation, et le processus va probablement bien.
+- « deadline exceeded » ou « timeout » : quelque chose écoute et n'a pas répondu à temps. Sous forte charge, c'est un indice sérieux de saturation. Mais un deadlock, une pause du garbage collector ou une dépendance appelée par erreur donnent le même message, donc c'est un signal à interpréter et non un diagnostic.
 
 ## Un seul bit de sortie {#un-seul-bit-de-sortie}
 
@@ -891,9 +889,9 @@ lecture   : 2 min
 
 Tout ce qui précède suppose que quelqu'un regarde un dashboard. À trois heures du matin, personne ne regarde, et c'est le rôle d'une alerte.
 
-Une alerte est une requête sur les métriques, avec une durée. Prometheus l'évalue toutes les trente secondes, et quand elle reste vraie pendant toute la durée, il la déclenche. Reste à la livrer quelque part, un mail, un canal de discussion ou une notification sur un téléphone, et c'est un réglage à part, avec sa propre destination. La durée sert à ne pas réveiller quelqu'un pour une seule mesure malchanceuse. « Mémoire au-dessus de 90 % pendant cinq minutes » est une alerte, « mémoire au-dessus de 90 % » est une nuisance.
+Une alerte est une requête sur les métriques, avec une durée. Prometheus l'évalue toutes les trente secondes, et quand elle reste vraie pendant toute la durée, il la déclenche. Il ne la livre pas lui-même : il la remet à un composant de routage (Alertmanager, dans la pile Prometheus), qui la regroupe et l'envoie à une destination, un mail, un canal de discussion ou une notification sur un téléphone. Cette destination est un réglage à part. Grafana, lui, affiche les alertes mais ne les livre pas. La durée sert à ne pas réveiller quelqu'un pour une seule mesure malchanceuse. « Mémoire au-dessus de 90 % pendant cinq minutes » est une alerte, « mémoire au-dessus de 90 % » est une nuisance.
 
-Admettons une pile d'observabilité installée depuis deux semaines avec ses réglages par défaut. Un pod cesse d'être prêt, l'alerte se déclenche, et elle s'affiche dans la liste des alertes de Grafana.
+Admettons la pile kube-prometheus-stack, installée depuis deux semaines avec ses réglages par défaut. Un pod cesse d'être prêt, l'alerte se déclenche, et elle s'affiche dans la liste des alertes de Grafana.
 
 :::devine
 question: Quelqu'un est-il prévenu ?
@@ -902,7 +900,7 @@ bonne: 1
 
 reponse:
 
-Personne. La destination par défaut de la pile s'appelle « null » et ne fait rien, pour qu'une installation neuve n'envoie pas de messages là où personne n'a rien configuré. L'alerte s'affiche, et la chaîne s'arrête là.
+Personne. Dans cette pile, la destination par défaut du routage s'appelle « null » et ne fait rien, pour qu'une installation neuve n'envoie pas de messages là où personne n'a rien configuré. L'alerte s'affiche, et la chaîne s'arrête là.
 
 :::
 

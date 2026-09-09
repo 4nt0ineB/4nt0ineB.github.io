@@ -8,7 +8,8 @@
   will come across is either Prometheus or a tool that speaks its language.</p>
 
   <p>It keeps its indexes in memory, which explains both its speed and its fragility. A
-  label with too many distinct values does not slow it down gradually, it brings it down
+  label whose values multiply without bound does not slow it down gradually, it exhausts
+  its memory
   (see
   <a href="#/en/blog/introduction-observabilite/trois-piliers#la-cardinalite">cardinality</a>).</p>
 
@@ -27,17 +28,16 @@
   physically separate streams, so the cardinality constraint applies here as is. The
   severity level is fine, there are five of them (info, debug, warn, error, trace). A
   label for the user identifier or the trace identifier destroys the system, and those
-  go into the content of the line, where a text filter finds them.</p>
+  go into structured metadata, which Loki provides for such high-cardinality values, or
+  failing that into the content of the line, where a text filter finds them.</p>
 
   <h2 id="tempo">Tempo</h2>
-  <p>Tempo is the storage for traces, and it follows Loki's philosophy, a minimal index. It
-  indexes the trace identifier, never the detail of each
-  <jargon mot="span">span</jargon>, and puts the rest in cheap bulk storage.</p>
-
-  <p>This is a deliberate bet on how traces are used, because the main path is "I already
-  have a trace identifier, from a log line or an exemplar, show me the tree". Searching
-  traces by arbitrary attribute at high volume calls for another design, more expensive
-  to run (the Elasticsearch, Logstash, Kibana stack, known as ELK).</p>
+  <p>Tempo is the storage for traces. The cheapest and most direct path is still the trace
+  identifier: "I already have an identifier, from a log line or an exemplar, show me the
+  tree". Tempo can also search traces with its query language, TraceQL, by
+  <jargon mot="span">span</jargon> attribute, by duration or by structure. But those
+  searches scan the traces themselves, and they have nothing in common with the index of
+  a metrics database.</p>
 
   <p>A trace that has just been sent is not immediately searchable, since it goes through
   an ingestion buffer and becomes queryable a minute or two later. Do not conclude

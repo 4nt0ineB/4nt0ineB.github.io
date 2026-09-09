@@ -8,8 +8,8 @@
   asks the question, and it is called a probe.</p>
 
   <p>A probe looks like monitoring but it is a command, since the kubelet acts on the
-  answer, immediately and without asking. And if the service runs on Kubernetes, probes
-  exist, whether they were configured or not.</p>
+  answer, immediately and without asking. On Kubernetes, a probe only exists if it is
+  declared, and without one the kubelet treats the container as alive and ready.</p>
 
   <h2 id="deux-sondes">Two probes, and what each failure triggers</h2>
   <tableau-mesure legende="The two probes, the question they ask, and what a failure does.">
@@ -43,8 +43,12 @@
   <schema-reaction-chaine></schema-reaction-chaine>
 
   <p>The test to apply: if the remedy is not "kill this process and start a new one", that
-  check has no place in a liveness probe. Dependency checks go in the readiness probe,
-  whose verdict removes a pod from the Service without destroying anything.</p>
+  check has no place in a liveness probe. A dependency check may go in the readiness probe,
+  whose verdict removes a pod from the Service without destroying anything. Removing
+  that pod still has to help, because if twenty pods depend on the same database and all
+  fail their readiness probe, the Service has nobody left behind it. A service that can
+  still answer in a degraded mode, from a cache or on some routes, is sometimes better
+  off staying ready.</p>
 
   <p>When in doubt, it is perfectly fine not to declare a liveness probe at all. The
   kubelet will then never kill the process, and that is a far safer default than a badly
@@ -72,17 +76,20 @@
 
   <p>When it is sensitive to load, a passing overload becomes a
   <jargon mot="crash loop">crash loop</jargon>, and the crash loop destroys the capacity
-  that would have absorbed the overload. The remedy is not to add capacity but to write
-  the two values, wider than their defaults. It is the readiness probe that is allowed
+  that would have absorbed the overload. The first remedy is to write the two values, wider
+  than their defaults, so that a passing load does not become a restart loop. The
+  saturation itself still has to be addressed separately. It is the readiness probe that is allowed
   to react to load, because it removes traffic without destroying anything.</p>
 
   <h2 id="deux-messages-opposes">Two failure messages that mean the opposite</h2>
-  <p>When reading probe failures in the events, this distinction is the fastest diagnosis:</p>
+  <p>When reading probe failures in the events, this distinction is the first sorting:</p>
 
   <ul>
     <li>"connection refused": nothing is listening. The process is starting, or it is dead.</li>
     <li>"deadline exceeded" or "timeout": something is listening and did not answer in time.
-    That is saturation, and the process is probably fine.</li>
+    Under heavy load, that is a strong clue of saturation. But a deadlock, a garbage
+    collector pause or a dependency called by mistake give the same message, so it is a
+    signal to interpret and not a diagnosis.</li>
   </ul>
 
   <h2 id="un-seul-bit-de-sortie">A single bit of output</h2>

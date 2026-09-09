@@ -44,7 +44,10 @@
   <p>A rate is computed over a time window, chosen at each query: the counter's variation over the window, divided by its length. This window carries two traps, which pull in opposite directions.</p>
 
   <p>Too wide a window spreads a short event out. A six-second incident, averaged over a
-  minute, draws a bump a minute wide, and nothing in the graph is broken.</p>
+  minute, draws a bump a minute wide, and nothing in the graph is broken. That bump is the one
+  of an ideal moving average. Prometheus's rate() works on the observed points and
+  extrapolates at the edges of the window, so a real query gives a slightly different
+  figure, but the shape is the same.</p>
 
   <schema-fenetre-rate></schema-fenetre-rate>
 

@@ -9,8 +9,8 @@
   langage.</p>
 
   <p>Il garde ses index en mémoire, ce qui explique sa vitesse et sa fragilité. Une
-  étiquette à trop de valeurs distinctes ne le ralentit pas progressivement, elle le
-  fait tomber (voir la <a href="#/fr/blog/introduction-observabilite/trois-piliers#la-cardinalite">cardinalité</a>).</p>
+  étiquette dont les valeurs se multiplient sans borne ne le ralentit pas
+  progressivement, elle épuise sa mémoire (voir la <a href="#/fr/blog/introduction-observabilite/trois-piliers#la-cardinalite">cardinalité</a>).</p>
 
   <h2 id="loki">Loki</h2>
   <p>Loki est le Prometheus des logs : la même place dans l'architecture et la même forme,
@@ -28,20 +28,17 @@
   étiquettes créent des flux physiquement séparés, donc la contrainte de cardinalité
   s'applique ici telle quelle. Le niveau de sévérité passe bien, il y en a cinq (info,
   debug, warn, error, trace). Une étiquette pour l'identifiant utilisateur ou
-  l'identifiant de trace détruit le système, et ceux-là vont dans le contenu de la
-  ligne, où un filtre texte les retrouve.</p>
+  l'identifiant de trace détruit le système, et ceux-là vont dans les structured
+  metadata, que Loki prévoit pour ces valeurs à forte cardinalité, ou à défaut dans le
+  contenu de la ligne, où un filtre texte les retrouve.</p>
 
   <h2 id="tempo">Tempo</h2>
-  <p>Tempo est le stockage pour les traces, et il suit la philosophie de Loki, un index
-  minimal. Il indexe l'identifiant de trace, jamais le détail de chaque
-  <jargon mot="span">span</jargon>, et met le reste dans un stockage en masse bon
-  marché.</p>
-
-  <p>C'est un pari délibéré sur la façon dont les traces servent, car le chemin principal
-  est « j'ai déjà un identifiant de trace, venu d'une ligne de log ou d'un exemplar,
-  montre-moi l'arbre ». Chercher des traces par attribut arbitraire à fort volume
-  demande une autre conception, plus chère à faire tourner (la stack Elasticsearch,
-  Logstash, Kibana, dite ELK).</p>
+  <p>Tempo est le stockage pour les traces. Le chemin le moins cher et le plus direct reste
+  l'identifiant de trace : « j'ai déjà un identifiant, venu d'une ligne de log ou d'un
+  exemplar, montre-moi l'arbre ». Tempo sait aussi chercher des traces avec son langage
+  de requête, TraceQL, par attribut de <jargon mot="span">span</jargon>, par durée ou par
+  structure. Mais ces recherches parcourent les traces elles-mêmes, et elles n'ont rien
+  de commun avec l'index d'une base de métriques.</p>
 
   <p>Une trace qui vient d'être envoyée n'est pas immédiatement cherchable, puisqu'elle
   passe par un tampon d'ingestion et devient interrogeable une minute ou deux plus tard.

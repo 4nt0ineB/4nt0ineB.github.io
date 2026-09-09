@@ -6,7 +6,9 @@
   <p>The three pillars of observability are the metric, the
   <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of
   doing the same job but three floors of the same investigation. Each answers one of the
-  three questions of the previous chapter.</p>
+  three questions of the previous chapter. For the investigations in this text, a useful
+  model is: metrics detect, traces locate, logs explain. It is not an exclusive one,
+  because a trace can also explain a cause and a log can detect an outage.</p>
 
   <tableau-mesure legende="The three pillars, the question each answers, its role in the investigation.">
     <table>
@@ -76,28 +78,31 @@
   <p>What remains is to make this metric able to explain. If we labelled the counter with
   the user's identifier, we would no longer have one metric but as many metrics as the
   system has users. Adding the URL with its parameters would multiply again. Prometheus
-  keeps its indexes in memory, so it does not degrade gracefully and would collapse
-  under its own weight.</p>
+  keeps its indexes in memory, and it is not one label with forty thousand values that
+  exhausts it, it is the multiplication. With status, route and method already in place,
+  the customer identifier takes the count to 5 × 20 × 6 × 40 000, twenty-four million
+  possible series, and a URL with its parameters has no count at all.</p>
 
   <schema-cardinalite></schema-cardinalite>
 
   <devine question="We add a customer identifier label to a metric. What happens?"
-          :options="['Queries slow down a little', 'Storage grows proportionally', 'The database goes down']"
+          :options="['Queries slow down a little', 'Storage grows proportionally', 'The number of series explodes, and the server memory with it']"
           :bonne="2">
-    <template #reponse><p>Each label value creates one more series, kept in memory. Forty thousand customers
-    make forty thousand series for this one counter, and the index is not designed to
-    degrade gradually.</p></template>
+    <template #reponse><p>Each label value creates one more series, kept in memory. Forty thousand series on
+    their own, Prometheus can hold. But the label combines with the ones already there,
+    and the count runs into millions of possible series. The server runs out of memory
+    and becomes unstable, without degrading gradually.</p></template>
   </devine>
 
-  <p>A metric can therefore never give per-request detail. The property that makes it cheap
+  <p>A metric series therefore does not keep the identity of every request. The property that makes it cheap
   is precisely the one that throws the detail away.</p>
 
   <p>A trace does the opposite and keeps every instance with its full causality, so it
-  costs far more. This is why production systems only keep one in ten or one in a
-  hundred, and why one cannot alert on them: an alarm built on a sample misses the
+  costs far more. This is why production systems often keep only a fraction, one in ten or one in
+  a hundred, and why nobody alerts on them: an alarm built on a sample misses the
   events that were not sampled.</p>
 
-  <p>No future tool will merge the three, because a metric detailed enough to explain
+  <p>No tool does all three well at once, because a metric detailed enough to explain
   destroys its own database, and a trace complete enough to alert on costs the price of
   all the traffic.</p>
 

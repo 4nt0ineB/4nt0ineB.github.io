@@ -23,13 +23,14 @@
         <tr><td><jargon mot="counter">counter</jargon></td><td>ne fait qu'augmenter</td><td>requêtes servies, commandes créées, erreurs</td></tr>
         <tr><td><jargon mot="gauge">gauge</jargon></td><td>monte et descend</td><td>longueur de file, connexions actives, éléments en cache</td></tr>
         <tr><td><jargon mot="histogram">histogram</jargon> (ou timer)</td><td>enregistre une distribution</td><td>des durées, pour pouvoir demander le p95</td></tr>
-        <tr><td>résumé de valeurs</td><td>une distribution de valeurs non temporelles</td><td>montant d'une commande, taille d'une charge utile</td></tr>
+        <tr><td>distribution summary (Micrometer)</td><td>une distribution de valeurs non temporelles</td><td>montant d'une commande, taille d'une charge utile</td></tr>
       </tbody>
     </table>
   </tableau-mesure>
 
-  <p>À savoir : une latence moyenne ne vaut presque rien, puisqu'elle est dominée par les
-  nombreuses requêtes rapides et cache les lentes. Un percentile décrit au contraire
+  <p>À savoir : une latence moyenne décrit mal ce que vivent les utilisateurs, puisqu'elle
+  est dominée par les nombreuses requêtes rapides et cache les lentes. Elle sert à
+  dimensionner, pas à juger la queue de la distribution. Un percentile décrit au contraire
   l'expérience des utilisateurs les moins chanceux, et c'est ce qui fait l'utilité d'un
   histogram.</p>
 

@@ -46,7 +46,10 @@
 
   <p>Une fenêtre trop large étale un événement court. Un incident de six secondes, moyenné
   sur une minute, dessine une bosse d'une minute de large, et rien n'est cassé dans le
-  graphe.</p>
+  graphe. Cette bosse est celle d'une moyenne mobile idéale. La fonction rate() de
+  Prometheus travaille sur les points observés et extrapole aux bords de la fenêtre,
+  donc une requête réelle donne un chiffre un peu différent, mais la forme est la
+  même.</p>
 
   <schema-fenetre-rate></schema-fenetre-rate>
 

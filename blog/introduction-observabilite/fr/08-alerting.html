@@ -7,20 +7,23 @@
 
   <p>Une alerte est une requête sur les métriques, avec une durée. Prometheus l'évalue
   toutes les trente secondes, et quand elle reste vraie pendant toute la durée, il la
-  déclenche. Reste à la livrer quelque part, un mail, un canal de discussion ou une
-  notification sur un téléphone, et c'est un réglage à part, avec sa propre destination.
+  déclenche. Il ne la livre pas lui-même : il la remet à un composant de routage
+  (Alertmanager, dans la pile Prometheus), qui la regroupe et l'envoie à une
+  destination, un mail, un canal de discussion ou une notification sur un téléphone.
+  Cette destination est un réglage à part. Grafana, lui, affiche les alertes mais ne les
+  livre pas.
   La durée sert à ne pas réveiller quelqu'un pour une seule mesure malchanceuse. «
   Mémoire au-dessus de 90 % pendant cinq minutes » est une alerte, « mémoire au-dessus
   de 90 % » est une nuisance.</p>
 
-  <p>Admettons une pile d'observabilité installée depuis deux semaines avec ses réglages
-  par défaut. Un pod cesse d'être prêt, l'alerte se déclenche, et elle s'affiche dans la
+  <p>Admettons la pile kube-prometheus-stack, installée depuis deux semaines avec ses
+  réglages par défaut. Un pod cesse d'être prêt, l'alerte se déclenche, et elle s'affiche dans la
   liste des alertes de Grafana.</p>
 
   <devine question="Quelqu'un est-il prévenu ?"
           :options="['Oui, l\'alerte est arrivée au bout de la chaîne', 'Non, personne', 'Seulement si l\'interface est ouverte']"
           :bonne="1">
-    <template #reponse><p>Personne. La destination par défaut de la pile s'appelle « null » et ne fait rien,
+    <template #reponse><p>Personne. Dans cette pile, la destination par défaut du routage s'appelle « null » et ne fait rien,
     pour qu'une installation neuve n'envoie pas de messages là où personne n'a rien
     configuré. L'alerte s'affiche, et la chaîne s'arrête là.</p></template>
   </devine>

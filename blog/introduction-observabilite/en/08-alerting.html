@@ -6,20 +6,22 @@
   nobody is looking, and that is what an alert is for.</p>
 
   <p>An alert is a query on the metrics, with a duration. Prometheus evaluates it every
-  thirty seconds, and when it stays true for the whole duration, it fires it. What
-  remains is to deliver it somewhere, an e-mail, a chat channel or a notification on a
-  phone, and that is a separate setting, with its own destination. The duration is there
+  thirty seconds, and when it stays true for the whole duration, it fires it. It does
+  not deliver it itself: it hands it to a routing component (Alertmanager, in the
+  Prometheus stack), which groups it and sends it to a destination, an e-mail, a chat
+  channel or a notification on a phone. That destination is a separate setting. Grafana,
+  for its part, displays alerts but does not deliver them. The duration is there
   so as not to wake someone up for a single unlucky sample. "Memory above 90 % for five
   minutes" is an alert, "memory above 90 %" is a nuisance.</p>
 
-  <p>Let us assume an observability stack installed two weeks ago with its default
+  <p>Let us assume the kube-prometheus-stack, installed two weeks ago with its default
   settings. A pod stops being ready, the alert fires, and it shows up in Grafana's alert
   list.</p>
 
   <devine question="Is anyone notified?"
           :options="['Yes, the alert reached the end of the chain', 'No, nobody', 'Only if the interface is open']"
           :bonne="1">
-    <template #reponse><p>Nobody. The stack's default destination is called "null" and does nothing, so that a
+    <template #reponse><p>Nobody. In this stack, the routing's default destination is called "null" and does nothing, so that a
     fresh installation does not send messages where nobody has configured anything. The
     alert shows up, and the chain stops there.</p></template>
   </devine>

@@ -6,7 +6,10 @@
   <p>Les trois piliers de l'observabilité sont la métrique, la
   <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes
   de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une
-  des trois questions du chapitre précédent.</p>
+  des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle
+  utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une
+  exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une
+  panne.</p>
 
   <tableau-mesure legende="Les trois piliers, la question qu'ils répondent, leur rôle dans l'enquête.">
     <table>
@@ -77,29 +80,34 @@
   <p>Reste à rendre cette métrique capable d'expliquer. Si on étiquetait le compteur avec
   l'identifiant de l'utilisateur, on n'aurait plus une seule métrique mais autant de
   métriques que le système a d'utilisateurs. Ajouter l'URL avec ses paramètres
-  multiplierait encore. Prometheus garde ses index en mémoire, donc il ne se dégrade pas
-  en douceur et tomberait sous son propre poids.</p>
+  multiplierait encore. Prometheus garde ses index en mémoire, et ce n'est pas une
+  étiquette de quarante mille valeurs qui l'épuise, c'est la multiplication. Avec le
+  statut, la route et la méthode déjà en place, l'identifiant client porte le compte à
+  5 × 20 × 6 × 40 000, soit vingt-quatre millions de séries possibles, et une URL avec
+  ses paramètres n'a même pas de compte.</p>
 
   <schema-cardinalite></schema-cardinalite>
 
   <devine question="On ajoute une étiquette d'identifiant client à une métrique. Que se passe-t-il ?"
-          :options="['Les requêtes ralentissent un peu', 'Le stockage grossit proportionnellement', 'La base tombe']"
+          :options="['Les requêtes ralentissent un peu', 'Le stockage grossit proportionnellement', 'Le nombre de séries explose, et la mémoire du serveur avec']"
           :bonne="2">
     <template #reponse><p>Chaque valeur d'étiquette crée une série de plus, gardée en mémoire. Quarante mille
-    clients font quarante mille séries pour ce seul compteur, et l'index n'est pas conçu
-    pour se dégrader progressivement.</p></template>
+    séries seules, Prometheus les tient. Mais l'étiquette se combine avec celles qui
+    existent déjà, et le compte passe à des millions de séries possibles. La mémoire du
+    serveur s'épuise et il devient instable, sans se dégrader progressivement.</p></template>
   </devine>
 
-  <p>Une métrique ne peut donc jamais donner le détail par requête. La propriété qui la
+  <p>Une série de métrique ne garde donc pas l'identité de chaque requête. La propriété qui la
   rend bon marché est justement celle qui jette le détail.</p>
 
   <p>Une trace fait l'inverse et garde chaque instance avec sa causalité complète, donc
   elle coûte bien plus cher. C'est pourquoi les systèmes en production n'en gardent
-  qu'une sur dix ou une sur cent, et c'est pourquoi on ne peut pas alerter dessus : une
+  souvent qu'une fraction, une sur dix ou une sur cent, et c'est pourquoi on n'alerte pas
+  dessus : une
   alarme construite sur un échantillon rate les événements qui n'ont pas été
   échantillonnés.</p>
 
-  <p>Aucun futur outil ne fusionnera les trois, car une métrique assez détaillée pour
+  <p>Aucun outil ne fait bien les trois à la fois, car une métrique assez détaillée pour
   expliquer détruit sa propre base, et une trace assez complète pour alerter coûte le
   prix de tout le trafic.</p>
 

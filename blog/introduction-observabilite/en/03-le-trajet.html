@@ -23,8 +23,11 @@
     </table>
   </tableau-mesure>
 
-  <p>This stack was chosen because it is proven, free, fits on an 8 GB machine, and Grafana
-  can read all three stores. Other choices exist and the next page names one.</p>
+  <p>Many stacks implement the same ideas. This one was chosen because it is proven, free,
+  fits on an 8 GB machine, and Grafana can read all three stores. It serves as the
+  reference stack for the rest of the text, so that every notion has a real component
+  attached to it, but the notions matter more than the products. The next page names
+  another choice.</p>
 
   <p>This map answers "what is this component". It does not answer "how does the data reach
   my screen", which is a question of movement.</p>
@@ -67,8 +70,9 @@
   <p>Pull has a consequence that comes back in
   <a href="#/en/blog/introduction-observabilite/lire-un-graphe#la-fenetre">chapter
   6</a>: a metric has no continuous value, it has the value it had at the instants
-  someone came to read it. An event that starts and ends between two scrapes never
-  existed for Prometheus.</p>
+  someone came to read it. A transient state that appears and disappears between two
+  scrapes never existed for Prometheus. A counter is different: the event that
+  incremented it leaves a value behind, and the next scrape sees the increase.</p>
 
   <h2 id="ce-que-le-tuyau-achete">What the collector is for</h2>
   <p>The collector keeps nothing, so one may wonder what it is for. It is there so that the
