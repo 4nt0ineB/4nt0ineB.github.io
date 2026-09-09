@@ -24,7 +24,7 @@ lecture   : - min
 
 Java backend software engineer. Data migrations, legacy code, performance.
 
-At Lunatech since 2024, on assignment at DARVA then CARIAD. Quarkus and Spring day to day, comfortable in old or poorly documented codebases, with a habit of measuring before optimising.
+At Lunatech since 2024. Quarkus and Spring day to day, comfortable in old or poorly documented codebases, with a habit of measuring before optimising. AI-assisted development every day, Claude Code first, with guardrails: specifications, review, tests before any commit.
 
 - Seine-et-Marne, France
 - Lunatech
@@ -40,8 +40,8 @@ March to August 2026
 Lead developer, through Lunatech
 
 - Migration of a back-office permission-management tool, from server-side rendering to a REST API and a React frontend.
-- Strangler Fig strategy: the new frontend served alongside the old one behind a feature flag, endpoint-by-endpoint migration, instant rollback.
-- Authorisation rework: a role, operation and scope matrix, pinned by a test suite, replaces the scattered inherited checks; two latent bugs fixed along the way.
+- Strangler Fig strategy: new frontend served alongside the old one behind a feature flag, endpoint-by-endpoint migration, instant rollback.
+- Authorisation rework: a role, operation and scope matrix, pinned by a test suite, replaces the scattered inherited checks.
 - Mentoring of an apprentice developer through code review and pairing.
 
 Java, Spring Boot, React, TypeScript, Vitest
@@ -52,10 +52,10 @@ July 2025 to March 2026
 
 Backend developer, through Lunatech
 
-- Migration of thirty thousand customers' data to a new master data system: batch taken over midway, completed and released to production.
-- CRM calls parallelised, queries and Hibernate Reactive session handling reworked: the batch went from over eight hours to under an hour and a half.
-- Eight recurring business batches optimised, from tens of minutes or crashes to a few minutes.
-- JVM memory saturation in acceptance testing diagnosed alone from heap dumps, nested joins simplified.
+- Migration of thousands of customers' data to a new master data system: batch taken over midway, completed and released to production.
+- CRM calls parallelised, queries and Hibernate Reactive session handling reworked: batch run time brought from eight hours to under an hour and a half.
+- Recurring business batches optimised, from tens of minutes or crashes to a few minutes.
+- JVM memory saturation in acceptance testing diagnosed, nested joins simplified.
 - Functional documentation of the business rules, which did not exist until then.
 
 Java, Quarkus, Hibernate Reactive, Mutiny, Kafka, MariaDB, Jenkins
@@ -67,8 +67,7 @@ January to July 2025
 Full-stack developer, through Lunatech
 
 - Electronic registered mail platform: search features and client certificate checks.
-- A Quarkus interceptor warns of an expiring certificate in every API response, without duplicating the check per endpoint.
-- Non-regression tests migrated from Cypress to Playwright; Jenkins pipeline reworked and Jira statuses updated from PR state.
+- Non-regression tests migrated from Cypress to Playwright; Jenkins pipeline maintenance and Jira statuses updated from PR state.
 
 Java, Quarkus, React, TypeScript, Playwright, Jenkins
 

@@ -24,7 +24,7 @@ lecture   : - min
 
 Ingénieur logiciel backend Java. Migrations de données, reprise de code existant, performance.
 
-Chez Lunatech depuis 2024, en mission chez DARVA puis CARIAD. Quarkus et Spring au quotidien, à l'aise dans les bases de code anciennes ou peu documentées, avec un réflexe de mesure avant d'optimiser.
+Chez Lunatech depuis 2024. Quarkus et Spring au quotidien, à l'aise dans les bases de code anciennes ou peu documentées, avec un réflexe de mesure avant d'optimiser. Développement assisté par IA au quotidien, Claude Code en tête, avec des garde-fous : spécifications, revue, tests avant tout commit.
 
 - Seine-et-Marne, France
 - Lunatech
@@ -40,8 +40,8 @@ mars à août 2026
 Lead dev, via Lunatech
 
 - Migration d'un outil back-office de gestion des permissions, d'un rendu côté serveur vers une API REST et un frontend React.
-- Stratégie Strangler Fig : le nouveau frontend servi en parallèle de l'ancien derrière un feature flag, migration endpoint par endpoint, retour arrière instantané.
-- Refonte des autorisations : une matrice rôle, opération et périmètre, figée par une suite de tests, remplace les contrôles dispersés hérités ; deux bugs latents corrigés au passage.
+- Stratégie Strangler Fig : nouveau frontend servi en parallèle de l'ancien derrière un feature flag, migration endpoint par endpoint, retour arrière instantané.
+- Refonte des autorisations : une matrice rôle, opération et périmètre, figée par une suite de tests, remplace les contrôles dispersés hérités.
 - Encadrement d'un développeur apprenti par revue de code et binômage.
 
 Java, Spring Boot, React, TypeScript, Vitest
@@ -52,10 +52,10 @@ juillet 2025 à mars 2026
 
 Développeur backend, via Lunatech
 
-- Migration des données de trente mille clients vers un nouveau référentiel : batch repris en cours de route, terminé et mis en production.
-- Appels au CRM parallélisés, requêtes et gestion de session Hibernate Reactive revues : le batch passe de plus de huit heures à moins d'une heure et demie.
-- Huit batchs métier récurrents optimisés, de plusieurs dizaines de minutes ou de plantages à quelques minutes.
-- Saturation mémoire de la JVM en recette diagnostiquée seul par heap dump, jointures imbriquées simplifiées.
+- Migration des données de milliers de clients vers un nouveau référentiel : batch repris en cours de route, terminé et mis en production.
+- Appels au CRM parallélisés, requêtes et gestion de session Hibernate Reactive revues : optimisation du batch passant de huit heures à moins d'une heure et demie.
+- Batchs métier récurrents optimisés, de plusieurs dizaines de minutes ou de plantages à quelques minutes.
+- Saturation mémoire de la JVM en recette diagnostiquée, jointures imbriquées simplifiées.
 - Documentation fonctionnelle des règles métier, inexistante jusque-là.
 
 Java, Quarkus, Hibernate Reactive, Mutiny, Kafka, MariaDB, Jenkins
@@ -67,8 +67,7 @@ janvier à juillet 2025
 Développeur full-stack, via Lunatech
 
 - Plateforme de lettre recommandée électronique : fonctionnalités de recherche et contrôle des certificats clients.
-- Un intercepteur Quarkus avertit de l'expiration d'un certificat dans toutes les réponses de l'API, sans dupliquer le contrôle par endpoint.
-- Migration des tests de non-régression de Cypress vers Playwright ; pipeline Jenkins refondu et statuts Jira mis à jour depuis l'état des PR.
+- Migration de tests de non-régression de Cypress vers Playwright ; maintenance du pipeline Jenkins et mise à jour des statuts Jira depuis l'état des PR.
 
 Java, Quarkus, React, TypeScript, Playwright, Jenkins
 

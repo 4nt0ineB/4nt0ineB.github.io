@@ -2,7 +2,7 @@
   <header class="vitrine-entete">
     <h1>Antoine Bastos</h1>
     <p class="vitrine-titre">Ingénieur logiciel backend Java. Migrations de données, reprise de code existant, performance.</p>
-    <p class="vitrine-profil">Chez Lunatech depuis 2024, en mission chez DARVA puis CARIAD. Quarkus et Spring au quotidien, à l'aise dans les bases de code anciennes ou peu documentées, avec un réflexe de mesure avant d'optimiser.</p>
+    <p class="vitrine-profil">Chez Lunatech depuis 2024. Quarkus et Spring au quotidien, à l'aise dans les bases de code anciennes ou peu documentées, avec un réflexe de mesure avant d'optimiser. Développement assisté par IA au quotidien, Claude Code en tête, avec des garde-fous : spécifications, revue, tests avant tout commit.</p>
     <ul class="vitrine-meta">
       <li>Seine-et-Marne, France</li>
       <li>Lunatech</li>
@@ -23,8 +23,8 @@
             <p class="vitrine-role">Lead dev, via Lunatech</p>
             <ul class="vitrine-resultats">
               <li>Migration d'un outil back-office de gestion des permissions, d'un rendu côté serveur vers une API REST et un frontend React.</li>
-              <li>Stratégie Strangler Fig : le nouveau frontend servi en parallèle de l'ancien derrière un feature flag, migration endpoint par endpoint, retour arrière instantané.</li>
-              <li>Refonte des autorisations : une matrice rôle, opération et périmètre, figée par une suite de tests, remplace les contrôles dispersés hérités ; deux bugs latents corrigés au passage.</li>
+              <li>Stratégie Strangler Fig : nouveau frontend servi en parallèle de l'ancien derrière un feature flag, migration endpoint par endpoint, retour arrière instantané.</li>
+              <li>Refonte des autorisations : une matrice rôle, opération et périmètre, figée par une suite de tests, remplace les contrôles dispersés hérités.</li>
               <li>Encadrement d'un développeur apprenti par revue de code et binômage.</li>
             </ul>
             <p class="vitrine-pile">Java, Spring Boot, React, TypeScript, Vitest</p>
@@ -37,10 +37,10 @@
             <h3>DARVA, Domaine Client</h3>
             <p class="vitrine-role">Développeur backend, via Lunatech</p>
             <ul class="vitrine-resultats">
-              <li>Migration des données de trente mille clients vers un nouveau référentiel : batch repris en cours de route, terminé et mis en production.</li>
-              <li>Appels au CRM parallélisés, requêtes et gestion de session Hibernate Reactive revues : le batch passe de plus de huit heures à moins d'une heure et demie.</li>
-              <li>Huit batchs métier récurrents optimisés, de plusieurs dizaines de minutes ou de plantages à quelques minutes.</li>
-              <li>Saturation mémoire de la JVM en recette diagnostiquée seul par heap dump, jointures imbriquées simplifiées.</li>
+              <li>Migration des données de milliers de clients vers un nouveau référentiel : batch repris en cours de route, terminé et mis en production.</li>
+              <li>Appels au CRM parallélisés, requêtes et gestion de session Hibernate Reactive revues : optimisation du batch passant de huit heures à moins d'une heure et demie.</li>
+              <li>Batchs métier récurrents optimisés, de plusieurs dizaines de minutes ou de plantages à quelques minutes.</li>
+              <li>Saturation mémoire de la JVM en recette diagnostiquée, jointures imbriquées simplifiées.</li>
               <li>Documentation fonctionnelle des règles métier, inexistante jusque-là.</li>
             </ul>
             <p class="vitrine-pile">Java, Quarkus, Hibernate Reactive, Mutiny, Kafka, MariaDB, Jenkins</p>
@@ -54,8 +54,7 @@
             <p class="vitrine-role">Développeur full-stack, via Lunatech</p>
             <ul class="vitrine-resultats">
               <li>Plateforme de lettre recommandée électronique : fonctionnalités de recherche et contrôle des certificats clients.</li>
-              <li>Un intercepteur Quarkus avertit de l'expiration d'un certificat dans toutes les réponses de l'API, sans dupliquer le contrôle par endpoint.</li>
-              <li>Migration des tests de non-régression de Cypress vers Playwright ; pipeline Jenkins refondu et statuts Jira mis à jour depuis l'état des PR.</li>
+              <li>Migration de tests de non-régression de Cypress vers Playwright ; maintenance du pipeline Jenkins et mise à jour des statuts Jira depuis l'état des PR.</li>
             </ul>
             <p class="vitrine-pile">Java, Quarkus, React, TypeScript, Playwright, Jenkins</p>
           </div>
