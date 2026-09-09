@@ -24,7 +24,7 @@ lecture   : - min
 
 Java backend software engineer. Data migrations, legacy code, performance.
 
-At Lunatech since 2024. Quarkus and Spring day to day, comfortable in old or poorly documented codebases, with a habit of measuring before optimising. AI-assisted development every day, Claude Code first, with guardrails: specifications, review, tests before any commit.
+At Lunatech since 2024. Quarkus and Spring day to day, comfortable in old or poorly documented codebases, with a habit of measuring before optimising.
 
 - Seine-et-Marne, France
 - Lunatech
@@ -114,7 +114,7 @@ Hexagonal architecture, Strangler Fig, Playwright tests, continuous integration,
 
 AI
 
-Claude Code, Gemini CLI, GitHub Copilot
+Claude Code, Gemini CLI, GitHub Copilot, OpenSpec (spec-driven development)
 
 ## Education {#formation}
 
