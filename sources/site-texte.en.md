@@ -24,7 +24,7 @@ lecture   : - min
 
 Java backend software engineer. Data migrations, legacy code, performance.
 
-At Lunatech since 2024. Quarkus and Spring day to day, comfortable in old or poorly documented codebases, with a habit of measuring before optimising.
+At Lunatech since 2024.
 
 - Seine-et-Marne, France
 - Lunatech

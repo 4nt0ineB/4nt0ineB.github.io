@@ -24,7 +24,7 @@ lecture   : - min
 
 Ingénieur logiciel backend Java. Migrations de données, reprise de code existant, performance.
 
-Chez Lunatech depuis 2024. Quarkus et Spring au quotidien, à l'aise dans les bases de code anciennes ou peu documentées, avec un réflexe de mesure avant d'optimiser.
+Chez Lunatech depuis 2024.
 
 - Seine-et-Marne, France
 - Lunatech
