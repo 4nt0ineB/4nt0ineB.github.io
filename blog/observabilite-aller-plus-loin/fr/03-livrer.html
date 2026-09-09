@@ -1,5 +1,5 @@
 <article>
-  <p class="eyebrow">Chapitre 9</p>
+  <p class="eyebrow">Chapitre 3</p>
   <h1>L'observabilité dans le pipeline</h1>
 
   <p>Les dashboards et les alertes sont du logiciel. Ils ont des versions et des bugs, ils
@@ -25,11 +25,25 @@
   <p>Un déploiement n'est pas terminé quand la commande retourne mais quand la version
   neuve sert le trafic. Le pipeline devrait donc attendre que les pods neufs soient
   prêts, et les minutes qui suivent un déploiement méritent plus d'attention que le
-  reste du temps. C'est là que le <a href="#/fr/blog/introduction-observabilite/trois-piliers#le-checkout-lent">chapitre
-  2</a> s'est refermé en trois clics : la phrase décisive était « le cache est vide
+  reste du temps. C'est là que le <a href="#/fr/blog/introduction-observabilite/trois-piliers#le-checkout-lent">checkout
+  lent de l'introduction</a> s'est refermé en trois clics : la phrase décisive était « le cache est vide
   depuis le déploiement de 14h02 », et elle n'était possible que parce que le
   déploiement était visible sur le graphe. Une annotation sur les dashboards à chaque
   déploiement, que Grafana fait nativement, est le meilleur rapport valeur sur effort de
   tout le pipeline. Sans elle, la première question de chaque incident est « est-ce
   qu'on a livré quelque chose récemment ? », et quelqu'un va vérifier à la main.</p>
+
+  <h2 id="ce-qu-il-faut-retenir">Ce qu'il faut retenir</h2>
+  <ul>
+    <li>Pour un post-mortem, lire d'abord le compteur brut, et choisir la fenêtre une fois
+    l'incident situé. Quand l'instant exact compte, chercher une source qui porte
+    l'horodatage de l'événement.</li>
+    <li>Ne jamais mettre une dépendance partagée dans une liveness. Écrire le délai et le
+    nombre d'échecs de chaque sonde, et donner à la liveness un délai généreux.</li>
+    <li>Faire attendre au pipeline que les pods neufs soient prêts, et poser une annotation
+    de déploiement sur les dashboards.</li>
+    <li>Tuer un pod sous charge, exprès, et lire ce que le compteur de redémarrages
+    affiche : zéro, puisque le pod tué n'existe plus. Un instrument qu'on n'a jamais vu
+    réagir est une décoration.</li>
+  </ul>
 </article>

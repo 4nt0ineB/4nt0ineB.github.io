@@ -1,5 +1,5 @@
 <article>
-  <p class="eyebrow">Chapter 9</p>
+  <p class="eyebrow">Chapter 3</p>
   <h1>Observability in the pipeline</h1>
 
   <p>Dashboards and alerts are software. They have versions and bugs, they break when
@@ -24,11 +24,25 @@
   traffic. The pipeline should therefore wait for the new pods to be ready, and the
   minutes that follow a deployment deserve more attention than the rest of the time.
   That is where
-  <a href="#/en/blog/introduction-observabilite/trois-piliers#le-checkout-lent">chapter
-  2</a> closed in three clicks: the decisive sentence was "the cache has been empty
+  <a href="#/en/blog/introduction-observabilite/trois-piliers#le-checkout-lent">the slow
+  checkout of the introduction</a> closed in three clicks: the decisive sentence was "the cache has been empty
   since the 14:02 deployment", and it was only possible because the deployment was
   visible on the graph. An annotation on the dashboards at every deployment, which
   Grafana does natively, is the best value for effort in the whole pipeline. Without it,
   the first question of every incident is "did we ship something recently?", and someone
   goes to check by hand.</p>
+
+  <h2 id="ce-qu-il-faut-retenir">What to take away</h2>
+  <ul>
+    <li>For a post-mortem, read the raw counter first, and pick the window once the
+    incident is located. When the exact instant matters, look for a source that carries
+    the event's timestamp.</li>
+    <li>Never put a shared dependency in a liveness probe. Write the timeout and the failure
+    count of every probe, and give the liveness probe a generous timeout.</li>
+    <li>Make the pipeline wait for the new pods to be ready, and put a deployment annotation
+    on the dashboards.</li>
+    <li>Kill a pod under load, on purpose, and read what the restart counter shows: zero,
+    since the killed pod no longer exists. An instrument that has never been seen
+    reacting is decoration.</li>
+  </ul>
 </article>

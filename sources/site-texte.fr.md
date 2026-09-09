@@ -357,7 +357,7 @@ Cet article s'adresse à qui sait ce qu'est une ligne de log et a peut-être vu 
 
 Il vient d'un bilan d'auto-apprentissage aidé par l'IA : neuf pannes provoquées sous charge réelle, sur un vrai serveur, diagnostiquées depuis les dashboards seuls. Tout ce qui est chiffré ici a été constaté par un enchaînement d'exercices pratiques sur un serveur virtuel.
 
-L'objectif est de donner au lecteur une image mentale de l'observabilité et de ses concepts clés. Il ne s'agit pas ici de la capacité de diagnostiquer une panne, qu'un texte de quelques lignes ne pourrait pas enseigner.
+L'objectif est de donner au lecteur une image mentale de l'observabilité et de ses concepts clés. Il ne s'agit pas ici de la capacité de diagnostiquer une panne, qu'un texte de quelques lignes ne pourrait pas enseigner. Une suite, [L'observabilité, pour aller plus loin](#/fr/blog/observabilite-aller-plus-loin), traite de la lecture des séries temporelles, des sondes Kubernetes et du déploiement.
 
 ---
 
@@ -409,7 +409,7 @@ Les logs ne sont pas mauvais pour autant. Ils répondent à la troisième questi
 
 ---
 
-# Trois piliers, et pourquoi exactement trois
+# Trois signaux, trois niveaux de détail
 
 ```
 article   : introduction-observabilite
@@ -421,7 +421,7 @@ lecture   : 5 min
 
 ## Détecter, localiser, expliquer {#detecter-localiser-expliquer}
 
-Les trois piliers de l'observabilité sont la métrique, la <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une panne.
+Les trois signaux de base de l'observabilité sont la métrique, la <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une panne. OpenTelemetry en compte d'autres, et parle de signaux plutôt que de piliers.
 
 :::tableau legende="Les trois piliers, la question qu'ils répondent, leur rôle dans l'enquête."
 
@@ -502,7 +502,7 @@ La mémoire utilisée, la charge processeur, la profondeur d'une file : c'est de
 
 ## Un identifiant, propagé partout {#la-colle}
 
-Les trois piliers ne valent que si on peut passer de l'un à l'autre, et un seul mécanisme le rend possible : un identifiant de trace, généré à l'entrée du système et transporté à travers tout. Il doit apparaître à trois endroits :
+Les trois signaux ne valent que si on peut passer de l'un à l'autre, et un seul mécanisme le rend possible : un identifiant de trace, généré à l'entrée du système et transporté à travers tout. Il doit apparaître à trois endroits :
 
 - dans la trace, où il naît ;
 - dans chaque ligne de log écrite en traitant cette requête ;
@@ -717,16 +717,10 @@ article   : introduction-observabilite
 page      : lire-un-graphe
 fichier   : blog/introduction-observabilite/fr/06-lire-un-graphe.html
 surtitre  : Chapitre 6
-lecture   : 4 min
+lecture   : 2 min
 ```
 
-Un graphe a l'air d'une fenêtre sur le système. C'en est une reconstruction, faite de points collectés à intervalle régulier puis passés dans une requête.
-
-## Le bord droit du graphe {#le-bord-droit}
-
-On pourrait être tenté de lire tout mouvement à la droite de la courbe comme « il se passe quelque chose maintenant ». Mais le bord droit est simplement l'endroit où la donnée s'arrête, c'est-à-dire maintenant, et chaque graphe finit toujours là, qu'il se passe quelque chose ou non.
-
-Un dashboard qui se rafraîchit tout seul recrée cette impression toutes les quelques secondes. Une ligne qui remonte légèrement au bord droit n'annonce rien, car c'est le dernier échantillon, bruité comme les autres, qui n'a pas encore de voisin pour le lisser. Attendons le rafraîchissement suivant avant de réveiller quelqu'un.
+Un graphe a l'air d'une fenêtre sur le système. C'en est une reconstruction, faite de points collectés à intervalle régulier puis passés dans une requête. Deux choses sur cette reconstruction ont leur place dans une introduction. Le reste, le bord droit du graphe, l'heure du scrape et les fuseaux, est dans [la suite de cet article](#/fr/blog/observabilite-aller-plus-loin/lire-une-serie).
 
 ## Une ligne plate a deux causes {#plat-n-est-pas-absent}
 
@@ -750,6 +744,175 @@ Les deux situations réclament des réponses opposées, car un compteur plat veu
 Un compteur brut se lit donc rarement tel quel. On le convertit en taux, c'est-à-dire en « combien par seconde, maintenant », en divisant ce qu'il a gagné par le temps écoulé. On alerte sur ce taux et on diagnostique sur ce taux. Le compteur brut ne sert qu'à lire un total exact.
 
 C'est aussi pourquoi une alerte qui compare un compteur brut à un seuil fixe est une erreur de conception et non un réglage à corriger. Le compteur ne fait que grossir, donc un seuil qui a un sens la première heure n'en a plus aucun la troisième semaine. Un taux, lui, reste comparable d'un jour à l'autre.
+
+## La fenêtre d'une requête {#la-fenetre}
+
+Un taux se calcule sur une fenêtre de temps, choisie à chaque requête, et cette fenêtre décide de ce qu'on voit. Une fenêtre trop large étale un événement court : un incident de six secondes, moyenné sur une minute, dessine une bosse d'une minute de large, et rien n'est cassé dans le graphe. Une fenêtre trop étroite cache un événement qui s'est produit avant elle.
+
+:::regle
+Un graphe montre la forme que la requête lui a donnée, pas la forme de l'incident.
+:::
+
+---
+
+# Une alerte doit atteindre quelqu'un
+
+```
+article   : introduction-observabilite
+page      : alerting
+fichier   : blog/introduction-observabilite/fr/07-alerting.html
+surtitre  : Chapitre 7
+lecture   : 2 min
+```
+
+Tout ce qui précède suppose que quelqu'un regarde un dashboard. À trois heures du matin, personne ne regarde, et c'est le rôle d'une alerte.
+
+Une alerte est une requête sur les métriques, avec une durée. Prometheus l'évalue toutes les trente secondes, et quand elle reste vraie pendant toute la durée, il la déclenche. Il ne la livre pas lui-même : il la remet à un composant de routage (Alertmanager, dans la pile Prometheus), qui la regroupe et l'envoie à une destination, un mail, un canal de discussion ou une notification sur un téléphone. Cette destination est un réglage à part. Grafana, lui, affiche les alertes mais ne les livre pas. La durée sert à ne pas réveiller quelqu'un pour une seule mesure malchanceuse. « Mémoire au-dessus de 90 % pendant cinq minutes » est une alerte, « mémoire au-dessus de 90 % » est une nuisance.
+
+Admettons la pile kube-prometheus-stack, installée depuis deux semaines avec ses réglages par défaut. Un pod cesse d'être prêt, l'alerte se déclenche, et elle s'affiche dans la liste des alertes de Grafana.
+
+:::devine
+question: Quelqu'un est-il prévenu ?
+options: ['Oui, l\'alerte est arrivée au bout de la chaîne', 'Non, personne', 'Seulement si l\'interface est ouverte']
+bonne: 1
+
+reponse:
+
+Personne. Dans cette pile, la destination par défaut du routage s'appelle « null » et ne fait rien, pour qu'une installation neuve n'envoie pas de messages là où personne n'a rien configuré. L'alerte s'affiche, et la chaîne s'arrête là.
+
+:::
+
+:::regle
+« On le verra » suppose un humain devant un dashboard, ce qu'une alerte existe pour supprimer.
+:::
+
+Ce défaut peut rester des semaines sans que personne le remarque, et une alerte a sonné <mesure valeur="40 min">sur un vrai incident sans qu'un seul message sorte de la machine</mesure>.
+
+Il en découle deux habitudes. La première est d'envoyer une vraie alerte, exprès, et de confirmer qu'elle arrive sur l'appareil censé la recevoir, pas seulement dans l'interface. La seconde est de garder la liste des alertes vide en temps normal, car une alerte qui sonne en permanence, même juste, transforme la liste en décor. La troisième entrée dans une liste qui en compte déjà deux ne change rien à l'œil, et une équipe qui démarre avec une liste bruyante apprend durablement à l'ignorer.
+
+---
+
+# Ce qu'un dashboard vert ne dit pas
+
+```
+article   : introduction-observabilite
+page      : dashboard-vert
+fichier   : blog/introduction-observabilite/fr/08-dashboard-vert.html
+surtitre  : Chapitre 8
+lecture   : 2 min
+```
+
+Un compteur plat et une série absente se ressemblent. Un agrégat à 65 % cache un pool à 97 %. Une alerte évaluée et affichée ne signifie pas quelqu'un la vu. Un run vert recouvre des pods qui ne démarrent pas. Chaque page de ce texte a rencontré la même chose sous une forme différente : un instrument qui ne montre rien est indiscernable d'un système sain.
+
+Deux autres instruments ont la même propriété. Un healthcheck n'est pas un signal d'observabilité mais l'entrée d'une décision automatique, prise par l'orchestrateur tout de suite et sans nuance, donc un healthcheck vert ne prouve pas que le service va bien, seulement que la sonde a répondu. Un job de déploiement vert rapporte un seul fait, la commande a retourné sans erreur, et rien sur la version qui sert le trafic. [La suite de cet article](#/fr/blog/observabilite-aller-plus-loin) les démonte.
+
+Admettons un test de charge de cinq minutes sur un service, avec un dashboard sous les yeux. Résultat côté client : zéro requête échouée, latence stable, débit servi égal au débit demandé.
+
+:::devine
+question: Le service est-il en bonne santé ?
+options: ['Oui, les trois chiffres le disent', 'Non, il est en surcharge', 'On ne sait pas']
+bonne: 2
+
+reponse:
+
+On ne sait pas. Zéro échec dit que rien n'a été refusé, pas que rien n'a cassé. Les pods peuvent être sortis du Service un par un pendant que le client voit cent pour cent de succès, la liveness peut être à un cycle de tuer le conteneur, et une limite mémoire peut se franchir si vite qu'aucune requête n'a le temps d'échouer.
+
+:::
+
+:::regle
+Un dashboard vert est une hypothèse, pas un résultat.
+:::
+
+Sur les neuf pannes provoquées pour ce texte, ce résultat parfait côté client est apparu <mesure valeur="3 fois sur 9">avec, à chaque fois, un système en danger</mesure>.
+
+Rien dans un instrument ne distingue un signal qui ne montre rien parce que rien n'est cassé d'un signal qui ne montre rien parce qu'il regarde au mauvais endroit. La seule façon de trancher est de faire échouer quelque chose exprès, à un moment choisi, en regardant. Déclencher chaque panneau une fois et confirmer qu'il bouge, car un panneau qu'on n'a jamais vu réagir est une décoration. Envoyer une alerte et attendre le téléphone. Tuer un pod sous charge et lire ce que le compteur de redémarrages affiche, c'est-à-dire zéro, puisque le pod tué n'existe plus.
+
+C'est ce que le cours qui accompagne ce texte fait faire. Chaque module pose un décor sur un cluster jetable, envoie de la charge, demande une prédiction écrite avant d'ouvrir le premier dashboard, puis casse quelque chose. Le pari écrit est ce qui sépare lire une conclusion de l'apprendre : « la colonne à zéro échec est la pire » enseigne quelque chose à qui a parié sur elle, et rien à qui le lit dans un tableau.
+
+---
+
+# Checklist pratique
+
+```
+article   : introduction-observabilite
+page      : checklist
+fichier   : blog/introduction-observabilite/fr/09-checklist.html
+surtitre  : Chapitre 9
+lecture   : 2 min
+```
+
+Chaque ligne vient de quelque chose qui a d'abord mal tourné, quelque part dans ce texte ou dans sa suite.
+
+## En instrumentant le service {#en-instrumentant-le-service}
+
+- Émettre un identifiant de trace sur chaque requête, et le mettre dans [chaque ligne de log](#/fr/blog/introduction-observabilite/trois-piliers#la-colle). Rien d'autre dans cette liste ne compte autant.
+- Formater chaque horodatage avec son décalage, et fixer [un seul fuseau partout](#/fr/blog/observabilite-aller-plus-loin/lire-une-serie#une-seule-horloge), y compris le défaut des vues ad hoc.
+- Ajouter des [exemplars](#/fr/blog/introduction-observabilite/instrumenter#les-exemplars), pour qu'un point sur un graphe puisse ouvrir une requête réelle.
+- Ajouter les deux ou trois [compteurs métier](#/fr/blog/introduction-observabilite/instrumenter#les-metriques-metier) qui disent à quoi sert le service. Ce sont eux qui rendent un incident lisible à quelqu'un d'autre que son auteur.
+
+## En écrivant les sondes {#en-ecrivant-les-sondes}
+
+- Ne jamais mettre une vérification de dépendance dans une [liveness](#/fr/blog/observabilite-aller-plus-loin/sondes#jamais-de-dependance). Elle peut aller dans la readiness, si retirer le pod du Service aide vraiment.
+- Écrire le délai et le nombre d'échecs de chaque sonde, sans se fier aux défauts, et donner à la liveness [un délai généreux](#/fr/blog/observabilite-aller-plus-loin/sondes#une-sonde-qui-ne-touche-a-rien). Elle existe pour attraper un processus définitivement bloqué, et elle ne doit jamais pouvoir échouer parce qu'il est occupé.
+
+## En construisant les dashboards {#en-construisant-les-dashboards}
+
+- Alerter et diagnostiquer sur le [taux](#/fr/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent), jamais sur un compteur brut comparé à un seuil.
+- Chercher [la mesure qui porte l'instant de l'événement](#/fr/blog/observabilite-aller-plus-loin/lire-une-serie#l-heure-du-scrape) quand l'heure exacte compte, plutôt que la position d'un échantillon.
+- Déclencher [chaque panneau une fois](#/fr/blog/introduction-observabilite/dashboard-vert), exprès, et confirmer qu'il bouge. Un panneau qu'on n'a jamais vu réagir est une décoration.
+
+## En montant l'alerting {#en-montant-l-alerting}
+
+- Mettre en place des [alertes et leurs notifications](#/fr/blog/introduction-observabilite/alerting), téléphone ou mail, pour les pannes critiques.
+- Corriger à la source toute alerte qui reste active en permanence, dès le premier jour. Le silence doit être l'état normal.
+
+## En déployant {#en-deployant}
+
+- Garder dashboards et règles d'alerte [dans le dépôt](#/fr/blog/observabilite-aller-plus-loin/livrer), et ne jamais coller un panneau depuis l'interface web.
+- Poser une annotation de déploiement sur les dashboards.
+- Retenir qu'un run vert rapporte que l'état désiré a été écrit, et rien du tout sur sa santé.
+
+:::regle
+Poser au système qui tourne une question dont la réponse serait différente en cas d'erreur. Pas « est-ce que ma commande a réussi », mais « le monde est-il maintenant différent de la façon dont je le voulais ».
+:::
+
+---
+
+# L'observabilité, pour aller plus loin
+
+```
+article   : observabilite-aller-plus-loin
+page      : accueil
+fichier   : blog/observabilite-aller-plus-loin/fr/00-accueil.html
+surtitre  : Introduction
+lecture   : 1 min
+```
+
+La suite de l'[introduction à l'observabilité](#/fr/blog/introduction-observabilite). Elle en suppose l'image mentale : métriques, traces et logs, la pile de référence, compteurs et taux, et l'idée qu'un dashboard vert est une hypothèse.
+
+Trois choses tournent mal une fois les bases en place. Un graphe montre la forme que la requête lui a donnée, et non celle de l'incident. Une sonde Kubernetes est une commande et non une mesure, et elle peut abattre un service sain. Un pipeline rapporte vert alors que la version neuve n'a jamais démarré.
+
+Comme l'introduction, ce texte vient de neuf pannes provoquées sous charge réelle sur un serveur virtuel, et tout ce qui y est chiffré a été constaté.
+
+---
+
+# Lire une série temporelle
+
+```
+article   : observabilite-aller-plus-loin
+page      : lire-une-serie
+fichier   : blog/observabilite-aller-plus-loin/fr/01-lire-une-serie.html
+surtitre  : Chapitre 1
+lecture   : 3 min
+```
+
+Un graphe a l'air d'une fenêtre sur le système. C'en est une reconstruction, faite de points collectés à intervalle régulier puis passés dans une requête. L'introduction a donné la différence entre un compteur plat et une série absente, et l'idée qu'un taux se calcule sur une fenêtre. Voici les pièges qui restent.
+
+## Le bord droit du graphe {#le-bord-droit}
+
+On pourrait être tenté de lire tout mouvement à la droite de la courbe comme « il se passe quelque chose maintenant ». Mais le bord droit est simplement l'endroit où la donnée s'arrête, c'est-à-dire maintenant, et chaque graphe finit toujours là, qu'il se passe quelque chose ou non.
+
+Un dashboard qui se rafraîchit tout seul recrée cette impression toutes les quelques secondes. Une ligne qui remonte légèrement au bord droit n'annonce rien, car c'est le dernier échantillon, bruité comme les autres, qui n'a pas encore de voisin pour le lisser. Attendons le rafraîchissement suivant avant de réveiller quelqu'un.
 
 ## La fenêtre d'une requête {#la-fenetre}
 
@@ -794,10 +957,10 @@ Un graphe montre la forme que la requête lui a donnée, pas la forme de l'incid
 # Les sondes sont des commandes
 
 ```
-article   : introduction-observabilite
+article   : observabilite-aller-plus-loin
 page      : sondes
-fichier   : blog/introduction-observabilite/fr/07-sondes.html
-surtitre  : Chapitre 7
+fichier   : blog/observabilite-aller-plus-loin/fr/02-sondes.html
+surtitre  : Chapitre 2
 lecture   : 4 min
 ```
 
@@ -877,51 +1040,14 @@ Une application peut donc être vivante, prête, et lente. Un p99 de huit second
 
 ---
 
-# Une alerte doit atteindre quelqu'un
-
-```
-article   : introduction-observabilite
-page      : alerting
-fichier   : blog/introduction-observabilite/fr/08-alerting.html
-surtitre  : Chapitre 8
-lecture   : 2 min
-```
-
-Tout ce qui précède suppose que quelqu'un regarde un dashboard. À trois heures du matin, personne ne regarde, et c'est le rôle d'une alerte.
-
-Une alerte est une requête sur les métriques, avec une durée. Prometheus l'évalue toutes les trente secondes, et quand elle reste vraie pendant toute la durée, il la déclenche. Il ne la livre pas lui-même : il la remet à un composant de routage (Alertmanager, dans la pile Prometheus), qui la regroupe et l'envoie à une destination, un mail, un canal de discussion ou une notification sur un téléphone. Cette destination est un réglage à part. Grafana, lui, affiche les alertes mais ne les livre pas. La durée sert à ne pas réveiller quelqu'un pour une seule mesure malchanceuse. « Mémoire au-dessus de 90 % pendant cinq minutes » est une alerte, « mémoire au-dessus de 90 % » est une nuisance.
-
-Admettons la pile kube-prometheus-stack, installée depuis deux semaines avec ses réglages par défaut. Un pod cesse d'être prêt, l'alerte se déclenche, et elle s'affiche dans la liste des alertes de Grafana.
-
-:::devine
-question: Quelqu'un est-il prévenu ?
-options: ['Oui, l\'alerte est arrivée au bout de la chaîne', 'Non, personne', 'Seulement si l\'interface est ouverte']
-bonne: 1
-
-reponse:
-
-Personne. Dans cette pile, la destination par défaut du routage s'appelle « null » et ne fait rien, pour qu'une installation neuve n'envoie pas de messages là où personne n'a rien configuré. L'alerte s'affiche, et la chaîne s'arrête là.
-
-:::
-
-:::regle
-« On le verra » suppose un humain devant un dashboard, ce qu'une alerte existe pour supprimer.
-:::
-
-Ce défaut peut rester des semaines sans que personne le remarque, et une alerte a sonné <mesure valeur="40 min">sur un vrai incident sans qu'un seul message sorte de la machine</mesure>.
-
-Il en découle deux habitudes. La première est d'envoyer une vraie alerte, exprès, et de confirmer qu'elle arrive sur l'appareil censé la recevoir, pas seulement dans l'interface. La seconde est de garder la liste des alertes vide en temps normal, car une alerte qui sonne en permanence, même juste, transforme la liste en décor. La troisième entrée dans une liste qui en compte déjà deux ne change rien à l'œil, et une équipe qui démarre avec une liste bruyante apprend durablement à l'ignorer.
-
----
-
 # L'observabilité dans le pipeline
 
 ```
-article   : introduction-observabilite
+article   : observabilite-aller-plus-loin
 page      : livrer
-fichier   : blog/introduction-observabilite/fr/09-livrer.html
-surtitre  : Chapitre 9
-lecture   : 1 min
+fichier   : blog/observabilite-aller-plus-loin/fr/03-livrer.html
+surtitre  : Chapitre 3
+lecture   : 2 min
 ```
 
 Les dashboards et les alertes sont du logiciel. Ils ont des versions et des bugs, ils cassent quand autre chose change, et s'ils n'existent que sous forme de clics faits dans une interface il y a dix-huit mois, ils finiront par se perdre. Il est donc vivement suggéré de les faire vivre dans le dépôt de code. Grafana sait les charger depuis des fichiers.
@@ -943,90 +1069,13 @@ Un job de déploiement rapporte un seul fait, la commande a retourné sans erreu
 Un pipeline vert n'est pas un service sain.
 :::
 
-Un déploiement n'est pas terminé quand la commande retourne mais quand la version neuve sert le trafic. Le pipeline devrait donc attendre que les pods neufs soient prêts, et les minutes qui suivent un déploiement méritent plus d'attention que le reste du temps. C'est là que le [chapitre 2](#/fr/blog/introduction-observabilite/trois-piliers#le-checkout-lent) s'est refermé en trois clics : la phrase décisive était « le cache est vide depuis le déploiement de 14h02 », et elle n'était possible que parce que le déploiement était visible sur le graphe. Une annotation sur les dashboards à chaque déploiement, que Grafana fait nativement, est le meilleur rapport valeur sur effort de tout le pipeline. Sans elle, la première question de chaque incident est « est-ce qu'on a livré quelque chose récemment ? », et quelqu'un va vérifier à la main.
+Un déploiement n'est pas terminé quand la commande retourne mais quand la version neuve sert le trafic. Le pipeline devrait donc attendre que les pods neufs soient prêts, et les minutes qui suivent un déploiement méritent plus d'attention que le reste du temps. C'est là que le [checkout lent de l'introduction](#/fr/blog/introduction-observabilite/trois-piliers#le-checkout-lent) s'est refermé en trois clics : la phrase décisive était « le cache est vide depuis le déploiement de 14h02 », et elle n'était possible que parce que le déploiement était visible sur le graphe. Une annotation sur les dashboards à chaque déploiement, que Grafana fait nativement, est le meilleur rapport valeur sur effort de tout le pipeline. Sans elle, la première question de chaque incident est « est-ce qu'on a livré quelque chose récemment ? », et quelqu'un va vérifier à la main.
 
----
+## Ce qu'il faut retenir {#ce-qu-il-faut-retenir}
 
-# Ce qu'un dashboard vert ne dit pas
-
-```
-article   : introduction-observabilite
-page      : dashboard-vert
-fichier   : blog/introduction-observabilite/fr/10-dashboard-vert.html
-surtitre  : Chapitre 10
-lecture   : 2 min
-```
-
-Un compteur plat et une série absente se ressemblent. Un agrégat à 65 % cache un pool à 97 %. Une alerte évaluée et affichée ne signifie pas quelqu'un la vu. Un run vert recouvre des pods qui ne démarrent pas. Chaque page de ce texte a rencontré la même chose sous une forme différente : un instrument qui ne montre rien est indiscernable d'un système sain.
-
-Admettons un test de charge de cinq minutes sur un service, avec un dashboard sous les yeux. Résultat côté client : zéro requête échouée, latence stable, débit servi égal au débit demandé.
-
-:::devine
-question: Le service est-il en bonne santé ?
-options: ['Oui, les trois chiffres le disent', 'Non, il est en surcharge', 'On ne sait pas']
-bonne: 2
-
-reponse:
-
-On ne sait pas. Zéro échec dit que rien n'a été refusé, pas que rien n'a cassé. Les pods peuvent être sortis du Service un par un pendant que le client voit cent pour cent de succès, la liveness peut être à un cycle de tuer le conteneur, et une limite mémoire peut se franchir si vite qu'aucune requête n'a le temps d'échouer.
-
-:::
-
-:::regle
-Un dashboard vert est une hypothèse, pas un résultat.
-:::
-
-Sur les neuf pannes provoquées pour ce texte, ce résultat parfait côté client est apparu <mesure valeur="3 fois sur 9">avec, à chaque fois, un système en danger</mesure>.
-
-Rien dans un instrument ne distingue un signal qui ne montre rien parce que rien n'est cassé d'un signal qui ne montre rien parce qu'il regarde au mauvais endroit. La seule façon de trancher est de faire échouer quelque chose exprès, à un moment choisi, en regardant. Déclencher chaque panneau une fois et confirmer qu'il bouge, car un panneau qu'on n'a jamais vu réagir est une décoration. Envoyer une alerte et attendre le téléphone. Tuer un pod sous charge et lire ce que le compteur de redémarrages affiche, c'est-à-dire zéro, puisque le pod tué n'existe plus.
-
-C'est ce que le cours qui accompagne ce texte fait faire. Chaque module pose un décor sur un cluster jetable, envoie de la charge, demande une prédiction écrite avant d'ouvrir le premier dashboard, puis casse quelque chose. Le pari écrit est ce qui sépare lire une conclusion de l'apprendre : « la colonne à zéro échec est la pire » enseigne quelque chose à qui a parié sur elle, et rien à qui le lit dans un tableau.
-
----
-
-# Checklist pratique
-
-```
-article   : introduction-observabilite
-page      : checklist
-fichier   : blog/introduction-observabilite/fr/11-checklist.html
-surtitre  : Chapitre 11
-lecture   : 2 min
-```
-
-Chaque ligne vient de quelque chose qui a d'abord mal tourné, quelque part dans ce texte.
-
-## En instrumentant le service {#en-instrumentant-le-service}
-
-- Émettre un identifiant de trace sur chaque requête, et le mettre dans [chaque ligne de log](#/fr/blog/introduction-observabilite/trois-piliers#la-colle). Rien d'autre dans cette liste ne compte autant.
-- Formater chaque horodatage avec son décalage, et fixer [un seul fuseau partout](#/fr/blog/introduction-observabilite/lire-un-graphe#une-seule-horloge), y compris le défaut des vues ad hoc.
-- Ajouter des [exemplars](#/fr/blog/introduction-observabilite/instrumenter#les-exemplars), pour qu'un point sur un graphe puisse ouvrir une requête réelle.
-- Ajouter les deux ou trois [compteurs métier](#/fr/blog/introduction-observabilite/instrumenter#les-metriques-metier) qui disent à quoi sert le service. Ce sont eux qui rendent un incident lisible à quelqu'un d'autre que son auteur.
-
-## En écrivant les sondes {#en-ecrivant-les-sondes}
-
-- Ne jamais mettre une vérification de dépendance dans une [liveness](#/fr/blog/introduction-observabilite/sondes#jamais-de-dependance). Elle va dans la readiness.
-- Écrire le délai et le nombre d'échecs de chaque sonde, sans se fier aux défauts, et donner à la liveness [un délai généreux](#/fr/blog/introduction-observabilite/sondes#une-sonde-qui-ne-touche-a-rien). Elle existe pour attraper un processus définitivement bloqué, et elle ne doit jamais pouvoir échouer parce qu'il est occupé.
-
-## En construisant les dashboards {#en-construisant-les-dashboards}
-
-- Alerter et diagnostiquer sur le [taux](#/fr/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent), jamais sur un compteur brut comparé à un seuil.
-- Chercher [la mesure qui porte l'instant de l'événement](#/fr/blog/introduction-observabilite/lire-un-graphe#l-heure-du-scrape) quand l'heure exacte compte, plutôt que la position d'un échantillon.
-- Déclencher [chaque panneau une fois](#/fr/blog/introduction-observabilite/dashboard-vert), exprès, et confirmer qu'il bouge. Un panneau qu'on n'a jamais vu réagir est une décoration.
-
-## En montant l'alerting {#en-montant-l-alerting}
-
-- Mettre en place des [alertes et leurs notifications](#/fr/blog/introduction-observabilite/alerting), téléphone ou mail, pour les pannes critiques.
-- Corriger à la source toute alerte qui reste active en permanence, dès le premier jour. Le silence doit être l'état normal.
-
-## En déployant {#en-deployant}
-
-- Garder dashboards et règles d'alerte [dans le dépôt](#/fr/blog/introduction-observabilite/livrer), et ne jamais coller un panneau depuis l'interface web.
-- Poser une annotation de déploiement sur les dashboards.
-- Retenir qu'un run vert rapporte que l'état désiré a été écrit, et rien du tout sur sa santé.
-
-:::regle
-Poser au système qui tourne une question dont la réponse serait différente en cas d'erreur. Pas « est-ce que ma commande a réussi », mais « le monde est-il maintenant différent de la façon dont je le voulais ».
-:::
+- Pour un post-mortem, lire d'abord le compteur brut, et choisir la fenêtre une fois l'incident situé. Quand l'instant exact compte, chercher une source qui porte l'horodatage de l'événement.
+- Ne jamais mettre une dépendance partagée dans une liveness. Écrire le délai et le nombre d'échecs de chaque sonde, et donner à la liveness un délai généreux.
+- Faire attendre au pipeline que les pods neufs soient prêts, et poser une annotation de déploiement sur les dashboards.
+- Tuer un pod sous charge, exprès, et lire ce que le compteur de redémarrages affiche : zéro, puisque le pod tué n'existe plus. Un instrument qu'on n'a jamais vu réagir est une décoration.
 
 ---

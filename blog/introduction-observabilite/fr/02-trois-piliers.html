@@ -1,15 +1,15 @@
 <article>
   <p class="eyebrow">Chapitre 2</p>
-  <h1>Trois piliers, et pourquoi exactement trois</h1>
+  <h1>Trois signaux, trois niveaux de détail</h1>
 
   <h2 id="detecter-localiser-expliquer">Détecter, localiser, expliquer</h2>
-  <p>Les trois piliers de l'observabilité sont la métrique, la
+  <p>Les trois signaux de base de l'observabilité sont la métrique, la
   <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes
   de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une
   des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle
   utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une
   exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une
-  panne.</p>
+  panne. OpenTelemetry en compte d'autres, et parle de signaux plutôt que de piliers.</p>
 
   <tableau-mesure legende="Les trois piliers, la question qu'ils répondent, leur rôle dans l'enquête.">
     <table>
@@ -119,7 +119,7 @@
   recoupées avec les events que Kubernetes enregistre lui-même.</p>
 
   <h2 id="la-colle">Un identifiant, propagé partout</h2>
-  <p>Les trois piliers ne valent que si on peut passer de l'un à l'autre, et un seul
+  <p>Les trois signaux ne valent que si on peut passer de l'un à l'autre, et un seul
   mécanisme le rend possible : un identifiant de trace, généré à l'entrée du système et
   transporté à travers tout. Il doit apparaître à trois endroits :</p>
 

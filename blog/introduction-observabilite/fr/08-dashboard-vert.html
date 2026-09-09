@@ -1,5 +1,5 @@
 <article>
-  <p class="eyebrow">Chapitre 10</p>
+  <p class="eyebrow">Chapitre 8</p>
   <h1>Ce qu'un dashboard vert ne dit pas</h1>
 
   <p>Un compteur plat et une série absente se ressemblent. Un agrégat à 65 % cache un pool
@@ -7,6 +7,14 @@
   recouvre des pods qui ne démarrent pas. Chaque page de ce texte a rencontré la même
   chose sous une forme différente : un instrument qui ne montre rien est indiscernable
   d'un système sain.</p>
+
+  <p>Deux autres instruments ont la même propriété. Un healthcheck n'est pas un signal
+  d'observabilité mais l'entrée d'une décision automatique, prise par l'orchestrateur
+  tout de suite et sans nuance, donc un healthcheck vert ne prouve pas que le service
+  va bien, seulement que la sonde a répondu. Un job de déploiement vert rapporte un seul
+  fait, la commande a retourné sans erreur, et rien sur la version qui sert le trafic.
+  <a href="#/fr/blog/observabilite-aller-plus-loin">La suite de cet article</a> les
+  démonte.</p>
 
   <p>Admettons un test de charge de cinq minutes sur un service, avec un dashboard sous les
   yeux. Résultat côté client : zéro requête échouée, latence stable, débit servi égal au

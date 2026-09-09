@@ -1,9 +1,9 @@
 <article>
-  <p class="eyebrow">Chapitre 11</p>
+  <p class="eyebrow">Chapitre 9</p>
   <h1>Checklist pratique</h1>
 
   <p>Chaque ligne vient de quelque chose qui a d'abord mal tourné, quelque part dans ce
-  texte.</p>
+  texte ou dans sa suite.</p>
 
   <h2 id="en-instrumentant-le-service">En instrumentant le service</h2>
   <ul>
@@ -11,7 +11,7 @@
     <a href="#/fr/blog/introduction-observabilite/trois-piliers#la-colle">chaque ligne de log</a>. Rien d'autre dans cette
     liste ne compte autant.</li>
     <li>Formater chaque horodatage avec son décalage, et fixer
-    <a href="#/fr/blog/introduction-observabilite/lire-un-graphe#une-seule-horloge">un seul fuseau partout</a>, y compris
+    <a href="#/fr/blog/observabilite-aller-plus-loin/lire-une-serie#une-seule-horloge">un seul fuseau partout</a>, y compris
     le défaut des vues ad hoc.</li>
     <li>Ajouter des <a href="#/fr/blog/introduction-observabilite/instrumenter#les-exemplars">exemplars</a>, pour qu'un point
     sur un graphe puisse ouvrir une requête réelle.</li>
@@ -23,9 +23,10 @@
   <h2 id="en-ecrivant-les-sondes">En écrivant les sondes</h2>
   <ul>
     <li>Ne jamais mettre une vérification de dépendance dans une
-    <a href="#/fr/blog/introduction-observabilite/sondes#jamais-de-dependance">liveness</a>. Elle va dans la readiness.</li>
+    <a href="#/fr/blog/observabilite-aller-plus-loin/sondes#jamais-de-dependance">liveness</a>. Elle peut aller dans la readiness, si retirer le pod du Service aide
+    vraiment.</li>
     <li>Écrire le délai et le nombre d'échecs de chaque sonde, sans se fier aux défauts, et
-    donner à la liveness <a href="#/fr/blog/introduction-observabilite/sondes#une-sonde-qui-ne-touche-a-rien">un délai
+    donner à la liveness <a href="#/fr/blog/observabilite-aller-plus-loin/sondes#une-sonde-qui-ne-touche-a-rien">un délai
     généreux</a>. Elle existe pour attraper un processus définitivement bloqué, et elle
     ne doit jamais pouvoir échouer parce qu'il est occupé.</li>
   </ul>
@@ -35,7 +36,7 @@
     <li>Alerter et diagnostiquer sur le
     <a href="#/fr/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent">taux</a>, jamais sur un compteur
     brut comparé à un seuil.</li>
-    <li>Chercher <a href="#/fr/blog/introduction-observabilite/lire-un-graphe#l-heure-du-scrape">la mesure qui porte l'instant
+    <li>Chercher <a href="#/fr/blog/observabilite-aller-plus-loin/lire-une-serie#l-heure-du-scrape">la mesure qui porte l'instant
     de l'événement</a> quand l'heure exacte compte, plutôt que la position d'un
     échantillon.</li>
     <li>Déclencher <a href="#/fr/blog/introduction-observabilite/dashboard-vert">chaque panneau une fois</a>, exprès, et
@@ -52,7 +53,7 @@
 
   <h2 id="en-deployant">En déployant</h2>
   <ul>
-    <li>Garder dashboards et règles d'alerte <a href="#/fr/blog/introduction-observabilite/livrer">dans le dépôt</a>, et ne
+    <li>Garder dashboards et règles d'alerte <a href="#/fr/blog/observabilite-aller-plus-loin/livrer">dans le dépôt</a>, et ne
     jamais coller un panneau depuis l'interface web.</li>
     <li>Poser une annotation de déploiement sur les dashboards.</li>
     <li>Retenir qu'un run vert rapporte que l'état désiré a été écrit, et rien du tout sur

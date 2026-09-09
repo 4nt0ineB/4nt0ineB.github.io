@@ -1,5 +1,5 @@
 <article>
-  <p class="eyebrow">Chapter 10</p>
+  <p class="eyebrow">Chapter 8</p>
   <h1>What a green dashboard does not say</h1>
 
   <p>A flat counter and an absent series look alike. An aggregate at 65 % hides a pool at
@@ -7,6 +7,14 @@
   covers pods that do not start. Every page of this text met the same thing in a
   different form: an instrument that shows nothing is indistinguishable from a healthy
   system.</p>
+
+  <p>Two more instruments have the same property. A health check is not an observability
+  signal but the input to an automated decision, taken by the orchestrator immediately
+  and without nuance, so a green health check does not prove that the service is
+  healthy, only that the probe answered. A green deployment job reports a single fact,
+  the command returned without error, and nothing about the version serving traffic.
+  <a href="#/en/blog/observabilite-aller-plus-loin">The sequel to this article</a> takes
+  them apart.</p>
 
   <p>Let us assume a five-minute load test on a service, with a dashboard in front of us.
   Client-side result: zero failed requests, stable latency, throughput served equal to

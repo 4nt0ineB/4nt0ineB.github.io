@@ -357,7 +357,7 @@ This article is for someone who knows what a log line is and may have seen a Gra
 
 It comes from an AI-assisted self-training review: nine failures provoked under real load, on a real server, diagnosed from the dashboards alone. Every figure in it was observed through a series of hands-on exercises on a virtual server.
 
-The goal is to give the reader a mental picture of observability and its key concepts. It is not about the ability to diagnose an outage, which a text of a few lines could not teach.
+The goal is to give the reader a mental picture of observability and its key concepts. It is not about the ability to diagnose an outage, which a text of a few lines could not teach. A sequel, [Observability, going further](#/en/blog/observabilite-aller-plus-loin), covers reading time series, Kubernetes probes and deployment.
 
 ---
 
@@ -409,7 +409,7 @@ Logs are not bad for all that. They answer the third question better than any ot
 
 ---
 
-# Three pillars, and why exactly three
+# Three signals, three levels of detail
 
 ```
 article   : introduction-observabilite
@@ -421,7 +421,7 @@ lecture   : 4 min
 
 ## Detect, locate, explain {#detecter-localiser-expliquer}
 
-The three pillars of observability are the metric, the <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of doing the same job but three floors of the same investigation. Each answers one of the three questions of the previous chapter. For the investigations in this text, a useful model is: metrics detect, traces locate, logs explain. It is not an exclusive one, because a trace can also explain a cause and a log can detect an outage.
+The three core signals of observability are the metric, the <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of doing the same job but three floors of the same investigation. Each answers one of the three questions of the previous chapter. For the investigations in this text, a useful model is: metrics detect, traces locate, logs explain. It is not an exclusive one, because a trace can also explain a cause and a log can detect an outage. OpenTelemetry counts other signals, and speaks of signals rather than pillars.
 
 :::tableau legende="The three pillars, the question each answers, its role in the investigation."
 
@@ -502,7 +502,7 @@ Memory in use, CPU load, the depth of a queue: this is machine state, not events
 
 ## One identifier, propagated everywhere {#la-colle}
 
-The three pillars are only worth something if one can move from one to the next, and a single mechanism makes it possible: a trace identifier, generated at the entrance of the system and carried through everything. It has to appear in three places:
+The three signals are only worth something if one can move from one to the next, and a single mechanism makes it possible: a trace identifier, generated at the entrance of the system and carried through everything. It has to appear in three places:
 
 - in the trace, where it is born;
 - in every log line written while handling this request;
@@ -717,16 +717,10 @@ article   : introduction-observabilite
 page      : lire-un-graphe
 fichier   : blog/introduction-observabilite/en/06-lire-un-graphe.html
 surtitre  : Chapter 6
-lecture   : 4 min
+lecture   : 2 min
 ```
 
-A graph looks like a window onto the system. It is a reconstruction of it, made of points collected at a regular interval and then run through a query.
-
-## The right edge of the graph {#le-bord-droit}
-
-One might be tempted to read any movement at the right of the curve as "something is happening now". But the right edge is simply where the data stops, that is, now, and every graph always ends there, whether something is happening or not.
-
-A dashboard that refreshes by itself recreates this impression every few seconds. A line that ticks up slightly at the right edge announces nothing, because it is the last sample, as noisy as the others, which does not yet have a neighbour to smooth it. Let us wait for the next refresh before waking anyone up.
+A graph looks like a window onto the system. It is a reconstruction of it, made of points collected at a regular interval and then run through a query. Two things about that reconstruction belong in an introduction. The rest, the right edge of the graph, the time of the scrape and time zones, is in [the sequel to this article](#/en/blog/observabilite-aller-plus-loin/lire-une-serie).
 
 ## A flat line has two causes {#plat-n-est-pas-absent}
 
@@ -750,6 +744,175 @@ The two situations call for opposite responses, because a flat counter means the
 A raw counter is therefore rarely read as is. It is converted into a rate, that is "how many per second, now", by dividing what it gained by the time elapsed. We alert on this rate and we diagnose on this rate. The raw counter is only for reading an exact total.
 
 This is also why an alert that compares a raw counter to a fixed threshold is a design error and not a setting to tune. The counter only ever grows, so a threshold that makes sense in the first hour makes none in the third week. A rate, on the other hand, stays comparable from one day to the next.
+
+## The window of a query {#la-fenetre}
+
+A rate is computed over a time window, chosen at each query, and that window decides what you see. Too wide a window spreads a short event out: a six-second incident, averaged over a minute, draws a bump a minute wide, and nothing in the graph is broken. Too narrow a window hides an event that happened before it.
+
+:::regle
+A graph shows the shape the query gave it, not the shape of the incident.
+:::
+
+---
+
+# An alert has to reach someone
+
+```
+article   : introduction-observabilite
+page      : alerting
+fichier   : blog/introduction-observabilite/en/07-alerting.html
+surtitre  : Chapter 7
+lecture   : 2 min
+```
+
+Everything above assumes someone is looking at a dashboard. At three in the morning, nobody is looking, and that is what an alert is for.
+
+An alert is a query on the metrics, with a duration. Prometheus evaluates it every thirty seconds, and when it stays true for the whole duration, it fires it. It does not deliver it itself: it hands it to a routing component (Alertmanager, in the Prometheus stack), which groups it and sends it to a destination, an e-mail, a chat channel or a notification on a phone. That destination is a separate setting. Grafana, for its part, displays alerts but does not deliver them. The duration is there so as not to wake someone up for a single unlucky sample. "Memory above 90 % for five minutes" is an alert, "memory above 90 %" is a nuisance.
+
+Let us assume the kube-prometheus-stack, installed two weeks ago with its default settings. A pod stops being ready, the alert fires, and it shows up in Grafana's alert list.
+
+:::devine
+question: Is anyone notified?
+options: ['Yes, the alert reached the end of the chain', 'No, nobody', 'Only if the interface is open']
+bonne: 1
+
+reponse:
+
+Nobody. In this stack, the routing's default destination is called "null" and does nothing, so that a fresh installation does not send messages where nobody has configured anything. The alert shows up, and the chain stops there.
+
+:::
+
+:::regle
+"We will see it" assumes a human in front of a dashboard, which is what an alert exists to remove.
+:::
+
+This default can stay for weeks without anyone noticing, and an alert rang for <mesure valeur="40 min">on a real incident without a single message leaving the machine</mesure>.
+
+Two habits follow. The first is to send a real alert, on purpose, and to confirm that it reaches the device meant to receive it, not only the interface. The second is to keep the alert list empty in normal times, because an alert that rings permanently, even a correct one, turns the list into decoration. The third entry in a list that already has two changes nothing to the eye, and a team that starts with a noisy list durably learns to ignore it.
+
+---
+
+# What a green dashboard does not say
+
+```
+article   : introduction-observabilite
+page      : dashboard-vert
+fichier   : blog/introduction-observabilite/en/08-dashboard-vert.html
+surtitre  : Chapter 8
+lecture   : 2 min
+```
+
+A flat counter and an absent series look alike. An aggregate at 65 % hides a pool at 97 %. An alert that was evaluated, routed and displayed notified nobody. A green run covers pods that do not start. Every page of this text met the same thing in a different form: an instrument that shows nothing is indistinguishable from a healthy system.
+
+Two more instruments have the same property. A health check is not an observability signal but the input to an automated decision, taken by the orchestrator immediately and without nuance, so a green health check does not prove that the service is healthy, only that the probe answered. A green deployment job reports a single fact, the command returned without error, and nothing about the version serving traffic. [The sequel to this article](#/en/blog/observabilite-aller-plus-loin) takes them apart.
+
+Let us assume a five-minute load test on a service, with a dashboard in front of us. Client-side result: zero failed requests, stable latency, throughput served equal to throughput requested.
+
+:::devine
+question: Is the service healthy?
+options: ['Yes, the three figures say so', 'No, it is overloaded', 'We do not know']
+bonne: 2
+
+reponse:
+
+We do not know. Zero failures says nothing was refused, not that nothing broke. The pods may have left the Service one by one while the client saw one hundred percent success, the liveness probe may be one cycle away from killing the container, and a memory limit may be crossed so fast that no request has time to fail.
+
+:::
+
+:::regle
+A green dashboard is a hypothesis, not a result.
+:::
+
+Over the nine failures provoked for this text, this perfect client-side result appeared <mesure valeur="3 times out of 9">with, each time, a system in danger</mesure>.
+
+Nothing in an instrument distinguishes a signal that shows nothing because nothing is broken from a signal that shows nothing because it is looking in the wrong place. The only way to settle it is to make something fail on purpose, at a chosen moment, while watching. Trigger every panel once and confirm that it moves, because a panel one has never seen react is decoration. Send an alert and wait for the phone. Kill a pod under load and read what the restart counter shows, that is, zero, since the killed pod no longer exists.
+
+This is what the course that goes with this text makes you do. Each module sets a scene on a disposable cluster, sends load, asks for a written prediction before the first dashboard is opened, then breaks something. The written bet is what separates reading a conclusion from learning it: "the zero-failure column is the worst" teaches something to whoever bet on it, and nothing to whoever reads it in a table.
+
+---
+
+# A practical checklist
+
+```
+article   : introduction-observabilite
+page      : checklist
+fichier   : blog/introduction-observabilite/en/09-checklist.html
+surtitre  : Chapter 9
+lecture   : 2 min
+```
+
+Every line comes from something that first went wrong, somewhere in this text or in its sequel.
+
+## When instrumenting the service {#en-instrumentant-le-service}
+
+- Emit a trace identifier on every request, and put it in [every log line](#/en/blog/introduction-observabilite/trois-piliers#la-colle). Nothing else on this list matters as much.
+- Format every timestamp with its offset, and set [a single time zone everywhere](#/en/blog/observabilite-aller-plus-loin/lire-une-serie#une-seule-horloge), including the default of ad hoc views.
+- Add [exemplars](#/en/blog/introduction-observabilite/instrumenter#les-exemplars), so that a point on a graph can open a real request.
+- Add the two or three [business counters](#/en/blog/introduction-observabilite/instrumenter#les-metriques-metier) that say what the service is for. They are what makes an incident readable to someone other than its author.
+
+## When writing the probes {#en-ecrivant-les-sondes}
+
+- Never put a dependency check in a [liveness probe](#/en/blog/observabilite-aller-plus-loin/sondes#jamais-de-dependance). It may go in the readiness probe, if removing the pod from the Service actually helps.
+- Write the timeout and the failure count of every probe, without relying on the defaults, and give the liveness probe [a generous timeout](#/en/blog/observabilite-aller-plus-loin/sondes#une-sonde-qui-ne-touche-a-rien). It exists to catch a process stuck for good, and it must never be able to fail because the process is busy.
+
+## When building the dashboards {#en-construisant-les-dashboards}
+
+- Alert and diagnose on the [rate](#/en/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent), never on a raw counter compared to a threshold.
+- Look for [the measurement that carries the instant of the event](#/en/blog/observabilite-aller-plus-loin/lire-une-serie#l-heure-du-scrape) when the exact time matters, rather than the position of a sample.
+- Trigger [every panel once](#/en/blog/introduction-observabilite/dashboard-vert), on purpose, and confirm that it moves. A panel one has never seen react is decoration.
+
+## When setting up alerting {#en-montant-l-alerting}
+
+- Set up [alerts and their notifications](#/en/blog/introduction-observabilite/alerting), phone or e-mail, for critical failures.
+- Fix at the source any alert that stays active permanently, from day one. Silence must be the normal state.
+
+## When deploying {#en-deployant}
+
+- Keep dashboards and alerting rules [in the repository](#/en/blog/observabilite-aller-plus-loin/livrer), and never paste a panel from the web interface.
+- Put a deployment annotation on the dashboards.
+- Remember that a green run reports that the desired state was written, and nothing at all about its health.
+
+:::regle
+Ask the running system a question whose answer would be different in case of error. Not "did my command succeed", but "is the world now different from how I wanted it".
+:::
+
+---
+
+# Observability, going further
+
+```
+article   : observabilite-aller-plus-loin
+page      : accueil
+fichier   : blog/observabilite-aller-plus-loin/en/00-accueil.html
+surtitre  : Introduction
+lecture   : 1 min
+```
+
+The sequel to [an introduction to observability](#/en/blog/introduction-observabilite). It assumes the mental picture of that text: metrics, traces and logs, the reference stack, counters and rates, and the idea that a green dashboard is a hypothesis.
+
+Three things go wrong once the basics are in place. A graph shows the shape the query gave it, not the shape of the incident. A Kubernetes probe is a command, not a measurement, and it can take a healthy service down. A pipeline reports green while the new version never started.
+
+Like the introduction, this text comes from nine failures provoked under real load on a virtual server, and every figure in it was observed.
+
+---
+
+# Reading a time series
+
+```
+article   : observabilite-aller-plus-loin
+page      : lire-une-serie
+fichier   : blog/observabilite-aller-plus-loin/en/01-lire-une-serie.html
+surtitre  : Chapter 1
+lecture   : 3 min
+```
+
+A graph looks like a window onto the system. It is a reconstruction of it, made of points collected at a regular interval and then run through a query. The introduction gave the difference between a flat counter and an absent series, and the idea that a rate is computed over a window. Here are the traps that remain.
+
+## The right edge of the graph {#le-bord-droit}
+
+One might be tempted to read any movement at the right of the curve as "something is happening now". But the right edge is simply where the data stops, that is, now, and every graph always ends there, whether something is happening or not.
+
+A dashboard that refreshes by itself recreates this impression every few seconds. A line that ticks up slightly at the right edge announces nothing, because it is the last sample, as noisy as the others, which does not yet have a neighbour to smooth it. Let us wait for the next refresh before waking anyone up.
 
 ## The window of a query {#la-fenetre}
 
@@ -794,10 +957,10 @@ A graph shows the shape the query gave it, not the shape of the incident.
 # Probes are commands
 
 ```
-article   : introduction-observabilite
+article   : observabilite-aller-plus-loin
 page      : sondes
-fichier   : blog/introduction-observabilite/en/07-sondes.html
-surtitre  : Chapter 7
+fichier   : blog/observabilite-aller-plus-loin/en/02-sondes.html
+surtitre  : Chapter 2
 lecture   : 4 min
 ```
 
@@ -877,51 +1040,14 @@ An application can therefore be alive, ready, and slow. A p99 of eight seconds n
 
 ---
 
-# An alert has to reach someone
-
-```
-article   : introduction-observabilite
-page      : alerting
-fichier   : blog/introduction-observabilite/en/08-alerting.html
-surtitre  : Chapter 8
-lecture   : 2 min
-```
-
-Everything above assumes someone is looking at a dashboard. At three in the morning, nobody is looking, and that is what an alert is for.
-
-An alert is a query on the metrics, with a duration. Prometheus evaluates it every thirty seconds, and when it stays true for the whole duration, it fires it. It does not deliver it itself: it hands it to a routing component (Alertmanager, in the Prometheus stack), which groups it and sends it to a destination, an e-mail, a chat channel or a notification on a phone. That destination is a separate setting. Grafana, for its part, displays alerts but does not deliver them. The duration is there so as not to wake someone up for a single unlucky sample. "Memory above 90 % for five minutes" is an alert, "memory above 90 %" is a nuisance.
-
-Let us assume the kube-prometheus-stack, installed two weeks ago with its default settings. A pod stops being ready, the alert fires, and it shows up in Grafana's alert list.
-
-:::devine
-question: Is anyone notified?
-options: ['Yes, the alert reached the end of the chain', 'No, nobody', 'Only if the interface is open']
-bonne: 1
-
-reponse:
-
-Nobody. In this stack, the routing's default destination is called "null" and does nothing, so that a fresh installation does not send messages where nobody has configured anything. The alert shows up, and the chain stops there.
-
-:::
-
-:::regle
-"We will see it" assumes a human in front of a dashboard, which is what an alert exists to remove.
-:::
-
-This default can stay for weeks without anyone noticing, and an alert rang for <mesure valeur="40 min">on a real incident without a single message leaving the machine</mesure>.
-
-Two habits follow. The first is to send a real alert, on purpose, and to confirm that it reaches the device meant to receive it, not only the interface. The second is to keep the alert list empty in normal times, because an alert that rings permanently, even a correct one, turns the list into decoration. The third entry in a list that already has two changes nothing to the eye, and a team that starts with a noisy list durably learns to ignore it.
-
----
-
 # Observability in the pipeline
 
 ```
-article   : introduction-observabilite
+article   : observabilite-aller-plus-loin
 page      : livrer
-fichier   : blog/introduction-observabilite/en/09-livrer.html
-surtitre  : Chapter 9
-lecture   : 1 min
+fichier   : blog/observabilite-aller-plus-loin/en/03-livrer.html
+surtitre  : Chapter 3
+lecture   : 2 min
 ```
 
 Dashboards and alerts are software. They have versions and bugs, they break when something else changes, and if they only exist as clicks made in an interface eighteen months ago, they will end up lost. It is therefore strongly suggested to keep them in the code repository. Grafana can load them from files.
@@ -943,90 +1069,13 @@ A deployment job reports a single fact, the command returned without error. If t
 A green pipeline is not a healthy service.
 :::
 
-A deployment is not finished when the command returns but when the new version serves traffic. The pipeline should therefore wait for the new pods to be ready, and the minutes that follow a deployment deserve more attention than the rest of the time. That is where [chapter 2](#/en/blog/introduction-observabilite/trois-piliers#le-checkout-lent) closed in three clicks: the decisive sentence was "the cache has been empty since the 14:02 deployment", and it was only possible because the deployment was visible on the graph. An annotation on the dashboards at every deployment, which Grafana does natively, is the best value for effort in the whole pipeline. Without it, the first question of every incident is "did we ship something recently?", and someone goes to check by hand.
+A deployment is not finished when the command returns but when the new version serves traffic. The pipeline should therefore wait for the new pods to be ready, and the minutes that follow a deployment deserve more attention than the rest of the time. That is where [the slow checkout of the introduction](#/en/blog/introduction-observabilite/trois-piliers#le-checkout-lent) closed in three clicks: the decisive sentence was "the cache has been empty since the 14:02 deployment", and it was only possible because the deployment was visible on the graph. An annotation on the dashboards at every deployment, which Grafana does natively, is the best value for effort in the whole pipeline. Without it, the first question of every incident is "did we ship something recently?", and someone goes to check by hand.
 
----
+## What to take away {#ce-qu-il-faut-retenir}
 
-# What a green dashboard does not say
-
-```
-article   : introduction-observabilite
-page      : dashboard-vert
-fichier   : blog/introduction-observabilite/en/10-dashboard-vert.html
-surtitre  : Chapter 10
-lecture   : 2 min
-```
-
-A flat counter and an absent series look alike. An aggregate at 65 % hides a pool at 97 %. An alert that was evaluated, routed and displayed notified nobody. A green run covers pods that do not start. Every page of this text met the same thing in a different form: an instrument that shows nothing is indistinguishable from a healthy system.
-
-Let us assume a five-minute load test on a service, with a dashboard in front of us. Client-side result: zero failed requests, stable latency, throughput served equal to throughput requested.
-
-:::devine
-question: Is the service healthy?
-options: ['Yes, the three figures say so', 'No, it is overloaded', 'We do not know']
-bonne: 2
-
-reponse:
-
-We do not know. Zero failures says nothing was refused, not that nothing broke. The pods may have left the Service one by one while the client saw one hundred percent success, the liveness probe may be one cycle away from killing the container, and a memory limit may be crossed so fast that no request has time to fail.
-
-:::
-
-:::regle
-A green dashboard is a hypothesis, not a result.
-:::
-
-Over the nine failures provoked for this text, this perfect client-side result appeared <mesure valeur="3 times out of 9">with, each time, a system in danger</mesure>.
-
-Nothing in an instrument distinguishes a signal that shows nothing because nothing is broken from a signal that shows nothing because it is looking in the wrong place. The only way to settle it is to make something fail on purpose, at a chosen moment, while watching. Trigger every panel once and confirm that it moves, because a panel one has never seen react is decoration. Send an alert and wait for the phone. Kill a pod under load and read what the restart counter shows, that is, zero, since the killed pod no longer exists.
-
-This is what the course that goes with this text makes you do. Each module sets a scene on a disposable cluster, sends load, asks for a written prediction before the first dashboard is opened, then breaks something. The written bet is what separates reading a conclusion from learning it: "the zero-failure column is the worst" teaches something to whoever bet on it, and nothing to whoever reads it in a table.
-
----
-
-# A practical checklist
-
-```
-article   : introduction-observabilite
-page      : checklist
-fichier   : blog/introduction-observabilite/en/11-checklist.html
-surtitre  : Chapter 11
-lecture   : 2 min
-```
-
-Every line comes from something that first went wrong, somewhere in this text.
-
-## When instrumenting the service {#en-instrumentant-le-service}
-
-- Emit a trace identifier on every request, and put it in [every log line](#/en/blog/introduction-observabilite/trois-piliers#la-colle). Nothing else on this list matters as much.
-- Format every timestamp with its offset, and set [a single time zone everywhere](#/en/blog/introduction-observabilite/lire-un-graphe#une-seule-horloge), including the default of ad hoc views.
-- Add [exemplars](#/en/blog/introduction-observabilite/instrumenter#les-exemplars), so that a point on a graph can open a real request.
-- Add the two or three [business counters](#/en/blog/introduction-observabilite/instrumenter#les-metriques-metier) that say what the service is for. They are what makes an incident readable to someone other than its author.
-
-## When writing the probes {#en-ecrivant-les-sondes}
-
-- Never put a dependency check in a [liveness probe](#/en/blog/introduction-observabilite/sondes#jamais-de-dependance). It goes in the readiness probe.
-- Write the timeout and the failure count of every probe, without relying on the defaults, and give the liveness probe [a generous timeout](#/en/blog/introduction-observabilite/sondes#une-sonde-qui-ne-touche-a-rien). It exists to catch a process stuck for good, and it must never be able to fail because the process is busy.
-
-## When building the dashboards {#en-construisant-les-dashboards}
-
-- Alert and diagnose on the [rate](#/en/blog/introduction-observabilite/lire-un-graphe#plat-n-est-pas-absent), never on a raw counter compared to a threshold.
-- Look for [the measurement that carries the instant of the event](#/en/blog/introduction-observabilite/lire-un-graphe#l-heure-du-scrape) when the exact time matters, rather than the position of a sample.
-- Trigger [every panel once](#/en/blog/introduction-observabilite/dashboard-vert), on purpose, and confirm that it moves. A panel one has never seen react is decoration.
-
-## When setting up alerting {#en-montant-l-alerting}
-
-- Set up [alerts and their notifications](#/en/blog/introduction-observabilite/alerting), phone or e-mail, for critical failures.
-- Fix at the source any alert that stays active permanently, from day one. Silence must be the normal state.
-
-## When deploying {#en-deployant}
-
-- Keep dashboards and alerting rules [in the repository](#/en/blog/introduction-observabilite/livrer), and never paste a panel from the web interface.
-- Put a deployment annotation on the dashboards.
-- Remember that a green run reports that the desired state was written, and nothing at all about its health.
-
-:::regle
-Ask the running system a question whose answer would be different in case of error. Not "did my command succeed", but "is the world now different from how I wanted it".
-:::
+- For a post-mortem, read the raw counter first, and pick the window once the incident is located. When the exact instant matters, look for a source that carries the event's timestamp.
+- Never put a shared dependency in a liveness probe. Write the timeout and the failure count of every probe, and give the liveness probe a generous timeout.
+- Make the pipeline wait for the new pods to be ready, and put a deployment annotation on the dashboards.
+- Kill a pod under load, on purpose, and read what the restart counter shows: zero, since the killed pod no longer exists. An instrument that has never been seen reacting is decoration.
 
 ---

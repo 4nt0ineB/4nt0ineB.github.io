@@ -1,0 +1,64 @@
+<article>
+  <p class="eyebrow">Chapter 1</p>
+  <h1>Reading a time series</h1>
+
+  <p>A graph looks like a window onto the system. It is a reconstruction of it, made of
+  points collected at a regular interval and then run through a query. The introduction
+  gave the difference between a flat counter and an absent series, and the idea that a
+  rate is computed over a window. Here are the traps that remain.</p>
+
+  <h2 id="le-bord-droit">The right edge of the graph</h2>
+  <p>One might be tempted to read any movement at the right of the curve as "something is
+  happening now". But the right edge is simply where the data stops, that is, now, and
+  every graph always ends there, whether something is happening or not.</p>
+
+  <p>A dashboard that refreshes by itself recreates this impression every few seconds. A
+  line that ticks up slightly at the right edge announces nothing, because it is the
+  last sample, as noisy as the others, which does not yet have a neighbour to smooth it.
+  Let us wait for the next refresh before waking anyone up.</p>
+
+  <h2 id="la-fenetre">The window of a query</h2>
+  <p>A rate is computed over a time window, chosen at each query: the counter's variation over the window, divided by its length. This window carries two traps, which pull in opposite directions.</p>
+
+  <p>Too wide a window spreads a short event out. A six-second incident, averaged over a
+  minute, draws a bump a minute wide, and nothing in the graph is broken. That bump is the one
+  of an ideal moving average. Prometheus's rate() works on the observed points and
+  extrapolates at the edges of the window, so a real query gives a slightly different
+  figure, but the shape is the same.</p>
+
+  <schema-fenetre-rate></schema-fenetre-rate>
+
+  <p>Too narrow a window hides an event. A query asking for the increase over the last
+  fifteen minutes returns zero for everything that happened before, even though the raw
+  counter still carries the mark.</p>
+
+  <p>For a post-mortem, it is therefore better to read the raw counter first, and to move to a window only once the incident has been located on the timeline. And when the real duration of an event
+  matters, a source with exact timestamps is needed, such as Kubernetes events, because
+  no moving average can resolve a few seconds.</p>
+
+  <h2 id="l-heure-du-scrape">The time of the scrape</h2>
+  <p>The position of a point on the timeline is the moment it was collected, not the moment
+  the event took place. Let us assume a container killed at 11:21:31, according to the timestamp of its end, with a collection every two minutes. The panel shows it at 11:23, because the next collection happened then. Two minutes of error are enough to blame the wrong deployment. When the exact
+  instant matters, look for a metric that carries the event's timestamp as its value,
+  not the position of the sample.</p>
+
+  <h2 id="une-seule-horloge">A single clock</h2>
+  <p>Nothing drifts in storage, because the metrics, logs and traces databases all store an
+  instant as a number, with no time zone attached. The risk is at display time, and in
+  the text of the log lines.</p>
+
+  <p>At display time, each tool has its own time zone setting, and Grafana has two: one for
+  the dashboards, one for ad hoc views. Without a decision, the same outage reads 12:50 on one
+  screen and 14:50 on the other. Decide on UTC and apply it everywhere.</p>
+
+  <p>In the log lines, the trap is the format:</p>
+
+  <pre><code>2026-08-20 12:16:24,793 INFO ...      ambiguous forever
+2026-08-20T13:07:43.370Z INFO ...     the offset is carried in the line</code></pre>
+
+  <p>Rendered without an offset, the same instant in two time zones produces two
+  indistinguishable lines, two hours apart, and nothing in the line says which is which.
+  Always format timestamps with the offset included.</p>
+
+  <regle>A graph shows the shape the query gave it, not the shape of the incident.</regle>
+</article>

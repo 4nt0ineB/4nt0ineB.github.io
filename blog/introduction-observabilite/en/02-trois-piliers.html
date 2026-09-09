@@ -1,14 +1,14 @@
 <article>
   <p class="eyebrow">Chapter 2</p>
-  <h1>Three pillars, and why exactly three</h1>
+  <h1>Three signals, three levels of detail</h1>
 
   <h2 id="detecter-localiser-expliquer">Detect, locate, explain</h2>
-  <p>The three pillars of observability are the metric, the
+  <p>The three core signals of observability are the metric, the
   <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of
   doing the same job but three floors of the same investigation. Each answers one of the
   three questions of the previous chapter. For the investigations in this text, a useful
   model is: metrics detect, traces locate, logs explain. It is not an exclusive one,
-  because a trace can also explain a cause and a log can detect an outage.</p>
+  because a trace can also explain a cause and a log can detect an outage. OpenTelemetry counts other signals, and speaks of signals rather than pillars.</p>
 
   <tableau-mesure legende="The three pillars, the question each answers, its role in the investigation.">
     <table>
@@ -113,7 +113,7 @@
   metrics, cross-checked with the events Kubernetes records itself.</p>
 
   <h2 id="la-colle">One identifier, propagated everywhere</h2>
-  <p>The three pillars are only worth something if one can move from one to the next, and a
+  <p>The three signals are only worth something if one can move from one to the next, and a
   single mechanism makes it possible: a trace identifier, generated at the entrance of
   the system and carried through everything. It has to appear in three places:</p>
 

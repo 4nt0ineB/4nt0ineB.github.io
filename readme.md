@@ -19,7 +19,8 @@ Pages. Une seule coquille Vue chargée depuis un CDN, trois choses dedans :
   filets d'un pixel, aucun arrondi) ; la paire fond/encre ne colore la barre du
   haut que sur cette page.
 - `blog/` : les articles, du plus récent au plus ancien. Un article a une ou
-  plusieurs pages (`blog/introduction-observabilite/` en a douze), une date de
+  plusieurs pages (`blog/introduction-observabilite/` en a dix, sa suite
+  `blog/observabilite-aller-plus-loin/` quatre), une date de
   publication et une date de mise à jour.
 
 ## Lancer le site
