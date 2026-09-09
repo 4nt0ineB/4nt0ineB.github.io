@@ -32,7 +32,7 @@ Seine-et-Marne, France
 - [LinkedIn](https://www.linkedin.com/in/antoineba6/)
 - [CV](#/fr/cv)
 
-Je travaille surtout sur des systèmes backend Java, des migrations de données et des applications métier, chez Lunatech depuis 2024.
+Je travaille surtout sur des systèmes backend Java, des migrations de données et des applications métier. Chez Lunatech depuis 2024.
 
 ## Travaux choisis {#travaux}
 
