@@ -22,72 +22,116 @@ surtitre  :
 lecture   : - min
 ```
 
-01
+Java backend software engineer. Data migrations, legacy code, performance.
 
-Software engineer, Java backend
+At Lunatech since 2024, on assignment at DARVA then CARIAD. Quarkus and Spring day to day, comfortable in old or poorly documented codebases, with a habit of measuring before optimising.
 
-Seine-et-Marne, France
+- Seine-et-Marne, France
+- Lunatech
+- [GitHub](https://github.com/4nt0ineB)
+- [LinkedIn](https://www.linkedin.com/in/antoineba6/)
 
-Quarkus and Spring, data migrations, legacy code. At Lunatech since 2024, on assignment at DARVA then CARIAD.
+## Experience {#experience}
 
-- [github.com/4nt0ineB](https://github.com/4nt0ineB)
-- [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
+March to August 2026
 
-## 02 Career {#parcours}
+### CARIAD, Volkswagen Group
 
-1. March to August 2026 CARIAD, Volkswagen Group Lead developer, through Lunatech Migration of a back-office permission-management tool, from server-side rendering to a REST API and a React frontend. Strangler Fig pattern, endpoint by endpoint and behind a feature flag: instant rollback, no regression. Java · Spring Boot · React · TypeScript · Vitest
-2. July 2025 to March 2026 DARVA, Domaine Client Backend developer, through Lunatech Migration of the CRM to a new solution. Data migration batch for thirty thousand customers, built and released to production; run time brought from eight hours down to an hour and a half. Java · Quarkus · Hibernate Reactive · Mutiny · Kafka · MariaDB · Jenkins
-3. January to July 2025 DARVA, Exiris Full-stack developer, through Lunatech Electronic registered mail platform: search, certificate checks, test migration to Playwright. Java · Quarkus · React · TypeScript · Playwright · Jenkins
-4. May to August 2024 Open Food Facts Backend developer, in English Odoo CRM integration in the Perl monolith of the producer platform, import of three hundred organisations, routing rewrite adopted as the project standard. [Thirty-four merged PRs](https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged). Perl · Docker · Linux
-5. summer 2022 VLA, catalogue raisonné Freelance, sole developer Catalogue of the six hundred and fifty works of painter Vonick Laubreton, from the quote to production. [Online since 2022](https://laubreton.com). Python · Django · JavaScript · Docker · Nginx
+Lead developer, through Lunatech
 
-## 03 Education {#formation}
+- Migration of a back-office permission-management tool, from server-side rendering to a REST API and a React frontend.
+- Strangler Fig strategy: the new frontend served alongside the old one behind a feature flag, endpoint-by-endpoint migration, instant rollback.
+- Authorisation rework: a role, operation and scope matrix, pinned by a test suite, replaces the scattered inherited checks; two latent bugs fixed along the way.
+- Mentoring of a junior developer through code review and pairing.
 
-1. Master's in computer science, software and data engineering Université Gustave Eiffel, 2025
-2. TOEIC 945 Professional English, 2025
+Java, Spring Boot, React, TypeScript, Vitest
 
-## 04 Writing {#ecrits}
+July 2025 to March 2026
 
-1. [An introduction to observability](#/en/blog/introduction-observabilite) Twelve pages, from nine failures reproduced on a test machine
+### DARVA, Domaine Client
 
-## 05 Tools {#outils}
+Backend developer, through Lunatech
+
+- Migration of thirty thousand customers' data to a new master data system synchronised with Salesforce: batch taken over midway, completed and released to production.
+- Salesforce calls parallelised, queries and Hibernate Reactive session handling reworked: the batch went from over eight hours to under an hour and a half.
+- Eight recurring business batches optimised, from tens of minutes or crashes to a few minutes.
+- JVM memory saturation in acceptance testing diagnosed alone from heap dumps, nested joins simplified.
+- Functional documentation of the business rules, which did not exist until then.
+
+Java, Quarkus, Hibernate Reactive, Mutiny, Kafka, MariaDB, Jenkins
+
+January to July 2025
+
+### DARVA, Exiris
+
+Full-stack developer, through Lunatech
+
+- Electronic registered mail platform: search features and client certificate checks.
+- A Quarkus interceptor warns of an expiring certificate in every API response, without duplicating the check per endpoint.
+- Non-regression tests migrated from Cypress to Playwright; Jenkins pipeline reworked and Jira statuses updated from PR state.
+
+Java, Quarkus, React, TypeScript, Playwright, Jenkins
+
+May to August 2024
+
+### Open Food Facts
+
+Backend developer, open source contributor, in English
+
+- Odoo CRM integration over XML-RPC in the Perl monolith of the producer platform: contact and organisation creation, duplicate detection, import of three hundred existing organisations.
+- Routing module rewritten into typed handlers, adopted as the project standard.
+- [Thirty-four merged PRs](https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged) in four months.
+
+Perl, Docker, Linux
+
+summer 2022
+
+### VLA, catalogue raisonné
+
+Freelance, sole developer
+
+- Online catalogue of the six hundred and fifty works of painter Vonick Laubreton: quote, mockups, two intermediate reviews, deployment.
+- [Online since 2022](https://laubreton.com).
+
+Python, Django, JavaScript, Docker, Nginx
+
+## Skills {#competences}
 
 Languages
 
-- Java
-- TypeScript
-- Python
-- SQL
+Java, TypeScript, Python, SQL
 
 Frameworks
 
-- Quarkus
-- Spring Boot
-- Hibernate
-- React
-- Mutiny and Vert.x
+Quarkus, Spring Boot, Hibernate, Mutiny and Vert.x, React
 
 Data and infra
 
-- PostgreSQL
-- MariaDB
-- Docker
-- Jenkins
-- Linux
-
-AI
-
-- Claude Code
-- Gemini CLI
-- GitHub Copilot
+PostgreSQL, MariaDB, Kafka, Docker, Jenkins, Linux
 
 Practices
 
-- Hexagonal architecture
-- Strangler Fig
-- Playwright tests
-- Continuous integration
-- Scrum
+Hexagonal architecture, Strangler Fig, Playwright tests, continuous integration, Scrum
+
+AI
+
+Claude Code, Gemini CLI, GitHub Copilot
+
+## Education {#formation}
+
+### Master's in computer science, software and data engineering
+
+Université Gustave Eiffel, 2025
+
+## Languages {#langues}
+
+French, native. Professional English, TOEIC 945 in 2025.
+
+## Writing {#ecrits}
+
+### [An introduction to observability](#/en/blog/introduction-observabilite)
+
+Twelve pages, from nine failures reproduced on a test machine.
 
 ---
 

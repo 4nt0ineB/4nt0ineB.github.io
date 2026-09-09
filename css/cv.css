@@ -1,16 +1,14 @@
-/* Feuille du CV. Deux versions partagent la même grammaire (sans, chiffres en
-   mono, carrés pleins, filets d'un pixel, aucun arrondi) :
+/* Feuille du CV fancy (#/fr/cv/fancy). Une référence : la couverture des
+   Typographische Monatsblätter de décembre 1955 par Emil Ruder. Un aplat,
+   une encre, des carrés pleins reliés par des filets d'un pixel, beaucoup
+   de vide.
 
-   - le CV public (.cv seul) : papier ou noir au thème du site, casse
-     normale, une ligne de positionnement, les réalisations avant le parcours ;
-   - le CV fancy (.cv-fancy, sous html.page-cv) : une référence, la couverture
-     des Typographische Monatsblätter de décembre 1955 par Emil Ruder. Un
-     aplat, une encre, des paires fond/encre choisies par le lecteur
-     (composant cv-palettes), une marge tournée. La feuille prend toute la
-     page, en-tête compris.
-
-   Les paires fond/encre servent aussi à la barre du site, sur toutes les
-   pages : elles vivent donc sur :root, hors de la feuille. */
+   Les couleurs sont des paires fond/encre que le lecteur choisit
+   (composant cv-palettes), indépendantes du thème clair/sombre du reste du
+   site ; la barre du site les reprend sur toutes les pages. Tout ce qui est
+   propre à cette feuille se porte sur .cv ou sur html.page-cv, pour que le
+   blog et la vitrine n'en héritent rien. La vitrine publique (#/fr) a sa
+   propre feuille, css/vitrine.css. */
 
 :root {
   --cv-fond:  #f5c543;
@@ -22,16 +20,8 @@
 :root[data-cv-palette="noir"]   { --cv-fond: #141414; --cv-encre: #f5c543; }
 :root[data-cv-palette="papier"] { --cv-fond: #f4f1ea; --cv-encre: #141414; }
 
-/* La feuille publique n'a qu'une paire, bleu et crème, quelle que soit la
-   palette retenue sur la version fancy. */
-html.page-cv:not(.page-cv-fancy) {
-  --cv-fond:  #2f55d4;
-  --cv-encre: #f4f1ea;
-}
+/* --- La page entière prend la feuille, en-tête compris ------------------- */
 
-/* --- La feuille, commune aux deux versions ------------------------------ */
-
-/* La feuille couvre toute la page, en-tête compris. */
 html.page-cv body {
   background: var(--cv-fond);
   color: var(--cv-encre);
@@ -47,15 +37,17 @@ html.page-cv .contenu {
   padding-top: 2.5rem;
 }
 
+/* --- La feuille --------------------------------------------------------- */
+
 .cv {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 1.5rem;
   grid-template-areas:
-    "identite  parcours"
-    "formation parcours"
-    "ecrits    parcours"
-    "outils    outils";
-  grid-template-rows: auto auto 1fr auto;
+    "identite  parcours marge"
+    "formation parcours marge"
+    "outils    outils   marge"
+    "contact   contact  marge";
+  grid-template-rows: auto 1fr auto auto;
   column-gap: 4rem;
   row-gap: 4.5rem;
   font-family: var(--sans);
@@ -86,15 +78,10 @@ html.page-cv .contenu {
   gap: 0.9rem;
   font-size: 0.95rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
   line-height: 1;
   margin-bottom: 2.2rem;
-}
-
-.cv a {
-  color: inherit;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
 }
 
 /* --- 01, identité ------------------------------------------------------- */
@@ -108,36 +95,69 @@ html.page-cv .contenu {
 }
 
 .cv h1 {
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-size: clamp(2.6rem, 6.5vw, 4.6rem);
   font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
   margin-bottom: 0.9rem;
 }
 
 .cv-role {
-  font-size: 1.05rem;
-  letter-spacing: 0.06em;
+  font-size: 1.15rem;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
   margin-bottom: 0.5rem;
 }
 
 .cv-lieu {
   font-size: 0.85rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   margin-bottom: 2rem;
 }
 
 .cv-resume {
-  max-width: 36ch;
+  max-width: 34ch;
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
-.cv-identite .cv-liens {
-  margin-top: 1.6rem;
+/* Le choix de la paire fond/encre : un carré par palette, dans ses couleurs,
+   en colonne fixée à gauche de la page. Sur téléphone, en rangée au-dessus. */
+.cv-palettes {
+  position: fixed;
+  left: 1.5rem;
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-/* --- L'axe : un filet vertical, un carré par étape ---------------------- */
+html.page-cv .contenu {
+  padding-left: 3rem;
+}
+
+.cv-palette {
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0;
+  border: 1px solid var(--cv-encre);
+  border-radius: 0;
+  cursor: pointer;
+  background: var(--fond-palette);
+  box-shadow: inset 0 0 0 2px var(--cv-fond);
+}
+
+.cv-palette[aria-checked="true"] {
+  box-shadow: inset 0 0 0 2px var(--cv-fond), inset 0 0 0 5px var(--cv-encre);
+}
+
+.cv-palette-jaune  { --fond-palette: #f5c543; }
+.cv-palette-bleu   { --fond-palette: #2f55d4; }
+.cv-palette-orange { --fond-palette: #e8702a; }
+.cv-palette-noir   { --fond-palette: #141414; }
+.cv-palette-papier { --fond-palette: #f4f1ea; }
+
+/* --- 02, parcours : un axe vertical, un carré par étape ------------------ */
 
 .cv-parcours {
   grid-area: parcours;
@@ -147,7 +167,7 @@ html.page-cv .contenu {
    bord, et ceux des étapes, décalés d'autant vers la gauche. */
 .cv-axe {
   margin-left: calc(var(--carre) / 2 - 0.5px);
-  border-left: 1px solid currentColor;
+  border-left: 1px solid var(--cv-encre);
   padding-bottom: 1rem;
 }
 
@@ -171,6 +191,12 @@ html.page-cv .contenu {
   font-size: 0.85rem;
   letter-spacing: 0.12em;
   margin-bottom: 0.5rem;
+}
+
+.cv a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 .cv-org {
@@ -207,10 +233,10 @@ html.page-cv .contenu {
   width: 2rem;
   height: 1px;
   margin-bottom: 0.5rem;
-  background: currentColor;
+  background: var(--cv-encre);
 }
 
-/* --- outils : une colonne par famille, séparée par un filet ------------- */
+/* --- 04, outils : une colonne par famille, séparée par un filet ---------- */
 
 .cv-outils {
   grid-area: outils;
@@ -223,7 +249,7 @@ html.page-cv .contenu {
 }
 
 .cv-famille {
-  border-left: 1px solid currentColor;
+  border-left: 1px solid var(--cv-encre);
   padding-left: 1.1rem;
 }
 
@@ -240,9 +266,8 @@ html.page-cv .contenu {
   line-height: 1.75;
 }
 
-/* --- contact : les liens, sans mail ni téléphone ------------------------ */
+/* --- 05, contact : les liens, sans mail ni téléphone --------------------- */
 
-/* La rubrique contact n'existe que sur la version fancy. */
 .cv-contact {
   grid-area: contact;
 }
@@ -256,118 +281,23 @@ html.page-cv .contenu {
   letter-spacing: 0.04em;
 }
 
-/* --- formation, écrits : des axes courts -------------------------------- */
+/* --- 03, formation ------------------------------------------------------ */
 
 .cv-formation {
   grid-area: formation;
 }
 
-.cv-ecrits {
-  grid-area: ecrits;
-}
-
-:is(.cv-formation, .cv-ecrits) .cv-axe {
+.cv-formation .cv-axe {
   padding-bottom: 0;
 }
 
-:is(.cv-formation, .cv-ecrits) .cv-etape + .cv-etape {
+.cv-formation .cv-etape + .cv-etape {
   margin-top: 1.6rem;
 }
 
-@media (max-width: 800px) {
-  .cv {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "identite"
-      "parcours"
-      "formation"
-      "ecrits"
-      "outils";
-    grid-template-rows: auto;
-    row-gap: 3.5rem;
-  }
+/* --- La marge : une ligne de texte tournée, comme sur la couverture ------ */
 
-  html.page-cv .contenu {
-    padding-top: 1rem;
-  }
-}
-
-/* --- Le CV fancy : la feuille d'après Ruder ----------------------------- */
-
-/* De la place à gauche pour la colonne des palettes. */
-html.page-cv-fancy .contenu {
-  padding-left: 3rem;
-}
-
-.cv-fancy {
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 1.5rem;
-  grid-template-areas:
-    "identite  parcours marge"
-    "formation parcours marge"
-    "outils    outils   marge"
-    "contact   contact  marge";
-  grid-template-rows: auto 1fr auto auto;
-}
-
-.cv-fancy h1 {
-  font-size: clamp(2.6rem, 6.5vw, 4.6rem);
-  letter-spacing: -0.035em;
-  line-height: 0.95;
-}
-
-.cv-fancy h2 {
-  letter-spacing: 0.16em;
-  text-transform: lowercase;
-}
-
-.cv-fancy .cv-role {
-  font-size: 1.15rem;
-  letter-spacing: 0.14em;
-  text-transform: lowercase;
-}
-
-.cv-fancy .cv-lieu {
-  letter-spacing: 0.1em;
-}
-
-.cv-fancy .cv-resume {
-  max-width: 34ch;
-}
-
-/* Le choix de la paire fond/encre : un carré par palette, dans ses couleurs,
-   en colonne fixée à gauche de la page. Sur téléphone, en rangée au-dessus. */
-.cv-palettes {
-  position: fixed;
-  left: 1.5rem;
-  top: 6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.cv-palette {
-  width: 1.1rem;
-  height: 1.1rem;
-  padding: 0;
-  border: 1px solid var(--cv-encre);
-  border-radius: 0;
-  cursor: pointer;
-  background: var(--fond-palette);
-  box-shadow: inset 0 0 0 2px var(--cv-fond);
-}
-
-.cv-palette[aria-checked="true"] {
-  box-shadow: inset 0 0 0 2px var(--cv-fond), inset 0 0 0 5px var(--cv-encre);
-}
-
-.cv-palette-jaune  { --fond-palette: #f5c543; }
-.cv-palette-bleu   { --fond-palette: #2f55d4; }
-.cv-palette-orange { --fond-palette: #e8702a; }
-.cv-palette-noir   { --fond-palette: #141414; }
-.cv-palette-papier { --fond-palette: #f4f1ea; }
-
-/* La marge : une ligne de texte tournée, comme sur la couverture. Collée à
-   la fenêtre, elle suit le défilement sur toute la feuille. */
+/* Collée à la fenêtre : la marge suit le défilement sur toute la feuille. */
 .cv-marge {
   grid-area: marge;
   position: sticky;
@@ -399,7 +329,7 @@ html.page-cv-fancy .contenu {
 }
 
 @media (max-width: 800px) {
-  .cv-fancy {
+  .cv {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "identite"
@@ -408,6 +338,7 @@ html.page-cv-fancy .contenu {
       "outils"
       "contact";
     grid-template-rows: auto;
+    row-gap: 3.5rem;
   }
 
   .cv-marge {
@@ -420,7 +351,11 @@ html.page-cv-fancy .contenu {
     margin-bottom: 2rem;
   }
 
-  html.page-cv-fancy .contenu {
+  html.page-cv .contenu {
     padding-left: 0;
+  }
+
+  html.page-cv .contenu {
+    padding-top: 1rem;
   }
 }

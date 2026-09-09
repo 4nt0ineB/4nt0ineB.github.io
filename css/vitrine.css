@@ -1,0 +1,240 @@
+/* La vitrine : le CV public (#/fr). Un registre de document, pas d'affiche :
+   un bandeau d'en-tête à l'encre avec le nom et le positionnement, puis un
+   corps sur papier en deux colonnes, l'expérience à gauche avec la date en
+   marge, le reste à droite. Titres en serif, une seule couleur d'accent, au
+   thème clair/sombre du site. Rien de la grammaire à carrés du blog et du
+   CV fancy. */
+
+/* La vitrine occupe la largeur de la coquille : le bandeau a besoin de
+   toute la colonne, la mesure de lecture se pose dans chaque bloc. */
+.section-cv .contenu {
+  max-width: 64rem;
+  padding-top: 0;
+}
+
+.vitrine {
+  font-family: var(--sans);
+  color: var(--texte);
+}
+
+.vitrine :where(h1, h2, h3, p, ul, ol) {
+  margin: 0;
+  color: inherit;
+}
+
+.vitrine :where(ul, ol) {
+  list-style: none;
+  padding: 0;
+}
+
+.vitrine a {
+  color: inherit;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.vitrine a:hover {
+  color: var(--accent);
+}
+
+/* --- Le bandeau --------------------------------------------------------- */
+
+.vitrine-entete {
+  background: var(--texte);
+  color: var(--fond);
+  padding: 3.5rem 3rem 3rem;
+  margin-top: 2rem;
+}
+
+.vitrine h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+}
+
+.vitrine-titre {
+  font-size: 1.15rem;
+  line-height: 1.4;
+  max-width: 44ch;
+  margin-bottom: 1.6rem;
+}
+
+.vitrine-profil {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 60ch;
+  opacity: 0.85;
+  margin-bottom: 1.8rem;
+}
+
+/* Lieu, employeur, liens : une ligne, séparée par des points médians. */
+.vitrine-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+.vitrine-meta li + li::before {
+  content: "\00b7";
+  margin: 0 0.7em;
+  opacity: 0.6;
+}
+
+.vitrine-entete a {
+  text-decoration-color: currentColor;
+}
+
+.vitrine-entete a:hover {
+  color: inherit;
+  text-decoration-color: var(--accent);
+}
+
+/* --- Le corps ----------------------------------------------------------- */
+
+.vitrine-corps {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+  column-gap: 4rem;
+  row-gap: 3rem;
+  padding: 3rem 3rem 0;
+}
+
+.vitrine h2 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--trait-fort);
+  margin-bottom: 1.8rem;
+}
+
+.vitrine section + section {
+  margin-top: 3rem;
+}
+
+/* Une mission : la date en marge, le reste en colonne. */
+.vitrine-mission {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  column-gap: 1.5rem;
+}
+
+.vitrine-mission + .vitrine-mission {
+  margin-top: 2.2rem;
+}
+
+.vitrine-date {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--texte-faible);
+  padding-top: 0.1rem;
+}
+
+.vitrine h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.vitrine-role {
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+  margin-bottom: 0.7rem;
+}
+
+/* Les résultats : une puce courte, un tiret d'accent. */
+.vitrine-resultats li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.vitrine-resultats li + li {
+  margin-top: 0.35rem;
+}
+
+.vitrine-resultats li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.vitrine-pile {
+  margin-top: 0.7rem;
+  font-size: 0.82rem;
+  color: var(--texte-faible);
+}
+
+/* --- La colonne de droite ----------------------------------------------- */
+
+.vitrine-cote {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.vitrine-cote h2 {
+  font-size: 1.1rem;
+}
+
+.vitrine-cote section + section {
+  margin-top: 2.4rem;
+}
+
+/* Une famille d'outils : le nom en tête, la liste en prose. */
+.vitrine-famille + .vitrine-famille {
+  margin-top: 0.9rem;
+}
+
+.vitrine-famille-nom {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+  margin-bottom: 0.1rem;
+}
+
+.vitrine-cote .vitrine-mission {
+  display: block;
+}
+
+.vitrine-cote .vitrine-mission + .vitrine-mission {
+  margin-top: 1.2rem;
+}
+
+.vitrine-cote .vitrine-date {
+  padding-top: 0;
+}
+
+.vitrine-cote p {
+  max-width: 34ch;
+}
+
+@media (max-width: 800px) {
+  .vitrine-entete {
+    padding: 2.4rem 1.5rem 2.2rem;
+    margin-top: 1rem;
+  }
+
+  .vitrine-corps {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 2.4rem 0 0;
+  }
+
+  .vitrine-mission {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.2rem;
+  }
+}

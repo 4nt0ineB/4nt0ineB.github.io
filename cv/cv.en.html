@@ -1,140 +1,140 @@
-<article class="cv">
-  <header class="cv-identite">
-    <p class="repere"><span class="carre"></span><span class="index">01</span></p>
+<article class="vitrine">
+  <header class="vitrine-entete">
     <h1>Antoine Bastos</h1>
-    <p class="cv-role">Software engineer, Java backend</p>
-    <p class="cv-lieu">Seine-et-Marne, France</p>
-    <p class="cv-resume">Quarkus and Spring, data migrations, legacy code.
-    At Lunatech since 2024, on assignment at DARVA then CARIAD.</p>
-    <ul class="cv-liens">
-      <li><a href="https://github.com/4nt0ineB" target="_blank" rel="noopener">github.com/4nt0ineB</a></li>
-      <li><a href="https://www.linkedin.com/in/antoineba6/" target="_blank" rel="noopener">linkedin.com/in/antoineba6</a></li>
+    <p class="vitrine-titre">Java backend software engineer. Data migrations, legacy code, performance.</p>
+    <p class="vitrine-profil">At Lunatech since 2024, on assignment at DARVA then CARIAD. Quarkus and Spring day to day, comfortable in old or poorly documented codebases, with a habit of measuring before optimising.</p>
+    <ul class="vitrine-meta">
+      <li>Seine-et-Marne, France</li>
+      <li>Lunatech</li>
+      <li><a href="https://github.com/4nt0ineB" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/antoineba6/" target="_blank" rel="noopener">LinkedIn</a></li>
     </ul>
   </header>
 
-  <section class="cv-parcours" aria-labelledby="parcours">
-    <h2 id="parcours"><span class="carre"></span><span class="index">02</span> Career</h2>
-    <ol class="cv-axe">
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-date">March to August 2026</p>
-        <p class="cv-org">CARIAD, Volkswagen Group</p>
-        <p class="cv-poste">Lead developer, through Lunatech</p>
-        <p class="cv-mission">Migration of a back-office permission-management tool, from server-side rendering to a REST API and a React frontend. Strangler Fig pattern, endpoint by endpoint and behind a feature flag: instant rollback, no regression.</p>
-        <p class="cv-pile">Java · Spring Boot · React · TypeScript · Vitest</p>
-      </li>
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-date">July 2025 to March 2026</p>
-        <p class="cv-org">DARVA, Domaine Client</p>
-        <p class="cv-poste">Backend developer, through Lunatech</p>
-        <p class="cv-mission">Migration of the CRM to a new solution. Data migration batch for thirty thousand customers, built and released to production; run time brought from eight hours down to an hour and a half.</p>
-        <p class="cv-pile">Java · Quarkus · Hibernate Reactive · Mutiny · Kafka · MariaDB · Jenkins</p>
-      </li>
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-date">January to July 2025</p>
-        <p class="cv-org">DARVA, Exiris</p>
-        <p class="cv-poste">Full-stack developer, through Lunatech</p>
-        <p class="cv-mission">Electronic registered mail platform: search, certificate checks, test migration to Playwright.</p>
-        <p class="cv-pile">Java · Quarkus · React · TypeScript · Playwright · Jenkins</p>
-      </li>
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-date">May to August 2024</p>
-        <p class="cv-org">Open Food Facts</p>
-        <p class="cv-poste">Backend developer, in English</p>
-        <p class="cv-mission">Odoo CRM integration in the Perl monolith of the producer platform, import of three hundred organisations, routing rewrite adopted as the project standard. <a href="https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged" target="_blank" rel="noopener">Thirty-four merged PRs</a>.</p>
-        <p class="cv-pile">Perl · Docker · Linux</p>
-      </li>
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-date">summer 2022</p>
-        <p class="cv-org">VLA, catalogue raisonné</p>
-        <p class="cv-poste">Freelance, sole developer</p>
-        <p class="cv-mission">Catalogue of the six hundred and fifty works of painter Vonick Laubreton, from the quote to production. <a href="https://laubreton.com" target="_blank" rel="noopener">Online since 2022</a>.</p>
-        <p class="cv-pile">Python · Django · JavaScript · Docker · Nginx</p>
-      </li>
-    </ol>
-  </section>
+  <div class="vitrine-corps">
+    <div class="vitrine-principal">
+      <section aria-labelledby="experience">
+        <h2 id="experience">Experience</h2>
 
-  <section class="cv-formation" aria-labelledby="formation">
-    <h2 id="formation"><span class="carre"></span><span class="index">03</span> Education</h2>
-    <ol class="cv-axe">
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-org">Master's in computer science, software and data engineering</p>
-        <p class="cv-poste">Université Gustave Eiffel, 2025</p>
-      </li>
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-org">TOEIC 945</p>
-        <p class="cv-poste">Professional English, 2025</p>
-      </li>
-    </ol>
-  </section>
+        <article class="vitrine-mission">
+          <p class="vitrine-date">March to August 2026</p>
+          <div>
+            <h3>CARIAD, Volkswagen Group</h3>
+            <p class="vitrine-role">Lead developer, through Lunatech</p>
+            <ul class="vitrine-resultats">
+              <li>Migration of a back-office permission-management tool, from server-side rendering to a REST API and a React frontend.</li>
+              <li>Strangler Fig strategy: the new frontend served alongside the old one behind a feature flag, endpoint-by-endpoint migration, instant rollback.</li>
+              <li>Authorisation rework: a role, operation and scope matrix, pinned by a test suite, replaces the scattered inherited checks; two latent bugs fixed along the way.</li>
+              <li>Mentoring of a junior developer through code review and pairing.</li>
+            </ul>
+            <p class="vitrine-pile">Java, Spring Boot, React, TypeScript, Vitest</p>
+          </div>
+        </article>
 
-  <section class="cv-ecrits" aria-labelledby="ecrits">
-    <h2 id="ecrits"><span class="carre"></span><span class="index">04</span> Writing</h2>
-    <ol class="cv-axe">
-      <li class="cv-etape">
-        <span class="carre"></span>
-        <p class="cv-org"><a href="#/en/blog/introduction-observabilite">An introduction to observability</a></p>
-        <p class="cv-poste">Twelve pages, from nine failures reproduced on a test machine</p>
-      </li>
-    </ol>
-  </section>
+        <article class="vitrine-mission">
+          <p class="vitrine-date">July 2025 to March 2026</p>
+          <div>
+            <h3>DARVA, Domaine Client</h3>
+            <p class="vitrine-role">Backend developer, through Lunatech</p>
+            <ul class="vitrine-resultats">
+              <li>Migration of thirty thousand customers' data to a new master data system synchronised with Salesforce: batch taken over midway, completed and released to production.</li>
+              <li>Salesforce calls parallelised, queries and Hibernate Reactive session handling reworked: the batch went from over eight hours to under an hour and a half.</li>
+              <li>Eight recurring business batches optimised, from tens of minutes or crashes to a few minutes.</li>
+              <li>JVM memory saturation in acceptance testing diagnosed alone from heap dumps, nested joins simplified.</li>
+              <li>Functional documentation of the business rules, which did not exist until then.</li>
+            </ul>
+            <p class="vitrine-pile">Java, Quarkus, Hibernate Reactive, Mutiny, Kafka, MariaDB, Jenkins</p>
+          </div>
+        </article>
 
-  <section class="cv-outils" aria-labelledby="outils">
-    <h2 id="outils"><span class="carre"></span><span class="index">05</span> Tools</h2>
-    <div class="cv-familles">
-      <div class="cv-famille">
-        <p class="cv-famille-nom">Languages</p>
-        <ul>
-          <li>Java</li>
-          <li>TypeScript</li>
-          <li>Python</li>
-          <li>SQL</li>
-        </ul>
-      </div>
-      <div class="cv-famille">
-        <p class="cv-famille-nom">Frameworks</p>
-        <ul>
-          <li>Quarkus</li>
-          <li>Spring Boot</li>
-          <li>Hibernate</li>
-          <li>React</li>
-          <li>Mutiny and Vert.x</li>
-        </ul>
-      </div>
-      <div class="cv-famille">
-        <p class="cv-famille-nom">Data and infra</p>
-        <ul>
-          <li>PostgreSQL</li>
-          <li>MariaDB</li>
-          <li>Docker</li>
-          <li>Jenkins</li>
-          <li>Linux</li>
-        </ul>
-      </div>
-      <div class="cv-famille">
-        <p class="cv-famille-nom">AI</p>
-        <ul>
-          <li>Claude Code</li>
-          <li>Gemini CLI</li>
-          <li>GitHub Copilot</li>
-        </ul>
-      </div>
-      <div class="cv-famille">
-        <p class="cv-famille-nom">Practices</p>
-        <ul>
-          <li>Hexagonal architecture</li>
-          <li>Strangler Fig</li>
-          <li>Playwright tests</li>
-          <li>Continuous integration</li>
-          <li>Scrum</li>
-        </ul>
-      </div>
+        <article class="vitrine-mission">
+          <p class="vitrine-date">January to July 2025</p>
+          <div>
+            <h3>DARVA, Exiris</h3>
+            <p class="vitrine-role">Full-stack developer, through Lunatech</p>
+            <ul class="vitrine-resultats">
+              <li>Electronic registered mail platform: search features and client certificate checks.</li>
+              <li>A Quarkus interceptor warns of an expiring certificate in every API response, without duplicating the check per endpoint.</li>
+              <li>Non-regression tests migrated from Cypress to Playwright; Jenkins pipeline reworked and Jira statuses updated from PR state.</li>
+            </ul>
+            <p class="vitrine-pile">Java, Quarkus, React, TypeScript, Playwright, Jenkins</p>
+          </div>
+        </article>
+
+        <article class="vitrine-mission">
+          <p class="vitrine-date">May to August 2024</p>
+          <div>
+            <h3>Open Food Facts</h3>
+            <p class="vitrine-role">Backend developer, open source contributor, in English</p>
+            <ul class="vitrine-resultats">
+              <li>Odoo CRM integration over XML-RPC in the Perl monolith of the producer platform: contact and organisation creation, duplicate detection, import of three hundred existing organisations.</li>
+              <li>Routing module rewritten into typed handlers, adopted as the project standard.</li>
+              <li><a href="https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged" target="_blank" rel="noopener">Thirty-four merged PRs</a> in four months.</li>
+            </ul>
+            <p class="vitrine-pile">Perl, Docker, Linux</p>
+          </div>
+        </article>
+
+        <article class="vitrine-mission">
+          <p class="vitrine-date">summer 2022</p>
+          <div>
+            <h3>VLA, catalogue raisonné</h3>
+            <p class="vitrine-role">Freelance, sole developer</p>
+            <ul class="vitrine-resultats">
+              <li>Online catalogue of the six hundred and fifty works of painter Vonick Laubreton: quote, mockups, two intermediate reviews, deployment.</li>
+              <li><a href="https://laubreton.com" target="_blank" rel="noopener">Online since 2022</a>.</li>
+            </ul>
+            <p class="vitrine-pile">Python, Django, JavaScript, Docker, Nginx</p>
+          </div>
+        </article>
+      </section>
     </div>
-  </section>
+
+    <aside class="vitrine-cote">
+      <section aria-labelledby="competences">
+        <h2 id="competences">Skills</h2>
+        <div class="vitrine-famille">
+          <p class="vitrine-famille-nom">Languages</p>
+          <p>Java, TypeScript, Python, SQL</p>
+        </div>
+        <div class="vitrine-famille">
+          <p class="vitrine-famille-nom">Frameworks</p>
+          <p>Quarkus, Spring Boot, Hibernate, Mutiny and Vert.x, React</p>
+        </div>
+        <div class="vitrine-famille">
+          <p class="vitrine-famille-nom">Data and infra</p>
+          <p>PostgreSQL, MariaDB, Kafka, Docker, Jenkins, Linux</p>
+        </div>
+        <div class="vitrine-famille">
+          <p class="vitrine-famille-nom">Practices</p>
+          <p>Hexagonal architecture, Strangler Fig, Playwright tests, continuous integration, Scrum</p>
+        </div>
+        <div class="vitrine-famille">
+          <p class="vitrine-famille-nom">AI</p>
+          <p>Claude Code, Gemini CLI, GitHub Copilot</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="formation">
+        <h2 id="formation">Education</h2>
+        <article class="vitrine-mission">
+          <h3>Master's in computer science, software and data engineering</h3>
+          <p class="vitrine-date">Université Gustave Eiffel, 2025</p>
+        </article>
+      </section>
+
+      <section aria-labelledby="langues">
+        <h2 id="langues">Languages</h2>
+        <p>French, native. Professional English, TOEIC 945 in 2025.</p>
+      </section>
+
+      <section aria-labelledby="ecrits">
+        <h2 id="ecrits">Writing</h2>
+        <article class="vitrine-mission">
+          <h3><a href="#/en/blog/introduction-observabilite">An introduction to observability</a></h3>
+          <p class="vitrine-date">Twelve pages, from nine failures reproduced on a test machine.</p>
+        </article>
+      </section>
+    </aside>
+  </div>
 </article>
