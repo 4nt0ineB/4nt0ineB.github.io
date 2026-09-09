@@ -421,7 +421,7 @@ lecture   : 5 min
 
 ## Détecter, localiser, expliquer {#detecter-localiser-expliquer}
 
-Les trois signaux de base de l'observabilité sont la métrique, la <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une panne. OpenTelemetry en compte d'autres, et parle de signaux plutôt que de piliers.
+Les trois signaux de base de l'observabilité sont la métrique, la <jargon mot="trace">trace</jargon> et le log. Ce ne sont pas trois façons concurrentes de faire le même travail mais trois étages d'une même enquête. Chacun répond à l'une des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une panne, et il existe d'autres signaux que ces trois.
 
 :::tableau legende="Les trois piliers, la question qu'ils répondent, leur rôle dans l'enquête."
 
@@ -449,7 +449,7 @@ Une alerte se déclenche : le p95 de `/checkout` passe de 200 millisecondes à 3
 
 ### Étage deux, la trace
 
-Un clic sur le pic ouvre la trace d'une vraie requête lente. Cette trace est un arbre d'opérations, chacune avec un début, une durée, un parent et des attributs (un span, dans OpenTelemetry). L'arbre montre 3,1 secondes au total, dont 2,9 tenues par cent opérations jumelles, toutes `SELECT * FROM items WHERE order_id = ?`. On sait maintenant où : le chargement des articles fait cent requêtes au lieu d'une.
+Un clic sur le pic ouvre la trace d'une vraie requête lente. Cette trace est un arbre d'opérations, chacune avec un début, une durée, un parent et des attributs. L'arbre montre 3,1 secondes au total, dont 2,9 tenues par cent opérations jumelles, toutes `SELECT * FROM items WHERE order_id = ?`. On sait maintenant où : le chargement des articles fait cent requêtes au lieu d'une.
 
 ### Étage trois, le log
 
@@ -840,8 +840,6 @@ fichier   : blog/introduction-observabilite/fr/09-checklist.html
 surtitre  : Chapitre 9
 lecture   : 2 min
 ```
-
-Chaque ligne vient de quelque chose qui a d'abord mal tourné, quelque part dans ce texte ou dans sa suite.
 
 ## En instrumentant le service {#en-instrumentant-le-service}
 

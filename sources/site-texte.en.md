@@ -421,7 +421,7 @@ lecture   : 4 min
 
 ## Detect, locate, explain {#detecter-localiser-expliquer}
 
-The three core signals of observability are the metric, the <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of doing the same job but three floors of the same investigation. Each answers one of the three questions of the previous chapter. For the investigations in this text, a useful model is: metrics detect, traces locate, logs explain. It is not an exclusive one, because a trace can also explain a cause and a log can detect an outage. OpenTelemetry counts other signals, and speaks of signals rather than pillars.
+The three core signals of observability are the metric, the <jargon mot="trace">trace</jargon> and the log. They are not three competing ways of doing the same job but three floors of the same investigation. Each answers one of the three questions of the previous chapter. For the investigations in this text, a useful model is: metrics detect, traces locate, logs explain. It is not an exclusive one, because a trace can also explain a cause and a log can detect an outage, and there are other signals besides these three.
 
 :::tableau legende="The three pillars, the question each answers, its role in the investigation."
 
@@ -449,7 +449,7 @@ An alert fires: the p95 of `/checkout` goes from 200 milliseconds to 3 seconds. 
 
 ### Floor two, the trace
 
-A click on the spike opens the trace of a real slow request. This trace is a tree of operations, each with a start, a duration, a parent and attributes (a span, in OpenTelemetry). The tree shows 3.1 seconds in total, 2.9 of which are held by a hundred twin operations, all `SELECT * FROM items WHERE order_id = ?`. We now know where: loading the items makes a hundred queries instead of one.
+A click on the spike opens the trace of a real slow request. This trace is a tree of operations, each with a start, a duration, a parent and attributes. The tree shows 3.1 seconds in total, 2.9 of which are held by a hundred twin operations, all `SELECT * FROM items WHERE order_id = ?`. We now know where: loading the items makes a hundred queries instead of one.
 
 ### Floor three, the log
 
@@ -840,8 +840,6 @@ fichier   : blog/introduction-observabilite/en/09-checklist.html
 surtitre  : Chapter 9
 lecture   : 2 min
 ```
-
-Every line comes from something that first went wrong, somewhere in this text or in its sequel.
 
 ## When instrumenting the service {#en-instrumentant-le-service}
 

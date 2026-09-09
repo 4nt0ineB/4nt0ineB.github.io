@@ -9,7 +9,7 @@
   des trois questions du chapitre précédent. Pour les enquêtes de ce texte, un modèle
   utile est : la métrique détecte, la trace localise, le log explique. Ce n'est pas une
   exclusivité, car une trace peut aussi expliquer une cause et un log peut détecter une
-  panne. OpenTelemetry en compte d'autres, et parle de signaux plutôt que de piliers.</p>
+  panne, et il existe d'autres signaux que ces trois.</p>
 
   <tableau-mesure legende="Les trois piliers, la question qu'ils répondent, leur rôle dans l'enquête.">
     <table>
@@ -48,8 +48,7 @@
 
   <h3>Étage deux, la trace</h3>
   <p>Un clic sur le pic ouvre la trace d'une vraie requête lente. Cette trace est un arbre
-  d'opérations, chacune avec un début, une durée, un parent et des attributs (un span,
-  dans OpenTelemetry). L'arbre montre 3,1 secondes au total, dont 2,9 tenues par cent
+  d'opérations, chacune avec un début, une durée, un parent et des attributs. L'arbre montre 3,1 secondes au total, dont 2,9 tenues par cent
   opérations jumelles, toutes <code>SELECT * FROM items WHERE order_id = ?</code>. On
   sait maintenant où : le chargement des articles fait cent requêtes au lieu d'une.</p>
 
