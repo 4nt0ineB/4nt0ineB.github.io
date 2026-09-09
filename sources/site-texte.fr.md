@@ -24,49 +24,42 @@ lecture   : - min
 
 01
 
-Ingénieur logiciel
+Ingénieur logiciel, backend Java
 
 Seine-et-Marne, France
 
-Développeur backend Java, Quarkus et Spring. Migrations de données, modernisation de code existant, performance. Chez Lunatech depuis 2024.
+Quarkus et Spring, migrations de données, reprise de code existant. Chez Lunatech depuis 2024, en mission chez DARVA puis CARIAD.
 
 - [github.com/4nt0ineB](https://github.com/4nt0ineB)
 - [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
 
-## 02 Réalisations {#realisations}
+## 02 Parcours {#parcours}
 
-1. [Introduction à l'observabilité](#/fr/blog/introduction-observabilite) Douze pages sur les métriques, les logs et les traces, écrites à partir de neuf pannes reproduites sur une machine de test. Publié sur ce site.
-2. [Open Food Facts, trente-quatre PR fusionnées](https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged) En quatre mois, dans le monolithe Perl de la plateforme : intégration du CRM Odoo, import de trois cents organisations, refonte du routage adoptée comme standard du projet.
-3. [Catalogue raisonné de Vonick Laubreton](https://laubreton.com) Six cent cinquante œuvres en ligne, du devis à la mise en production, seul développeur. En ligne depuis 2022.
+1. mars à août 2026 CARIAD, groupe Volkswagen Lead dev, via Lunatech Migration d'un outil back-office de gestion des permissions, d'un rendu côté serveur à une API REST et un frontend React. Pattern Strangler Fig, endpoint par endpoint et derrière un feature flag : retour arrière instantané, aucune régression. Java · Spring Boot · React · TypeScript · Vitest
+2. juillet 2025 à mars 2026 DARVA, Domaine Client Développeur backend, via Lunatech Migration du CRM vers une nouvelle solution. Batch de migration des données de trente mille clients, développé et mis en production ; temps d'exécution ramené de huit heures à une heure et demie. Java · Quarkus · Hibernate Reactive · Mutiny · Kafka · MariaDB · Jenkins
+3. janvier à juillet 2025 DARVA, Exiris Développeur full-stack, via Lunatech Plateforme de lettre recommandée électronique : recherche, contrôle des certificats, migration des tests vers Playwright. Java · Quarkus · React · TypeScript · Playwright · Jenkins
+4. mai à août 2024 Open Food Facts Développeur backend, en anglais Intégration du CRM Odoo dans le monolithe Perl de la plateforme producteurs, import de trois cents organisations, refonte du routage adoptée comme standard du projet. [Trente-quatre PR fusionnées](https://github.com/openfoodfacts/openfoodfacts-server/pulls?q=is%3Apr+author%3A4nt0ineB+is%3Amerged). Perl · Docker · Linux
+5. été 2022 VLA, catalogue raisonné Freelance, seul développeur Catalogue des six cent cinquante œuvres du peintre Vonick Laubreton, du devis à la mise en production. [En ligne depuis 2022](https://laubreton.com). Python · Django · JavaScript · Docker · Nginx
 
-## 03 Parcours {#parcours}
-
-1. mars à août 2026 CARIAD, groupe Volkswagen Lead dev, via Lunatech Migration d'un outil back-office de gestion des permissions, d'un rendu côté serveur à une API REST et un frontend React. Mise en place du pattern Strangler Fig, endpoint par endpoint et derrière un feature flag, pour un retour arrière instantané et sans régression. Java · Spring Boot · React · TypeScript · Vitest
-2. juillet 2025 à mars 2026 DARVA, Domaine Client Développeur backend, via Lunatech Migration du CRM vers une nouvelle solution. Développement et mise en production du batch de migration des données de trente mille clients : temps d'exécution ramené de huit heures à une heure et demie. Java · Quarkus · Hibernate Reactive · Mutiny · Kafka · MariaDB · Jenkins
-3. janvier à juillet 2025 DARVA, Exiris Développeur full-stack, via Lunatech Plateforme de lettre recommandée électronique : fonctionnalités de recherche et de contrôle des certificats. Migration de tests vers Playwright. Java · Quarkus · React · TypeScript · Playwright · Jenkins
-4. mai à août 2024 Open Food Facts Développeur backend, stage de master, en anglais Intégration du CRM Odoo par XML-RPC dans le monolithe Perl de la plateforme producteurs, import de trois cents organisations, et refonte du routage en handlers typés, adoptée comme standard du projet. Perl · Docker · Linux
-5. été 2022 VLA, catalogue raisonné Freelance, seul développeur Catalogue en ligne des six cent cinquante œuvres du peintre Vonick Laubreton, du devis à la mise en production. Python · Django · JavaScript · Docker · Nginx
-
-## 04 Formation {#formation}
+## 03 Formation {#formation}
 
 1. Master en informatique, ingénierie logicielle et données Université Gustave Eiffel, 2025
-2. TOEIC Score 945, anglais professionnel, 2025
+2. TOEIC 945 Anglais professionnel, 2025
 
-## 05 Contact {#contact}
+## 04 Écrits {#ecrits}
 
-- [github.com/4nt0ineB](https://github.com/4nt0ineB)
-- [linkedin.com/in/antoineba6](https://www.linkedin.com/in/antoineba6/)
+1. [Introduction à l'observabilité](#/fr/blog/introduction-observabilite) Douze pages, à partir de neuf pannes reproduites sur une machine de test
 
-## 06 Outils {#outils}
+## 05 Outils {#outils}
 
-langages
+Langages
 
 - Java
 - TypeScript
 - Python
 - SQL
 
-frameworks
+Frameworks
 
 - Quarkus
 - Spring Boot
@@ -74,7 +67,7 @@ frameworks
 - React
 - Mutiny et Vert.x
 
-données et infra
+Données et infra
 
 - PostgreSQL
 - MariaDB
@@ -82,13 +75,13 @@ données et infra
 - Jenkins
 - Linux
 
-ia
+IA
 
 - Claude Code
 - Gemini CLI
 - GitHub Copilot
 
-pratiques
+Pratiques
 
 - Architecture hexagonale
 - Strangler Fig

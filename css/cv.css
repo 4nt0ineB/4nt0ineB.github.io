@@ -22,11 +22,28 @@
 :root[data-cv-palette="noir"]   { --cv-fond: #141414; --cv-encre: #f5c543; }
 :root[data-cv-palette="papier"] { --cv-fond: #f4f1ea; --cv-encre: #141414; }
 
+/* La feuille publique n'a qu'une paire, bleu et crème, quelle que soit la
+   palette retenue sur la version fancy. */
+html.page-cv:not(.page-cv-fancy) {
+  --cv-fond:  #2f55d4;
+  --cv-encre: #f4f1ea;
+}
+
 /* --- La feuille, commune aux deux versions ------------------------------ */
 
-/* Deux colonnes demandent plus que la mesure de lecture du blog. */
-.section-cv .contenu {
-  max-width: 62rem;
+/* La feuille couvre toute la page, en-tête compris. */
+html.page-cv body {
+  background: var(--cv-fond);
+  color: var(--cv-encre);
+}
+
+/* Le nom est déjà en grand sur la feuille : la barre ne le répète pas. */
+html.page-cv .titre-site {
+  visibility: hidden;
+}
+
+html.page-cv .contenu {
+  max-width: none;
   padding-top: 2.5rem;
 }
 
@@ -34,14 +51,15 @@
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   grid-template-areas:
-    "identite  realisations"
+    "identite  parcours"
     "formation parcours"
-    "contact   parcours"
+    "ecrits    parcours"
     "outils    outils";
   grid-template-rows: auto auto 1fr auto;
   column-gap: 4rem;
-  row-gap: 4rem;
+  row-gap: 4.5rem;
   font-family: var(--sans);
+  color: var(--cv-encre);
   min-height: 80vh;
 }
 
@@ -115,7 +133,6 @@
   line-height: 1.6;
 }
 
-/* Les liens de l'identité, sous le résumé : les mêmes qu'en contact. */
 .cv-identite .cv-liens {
   margin-top: 1.6rem;
 }
@@ -124,10 +141,6 @@
 
 .cv-parcours {
   grid-area: parcours;
-}
-
-.cv-realisations {
-  grid-area: realisations;
 }
 
 /* Le filet passe par le centre des carrés : celui du titre, à carre/2 du
@@ -197,15 +210,6 @@
   background: currentColor;
 }
 
-/* Les réalisations : des étapes plus serrées, sans date en tête. */
-.cv-realisations .cv-etape + .cv-etape {
-  margin-top: 2rem;
-}
-
-.cv-realisations .cv-axe {
-  padding-bottom: 0;
-}
-
 /* --- outils : une colonne par famille, séparée par un filet ------------- */
 
 .cv-outils {
@@ -238,6 +242,7 @@
 
 /* --- contact : les liens, sans mail ni téléphone ------------------------ */
 
+/* La rubrique contact n'existe que sur la version fancy. */
 .cv-contact {
   grid-area: contact;
 }
@@ -251,17 +256,21 @@
   letter-spacing: 0.04em;
 }
 
-/* --- formation ---------------------------------------------------------- */
+/* --- formation, écrits : des axes courts -------------------------------- */
 
 .cv-formation {
   grid-area: formation;
 }
 
-.cv-formation .cv-axe {
+.cv-ecrits {
+  grid-area: ecrits;
+}
+
+:is(.cv-formation, .cv-ecrits) .cv-axe {
   padding-bottom: 0;
 }
 
-.cv-formation .cv-etape + .cv-etape {
+:is(.cv-formation, .cv-ecrits) .cv-etape + .cv-etape {
   margin-top: 1.6rem;
 }
 
@@ -270,31 +279,23 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "identite"
-      "realisations"
       "parcours"
       "formation"
-      "outils"
-      "contact";
+      "ecrits"
+      "outils";
     grid-template-rows: auto;
     row-gap: 3.5rem;
+  }
+
+  html.page-cv .contenu {
+    padding-top: 1rem;
   }
 }
 
 /* --- Le CV fancy : la feuille d'après Ruder ----------------------------- */
 
-html.page-cv body {
-  background: var(--cv-fond);
-  color: var(--cv-encre);
-}
-
-/* Le nom est déjà en grand sur la feuille : la barre ne le répète pas. */
-html.page-cv .titre-site {
-  visibility: hidden;
-}
-
-html.page-cv .contenu {
-  max-width: none;
-  padding-top: 2.5rem;
+/* De la place à gauche pour la colonne des palettes. */
+html.page-cv-fancy .contenu {
   padding-left: 3rem;
 }
 
@@ -306,8 +307,6 @@ html.page-cv .contenu {
     "outils    outils   marge"
     "contact   contact  marge";
   grid-template-rows: auto 1fr auto auto;
-  row-gap: 4.5rem;
-  color: var(--cv-encre);
 }
 
 .cv-fancy h1 {
@@ -421,8 +420,7 @@ html.page-cv .contenu {
     margin-bottom: 2rem;
   }
 
-  html.page-cv .contenu {
+  html.page-cv-fancy .contenu {
     padding-left: 0;
-    padding-top: 1rem;
   }
 }

@@ -99,9 +99,10 @@ const App = defineComponent({
       document.documentElement.lang = demande.locale
       erreur.value = null
       vue.value = null
-      // La feuille du CV fancy couvre toute la page, en-tête compris : la
-      // classe se pose sur la racine, hors de portée de la coquille.
-      document.documentElement.classList.toggle('page-cv', estFancy.value && courante.value !== null)
+      // La feuille du CV couvre toute la page, en-tête compris : les classes
+      // se posent sur la racine, hors de portée de la coquille.
+      document.documentElement.classList.toggle('page-cv', estCv.value && courante.value !== null)
+      document.documentElement.classList.toggle('page-cv-fancy', estFancy.value && courante.value !== null)
       if (liste.value) { document.title = `${T.value.blog} | ${SITE}`; window.scrollTo(0, 0); return }
       if (courante.value === null) { erreur.value = 'introuvable'; return }
       try {
@@ -155,7 +156,7 @@ const App = defineComponent({
             <span v-else class="langue est-absente" aria-disabled="true">{{ l.code }}</span>
           </template>
         </nav>
-        <button v-if="!estFancy" type="button" class="bascule-theme" @click="bascule"
+        <button v-if="!estCv" type="button" class="bascule-theme" @click="bascule"
                 :aria-label="theme === 'dark' ? T.themeClair : T.themeSombre">
           {{ theme === 'dark' ? T.clair : T.sombre }}
         </button>
